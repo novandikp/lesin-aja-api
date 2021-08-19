@@ -3,7 +3,7 @@ name: cd
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   cd:
@@ -20,8 +20,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/www/lesinajaV2/lesin-aja-api
+            cd ~/app/example-ci-cd-auto-deploy-vps
             git pull origin master
             git status
-            yarn
-            yarn start
+            yarn install
+            yarn build
