@@ -27,8 +27,11 @@ const pgp = pgPromise(initOptions)
 const connectionString = process.env.CONNECTION_STRING || ""
 
 const db = pgp({
-  connectionString: connectionString,
   ssl: { rejectUnauthorized: false },
+  database: process.env.NAME_DATABASE,
+  host: process.env.HOST_DATABASE,
+  user: process.env.USER_DATABASE,
+  password: process.env.PASS_DATABASE,
 })
 
 module.exports = { db, pgp }
