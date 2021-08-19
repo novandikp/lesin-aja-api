@@ -24,5 +24,4 @@ jobs:
             git pull origin main
             git status
             yarn install
-            pm2 reload index
-            pm2 restart index
+            yarn start
