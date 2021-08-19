@@ -24,4 +24,3 @@ jobs:
             git pull origin main
             git status
             yarn install
-            yarn test
