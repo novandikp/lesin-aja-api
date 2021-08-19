@@ -3,7 +3,7 @@ name: cd
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   cd:
@@ -21,7 +21,7 @@ jobs:
           port: 22
           script: |
             cd ~/app/example-ci-cd-auto-deploy-vps
-            git pull origin master
+            git pull origin main
             git status
             yarn install
             yarn build
