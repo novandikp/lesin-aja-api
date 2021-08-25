@@ -23,6 +23,7 @@ jobs:
             cd ../../var/www/lesinajaV2/lesin-aja-api
             git pull origin main
             git status
+            rm -rf build
             yarn install
             yarn build
             pm2 reload Lesinaja
