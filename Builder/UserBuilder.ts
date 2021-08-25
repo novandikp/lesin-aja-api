@@ -1,5 +1,6 @@
 import { Posisi } from "../Entity/Posisi"
 import { User, UserInterface } from './../Entity/User';
+import { encrypt } from "../Util/Encrypt"
 
 export class UserBuilder{
     public iduser:number
@@ -13,9 +14,8 @@ export class UserBuilder{
         this.password =password
     }
 
-
-    setId(iduser:number){
-        this.iduser = iduser
+    withEnctyptPassword(){
+        this.password = encrypt(this.password)
     }
 
 
@@ -30,6 +30,8 @@ export class UserBuilder{
     withWaliPosisition(){
         this.posisi = Posisi.WALI
     }
+
+
 
 
     withNonAktif(){

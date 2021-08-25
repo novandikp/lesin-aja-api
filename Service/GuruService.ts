@@ -2,20 +2,16 @@
 import { User } from './../Entity/User';
 import { UserBuilder } from './../Builder/UserBuilder';
 import { db } from '../Database';
-import { Wali } from './../Entity/Wali';
-import { WaliBuilder } from './../Builder/WaliBuilder';
-import { GuruBuilder } from './../Builder/GuruBuilder';
 import { Guru } from '../Entity/Guru';
 
 
 const register = async (body) =>{
     const userBuilder:UserBuilder = new UserBuilder(body)
     userBuilder.withTeacherPosisition()
-    const guruBuilder:GuruBuilder = new GuruBuilder(body)    
-
+    userBuilder.withEnctyptPassword()
     try {
         const dataUser:User = await db.users.add(userBuilder.build())
-        const dataGuru:Guru = await db.guru.add(guruBuilder.build())
+        const dataGuru:Guru = await db.guru.add(body)
         return dataGuru
     } catch (error) {
         console.error(error)
@@ -25,20 +21,20 @@ const register = async (body) =>{
 
 const profile = async (email:String) =>{
     try {
-        const dataWali:Wali = await db.wali.getByEmail(email)
-        return dataWali
+        const dataGuru:Guru = await db.guru.getByEmail(email)
+        return dataGuru
     } catch (error) {
         return null       
     }
 }
 
 
-const setProfile = async (body, email:String) =>{
-    const waliBuilder:WaliBuilder = new WaliBuilder(body)
+const setProfile = async (body) =>{
     try {
-        const dataWali:Wali = await db.wali.add(waliBuilder.build())
-        return dataWali
+        const dataGuru:Guru = await db.guru.edit(body,body.idchild)
+        return dataGuru
     } catch (error) {
+        console.error(error)
         return null       
     }
 }

@@ -1,7 +1,15 @@
 import * as promise from "bluebird"
 import pgPromise from 'pg-promise'; 
 import {IInitOptions, IDatabase, IMain} from 'pg-promise';
-import { GuruRepository, IRepository, RegionRepository, UserRepository, WaliRepository } from "./Repository"
+import {
+    GuruRepository,
+    IRepository,
+    PaketRepository,
+    RegionRepository,
+    SiswaRepository,
+    UserRepository,
+    WaliRepository
+} from "./Repository"
 
 
 
@@ -14,6 +22,8 @@ const initOptions: IInitOptions<IRepository> = {
         obj.wali = new WaliRepository(obj,pgp)      
         obj.region = new RegionRepository(obj,pgp)
         obj.guru = new GuruRepository(obj,pgp)
+        obj.paket = new PaketRepository(obj,pgp)
+        obj.siswa = new SiswaRepository(obj,pgp)
     }
 };
 

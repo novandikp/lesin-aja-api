@@ -1,7 +1,4 @@
 import express from "express";
-
-
-
 import Route from "./Routes/Route";
 import { handleError } from "./Util/ErrorHandler";
 import AuthChecker from './Middleware/AuthChecker';
@@ -17,10 +14,16 @@ declare global {
   }
 }
 
+
 require("dotenv").config()
 const port = process.env.PORT || 1000
-
+const morgan = require("morgan")
+const compression = require("compression")
 const app =express()
+
+app.use(morgan("tiny"))
+app.use(compression())
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 

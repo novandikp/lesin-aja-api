@@ -1,5 +1,5 @@
-import { Status } from './Status';
 import { Posisi } from './Posisi';
+import { encrypt } from "../Util/Encrypt"
 export class User {
     public iduser:number
     public email:String
@@ -54,7 +54,7 @@ export class User {
     }
 
     setPassword(password : String){
-        this.password = password
+        this.password = encrypt(password)
     }
 
     getPassword():String{

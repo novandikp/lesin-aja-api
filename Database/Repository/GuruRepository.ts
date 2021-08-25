@@ -1,7 +1,7 @@
 
 import {IDatabase, IMain} from 'pg-promise';
-import { Guru } from '../../Entity/Guru';
-import { Wali } from "../../Entity/Wali"
+import { Guru, GuruInterface } from "../../Entity/Guru"
+import FilterUpdate from "../../Util/FilterUpdate"
 export default class GuruRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
     }
@@ -15,11 +15,17 @@ export default class GuruRepository {
     }
 
 
-    async add(guru : Guru): Promise<Guru >{
-        return this.db.one("INSERT INTO tblguru (${this:name}) VALUES (${this:list}) RETURNING *", guru.dataWithoutID())
+    async add(guru : GuruInterface): Promise<Guru >{
+        const dataGuru:Guru = new Guru(guru)
+        return this.db.one("INSERT INTO tblguru (${this:name}) VALUES (${this:list}) RETURNING *", dataGuru.dataWithoutID())
     }
-    // async edit(Guru :Guru) :Promise<Guru>{
-    //     return
-    // }
+
+    async edit(guru :GuruInterface,idguru:number) :Promise<Guru>{
+        const dataGuru:Guru = new Guru(guru)
+        const data = new FilterUpdate(dataGuru.dataWithoutID(),this.pgp)
+        return this.db.one("UPDATE tblguru set $1:raw WHERE idguru=$2 RETURNING *", [
+            data, idguru
+        ])
+    }
     
 }

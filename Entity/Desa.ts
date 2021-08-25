@@ -1,4 +1,4 @@
-import  Region  from "Region";
+import  Region  from "./Region";
 
 export default class Desa implements Region{
     public id: number;

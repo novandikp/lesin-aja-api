@@ -3,17 +3,16 @@ import { User } from './../Entity/User';
 import { UserBuilder } from './../Builder/UserBuilder';
 import { db } from '../Database';
 import { Wali } from './../Entity/Wali';
-import { WaliBuilder } from './../Builder/WaliBuilder';
+
 
 
 const register = async (body) =>{
-    const waliBuilder:WaliBuilder = new WaliBuilder(body)    
     const userBuilder:UserBuilder = new UserBuilder(body)
     userBuilder.withWaliPosisition()
+    userBuilder.withEnctyptPassword()
     try {
-                
         const dataUser:User = await db.users.add(userBuilder.build())
-        const dataWali:Wali = await db.wali.add(waliBuilder.build())
+        const dataWali:Wali = await db.wali.add(body)
         return dataWali
     } catch (error) {
         console.log(error)
@@ -32,10 +31,8 @@ const profile = async (email:String) =>{
 
 
 const setProfile = async (body) =>{
-    const waliBuilder:WaliBuilder = new WaliBuilder(body)
-    waliBuilder.setIdWali(body.idchild)
     try {
-        const dataWali:Wali = await db.wali.edit(waliBuilder.build())
+        const dataWali:Wali = await db.wali.edit(body,body.idchild)
         return dataWali
     } catch (error) {
         return null       

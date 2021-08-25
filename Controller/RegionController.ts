@@ -9,11 +9,8 @@ const router = Router()
 
 router.get("/provinsi",async (req:Request,res:Response, next:NextFunction)=>{    
     const data = await getProvince()
-    if(data){
-        return send(res,HTTPStatus.OK, {data :data,message:"Data Ditemukan"})
-    }else{
-       return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
-    }
+    if(!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
+    return send(res,HTTPStatus.OK, {data :data,message:"Data Ditemukan"})
 })
 
 

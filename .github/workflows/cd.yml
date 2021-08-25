@@ -24,3 +24,6 @@ jobs:
             git pull origin main
             git status
             yarn install
+            yarn build
+            pm2 reload Lesinaja
+            pm2 restart Lesinaja

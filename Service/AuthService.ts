@@ -2,15 +2,16 @@ import { db } from '../Database';
 import { Posisi } from '../Entity/Posisi';
 import { generate } from '../Util/JWT';
 import { User, UserInterface } from './../Entity/User';
+import { encrypt } from "../Util/Encrypt"
 
  const login = async ({email, password }:UserInterface) =>{
     try {
-        let idchild;
-        const {posisi,iduser} = await db.users.getByUsernameAndPassword(email,password)
+        let idchild=0;
+        const {posisi,iduser} = await db.users.getByUsernameAndPassword(email,encrypt(password))
         if (posisi == Posisi.GURU){
           const  {idguru} = await db.guru.getByEmail(email)
           idchild=idguru
-        }else{
+        }else if (posisi == Posisi.WALI){
           const  {idwali} = await db.wali.getByEmail(email)
           idchild=idwali
         }

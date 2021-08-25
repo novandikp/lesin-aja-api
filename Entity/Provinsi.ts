@@ -1,4 +1,4 @@
-import  Region  from "Region";
+import  Region  from "./Region";
 
 export default class Provinsi implements Region{
     public id: number;

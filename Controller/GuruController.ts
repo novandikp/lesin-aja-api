@@ -6,39 +6,45 @@ import { ErrorHandler } from "../Util/ErrorHandler";
 import multer = require("multer");
 
 const UPLOAD_PATH = 'public/uploads/cv';
-const upload = multer({ dest: `${UPLOAD_PATH}/` });
+const upload = multer({ storage:
+      multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, UPLOAD_PATH)
+      },
+
+      filename: function (req, file, cb) {
+        cb(null, file.originalname)
+      },
+    })
+});
 const router = Router()
 
 router.post("/register",upload.any(),async (req:Request, res :Response, next:NextFunction)=>{
-    if (req.files) {
-        req.body.file_cv = req.files[0].filename
-        return next()
-    }else{
-        return next(new ErrorHandler(HTTPStatus.NOTACCEPT,"Harap Upload CV"))
-    }
-    
+    if (!req.files) return next(new ErrorHandler(HTTPStatus.NOTACCEPT,"Harap Upload CV"))
+    req.body.file_cv = req.files[0].filename
+    return next()
 })
 
 router.post("/register",async (req:Request, res :Response, next:NextFunction)=>{
     const data = await GuruService.register(req.body)
-    if(data){
-        return send(res,HTTPStatus.OK, {
-            data :data,
-            status:true,
-            message:"Registrasi Berhasil silahkan Login"
-        })
-    }else{
-       return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi Kesalahan"))
-    }
+    if(!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi Kesalahan"))
+    return send(res,HTTPStatus.OK, {
+         data :data,
+         status:true,
+         message:"Registrasi Berhasil silahkan Login"
+    })
 })
 
 router.get("/profile",async (req:Request, res:Response,next:NextFunction)=>{
     const data = await GuruService.profile(req.context.email)
-    if (data){
-        return send(res, HTTPStatus.OK, {data:data,status:true, message :""})
-    }else{
-        return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
-    }
+    if (!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
+    return send(res, HTTPStatus.OK, {data:data,status:true, message :""})
+})
+
+router.post("/profile",async (req:Request, res:Response,next:NextFunction)=>{
+    const data = await GuruService.setProfile(req.body)
+    if (!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
+    return send(res, HTTPStatus.OK, {data:data,status:true, message :""})
 })
 
 

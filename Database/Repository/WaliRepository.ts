@@ -1,6 +1,6 @@
 
 import {IDatabase, IMain} from 'pg-promise';
-import { Wali } from '../../Entity/Wali';
+import { Wali, WaliInterface } from "../../Entity/Wali"
 import  FilterUpdate  from '../../Util/FilterUpdate';
 export default class WaliRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
@@ -23,10 +23,11 @@ export default class WaliRepository {
         return this.db.one("INSERT INTO tblwali (${this:name}) VALUES (${this:list}) RETURNING *", wali.dataWithoutId())
     }
 
-    async edit(wali :Wali) :Promise<Wali>{
-        const data = new FilterUpdate(wali.dataWithoutId(),this.pgp)
+    async edit(wali :WaliInterface,idwali:number) :Promise<Wali>{
+        const dataWali:Wali = new Wali(wali)
+        const data = new FilterUpdate(dataWali.dataWithoutId(),this.pgp)
         return this.db.one("UPDATE tblwali set $1:raw WHERE idwali=$2 RETURNING *", [
-            data, wali.idwali
+            data, idwali
         ])
     }
     

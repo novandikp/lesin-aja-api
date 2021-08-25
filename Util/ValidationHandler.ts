@@ -1,5 +1,5 @@
-const { validationResult } = require("express-validator")
-const { ErrorHandler } = require("ErrorHandler")
+import { validationResult } from "express-validator"
+import { ErrorHandler } from "./ErrorHandler"
 
 const resultValidation = validationResult.withDefaults({
   formatter: (error) => {
@@ -18,4 +18,4 @@ function handlerInput(req, res, next) {
   }
 }
 
-module.exports = handlerInput
+export default handlerInput

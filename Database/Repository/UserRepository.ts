@@ -17,6 +17,7 @@ export default class UserRepository {
     async getByUsername(email:String): Promise<User > {
         return this.db.one("SELECT * FROM tbluser where email=$1 LIMIT 1",[email])
     }
+
     async getByUsernameAndPassword(email:String,password:String) : Promise<User>{
         return this.db.one("select * from tbluser where status=true and email=$1 and password=$2",[email,password])
     }
@@ -27,8 +28,6 @@ export default class UserRepository {
             , 
         user.getDataWithoutID())
     }
- 
-    
 
     async edit(user :User, iduser:number) :Promise<User>{
         const data = new FilterUpdate(user,this.pgp)
