@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator")
-const { ErrorHandler } = require("./ErrorHandler")
+const { ErrorHandler } = require("ErrorHandler")
 
 const resultValidation = validationResult.withDefaults({
   formatter: (error) => {
