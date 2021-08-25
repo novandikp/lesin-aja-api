@@ -1,7 +1,7 @@
 const chai = require("chai")
 const chaiHttp = require("chai-http")
 const server = require("../public")
-const LoginHelper = require("./helper/LoginHelper")
+const LoginHelper = require("helper/LoginHelper")
 const expect = chai.expect
 
 chai.use(chaiHttp)
