@@ -167,7 +167,7 @@
 							"urlencoded": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{tokenGoogleSignIn}}",
 									"type": "text"
 								}
 							]
@@ -180,6 +180,45 @@
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Auth",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "testguru@gmail.co",
+									"type": "text"
+								},
+								{
+									"key": "posisi",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
 							]
 						}
 					},
@@ -277,80 +316,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{contohTokenWali}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "kevin@mail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "kevin",
-									"type": "text"
-								},
-								{
-									"key": "wali",
-									"value": "Budi",
-									"type": "text"
-								},
-								{
-									"key": "idprovinsi",
-									"value": "11",
-									"type": "text"
-								},
-								{
-									"key": "idkabupaten",
-									"value": "1101",
-									"type": "text"
-								},
-								{
-									"key": "idkecamatan",
-									"value": "1101010",
-									"type": "text"
-								},
-								{
-									"key": "iddesa",
-									"value": "1101010001",
-									"type": "text"
-								},
-								{
-									"key": "alamat",
-									"value": "Sidoarjo",
-									"type": "text"
-								},
-								{
-									"key": "telp",
-									"value": "08888",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{URL}}/wali/register",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"wali",
-								"register"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -393,8 +358,8 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "email",
 									"value": "gurua@mail.com",
@@ -484,6 +449,16 @@
 									"key": "jeniskelaminguru",
 									"value": "Pria",
 									"type": "text"
+								},
+								{
+									"key": "mapel",
+									"value": "Matematika",
+									"type": "text"
+								},
+								{
+									"key": "cv",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Documents/Akuntansi_baru.sql"
 								}
 							]
 						},
@@ -495,130 +470,6 @@
 							"path": [
 								"guru",
 								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "email",
-									"value": "guru@lesinaja",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "guru",
-									"type": "text"
-								},
-								{
-									"key": "guru",
-									"value": "Budi",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "idprovinsi",
-									"value": "11",
-									"type": "text"
-								},
-								{
-									"key": "idkabupaten",
-									"value": "1101",
-									"type": "text"
-								},
-								{
-									"key": "idkecamatan",
-									"value": "1101010",
-									"type": "text"
-								},
-								{
-									"key": "iddesa",
-									"value": "1101010001",
-									"type": "text"
-								},
-								{
-									"key": "alamat",
-									"value": "Sidoarjo",
-									"type": "text"
-								},
-								{
-									"key": "telp",
-									"value": "08888",
-									"type": "text"
-								},
-								{
-									"key": "cv",
-									"type": "file",
-									"src": "/C:/Users/Administrator/Downloads/Surat Peminjaman Ruang Tanggal 28 - 29  Agustus 2021.pdf"
-								},
-								{
-									"key": "perguruantinggi",
-									"value": "UPN",
-									"type": "text"
-								},
-								{
-									"key": "jurusan",
-									"value": "Informatika",
-									"type": "text"
-								},
-								{
-									"key": "mapelyangdikuasai",
-									"value": "Matematika",
-									"type": "text"
-								},
-								{
-									"key": "pernahmengajar",
-									"value": "sma",
-									"type": "text"
-								},
-								{
-									"key": "lokasimengajar",
-									"value": "Buduran",
-									"type": "text"
-								},
-								{
-									"key": "lamamengajar",
-									"value": "10",
-									"type": "text"
-								},
-								{
-									"key": "rekening",
-									"value": "12312",
-									"type": "text"
-								},
-								{
-									"key": "bank",
-									"value": "BCA",
-									"type": "text"
-								},
-								{
-									"key": "jeniskelaminguru",
-									"value": "Pria",
-									"type": "text"
-								},
-								{
-									"key": "mapel",
-									"value": "matematika",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{URL}}/guru/register",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"guru",
-								"register"
 							]
 						}
 					},
@@ -1002,7 +853,35 @@
 		},
 		{
 			"name": "Daftar Les",
-			"item": []
+			"item": [
+				{
+					"name": "Daftar Les",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idpaket\" :2,\r\n    \"idsiswa\" :1,\r\n    \"tglmulai\" :'',\r\n    \"tglles\" : [\r\n        \"SENIN\",\"JUMAT\"\r\n    ],\r\n    \"jamles\":[\r\n        \"19:00\",\"20:00\"\r\n    ]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/les/daftar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"les",
+								"daftar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Absen",
@@ -1045,6 +924,10 @@
 		{
 			"key": "contohtokenguru",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0IjoiTG9tYW4iLCJlbWFpbCI6Imd1cnVhQG1haWwuY29tIiwicG9zaXNpIjoxLCJpZGNoaWxkIjoyLCJpZHVzZXIiOjE1LCJpYXQiOjE2Mjk5MDA4OTF9.Onpj_6yoSjzs6Nk_hBcUrjesw-6OrC6fwDNpiiGPm0I"
+		},
+		{
+			"key": "tokenGoogleSignIn",
+			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjZlZjRiZDkwODU5MWY2OTdhOGE5Yjg5M2IwM2U2YTc3ZWIwNGU1MWYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1MDgzODQwOTUzMzQtczJkc2R1YmdyZDZyaXJqOWwxa3Y4ZzJxZGtnZzlxcjQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1MDgzODQwOTUzMzQtdXFpN3ZzaGI4djNrcm0ycjdiYWNlcmp0cGRmbTgyZmEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDI2Mzg5NzEyNDQ5MTM2OTIzNTUiLCJlbWFpbCI6ImFuZGkucmF5a2FAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJBbmRpIFJheWthIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdna3lyNjMzNC1rN05mLUFSbW0xZk1Xc0pFU0RGcTRvcHp2TW8tNkpnPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFuZGkiLCJmYW1pbHlfbmFtZSI6IlJheWthIiwibG9jYWxlIjoiZW4tR0IiLCJpYXQiOjE2Mjk5NjE1OTcsImV4cCI6MTYyOTk2NTE5N30.O_xX3GQpYSnqKLiz8Pghi9pu0u1rVeLEad2EGMpER4P9bcoNVdhYBqi0g1_Lzkiu_E5yjK3MXHTJnQ60LqcprvrjiIw9YS4b3IVfV6jAjm7puHjlB6upA9W_heMafufx9bAa6fjSsN1vRmqyM9Q10CxMkWC-u69hMsnt4bzCtQqUqm6mnRq9EvUnbdVz1OaChXZsAKbBT2G0teP3USJ4EAsScWarjRyVmjsqQ5oETjiOr6V9rMnf7TftqjSeml_DDCWVW-B8MRBRdn9Oi5iLuCwY2THfvzPpUHd-Th_IpWwcCjFjWwG-6a6RUCb4QihAYNm-fBHGwphWbzB6VFEFYA"
 		}
 	]
 }
