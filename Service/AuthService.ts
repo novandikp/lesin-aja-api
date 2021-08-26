@@ -9,14 +9,16 @@ const CLIENT_ID:string =""
 
 const loginAdmin= async ({email, password }:UserInterface) =>{
     try {
-        let idchild=0;
+      let idchild,topicID;
       const {posisi,iduser} = await db.users.getByUsernameAndPassword(email,encrypt(password))
       if (posisi == Posisi.GURU){
-        const  {idguru} = await db.guru.getByEmail(email)
+        const  {idguru,idkabupaten} = await db.guru.getByEmail(email)
         idchild=idguru
+        topicID =idkabupaten
       }else if (posisi == Posisi.WALI){
-        const  {idwali} = await db.wali.getByEmail(email)
+        const  {idwali,idkabupaten} = await db.wali.getByEmail(email)
         idchild=idwali
+        topicID =idkabupaten
       }
       const token = generate({
         iduser:iduser,
@@ -46,24 +48,28 @@ const loginWithGoogle = async (token) =>{
     const { email } = dataUser.getPayload();
     return getTokenByEmailVerified(email)
   }catch (e){
+    console.log(e)
     return null
   }
 }
 
 const getTokenByEmailVerified=async (email:String)=>{
   try {
-    let idchild=0;
+    let idchild,topicID;
+
     const dataUser:User= await db.users.getByEmail(email)
 
     if(!dataUser) return {isExist : false}
 
     const {posisi,iduser}  = dataUser
     if (posisi === Posisi.GURU){
-      const  {idguru} = await db.guru.getByEmail(email)
+      const  {idguru,idkabupaten} = await db.guru.getByEmail(email)
       idchild=idguru
+      topicID = idkabupaten
     }else if (posisi === Posisi.WALI){
-      const  {idwali} = await db.wali.getByEmail(email)
+      const  {idwali,idkabupaten} = await db.wali.getByEmail(email)
       idchild=idwali
+      topicID = idkabupaten
     }
     const token = generate({
       iduser:iduser,
@@ -76,6 +82,7 @@ const getTokenByEmailVerified=async (email:String)=>{
       email : email,
       posisi : Posisi.getPosisi(posisi),
       idchild:idchild,
+      topicID:topicID
     }
   }catch (e){
     return null
