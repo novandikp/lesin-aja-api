@@ -18,6 +18,7 @@
     "express-session": "^1.17.2",
     "express-validator": "^6.12.0",
     "fs": "^0.0.1-security",
+    "google-auth-library": "^7.6.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
@@ -27,7 +28,7 @@
     "set-cookie-parser": "^2.4.8"
   },
   "scripts": {
-    "build" : "tsc",
+    "build": "tsc",
     "start": "nodemon build/index.js",
     "dev": "nodemon index.ts",
     "test": "mocha -r ts-node/register 'Test/index.test.ts' --timeout 10000 --exit"

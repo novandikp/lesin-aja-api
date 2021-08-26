@@ -5,4 +5,5 @@ export class HTTPStatus {
     public static readonly UNAUTHORIZED = 401
     public static readonly NOTACCEPT = 406
     public static readonly CREATED =201
+    public static readonly NOCONTENT=204
 }
