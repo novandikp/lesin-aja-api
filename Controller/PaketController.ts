@@ -4,10 +4,11 @@ import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
 import { addPaket, deletePaket, editPaket, getPaket } from "../Service/PaketService"
+import AdminChecker from "../Middleware/AdminChecker"
 
 
 const router = Router()
-
+// router.use(AdminChecker)
 router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
   const data = await getPaket(req.query)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))

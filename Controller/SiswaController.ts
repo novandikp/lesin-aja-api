@@ -8,9 +8,6 @@ import WaliChecker from "../Middleware/WaliChecker"
 
 
 const router = Router()
-
-
-
 router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
   const data = await getSiswa(req.query)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
@@ -28,12 +25,14 @@ router.get("/my/",async (req:Request,res:Response,next:NextFunction)=>{
 
 
 router.post("/",async (req:Request,res:Response, next:NextFunction)=>{
+  req.body.idortu = req.context.idchild
   const data = await addSiswa(req.body)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 
 router.post("/:id",async (req:Request,res:Response, next:NextFunction)=>{
+  req.body.idortu = req.context.idchild
   const data = await editSiswa(req.body,req.params.id)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})

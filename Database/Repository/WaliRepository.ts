@@ -14,6 +14,10 @@ export default class WaliRepository {
         return this.db.one("SELECT * FROM tblwali where email=$1 LIMIT 1",[email])
     }
 
+    async getById(id:number): Promise<Wali > {
+        return this.db.one("SELECT * FROM tblwali where idwali=$1 LIMIT 1",[id])
+    }
+
     async get(idwali:number): Promise<Wali > {
         return this.db.one("SELECT * FROM tblwali where idwali=$1 LIMIT 1",[idwali])
     }

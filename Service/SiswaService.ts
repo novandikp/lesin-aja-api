@@ -19,7 +19,7 @@ const getSiswaByParent = async (filter,idparent)=>{
 }
 
 const addSiswa = async (data)  =>{
-  data.idortu = data.idchild
+
   try{
     return await db.siswa.add(data)
   }catch (e){
@@ -30,7 +30,7 @@ const addSiswa = async (data)  =>{
 
 
 const editSiswa = async (data,id) =>{
-  data.idortu = data.idchild
+  
   try{
     return await db.siswa.edit(data,id)
   }catch (e){

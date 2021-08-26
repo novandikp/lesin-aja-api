@@ -3,6 +3,9 @@ import { Posisi } from '../Entity/Posisi';
 import { generate } from '../Util/JWT';
 import { User, UserInterface } from './../Entity/User';
 import { encrypt } from "../Util/Encrypt"
+import { UserBuilder } from "../Builder/UserBuilder"
+import { WaliBuilder } from "../Builder/WaliBuilder"
+import { GuruBuilder } from "../Builder/GuruBuilder"
 
 const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID:string ="508384095334-uqi7vshb8v3krm2r7bacerjtpdfm82fa.apps.googleusercontent.com"
@@ -40,7 +43,6 @@ const loginAdmin= async ({email, password }:UserInterface) =>{
 
 const loginWithGoogle = async (token) =>{
   try{
-
     const client = new OAuth2Client(CLIENT_ID)
     const dataUser = await client.verifyIdToken({
       idToken: token,
@@ -56,8 +58,7 @@ const loginWithGoogle = async (token) =>{
 
 const getTokenByEmailVerified=async (email:String)=>{
   try {
-    let idchild,topicID;
-
+    let idchild,topicID,editedProfile;
     const dataUser:User= await db.users.getByEmail(email)
     if(!dataUser){
       const token = generate({
@@ -70,26 +71,29 @@ const getTokenByEmailVerified=async (email:String)=>{
     } else{
       const {posisi,iduser}  = dataUser
       if (posisi === Posisi.GURU){
-        const  {idguru,idkabupaten} = await db.guru.getByEmail(email)
+        const  {idguru,idkabupaten,guru} = await db.guru.getByEmail(email)
         idchild=idguru
         topicID = idkabupaten
+        editedProfile = guru != null
       }else if (posisi === Posisi.WALI){
-        const  {idwali,idkabupaten} = await db.wali.getByEmail(email)
+        const  {idwali,idkabupaten,wali} = await db.wali.getByEmail(email)
         idchild=idwali
         topicID = idkabupaten
+        editedProfile = wali != null
       }
       const token = generate({
         iduser:iduser,
         email:email,
         posisi:posisi,
-        idchild:idchild
+        idchild:idchild,
       })
       return {
         token : token,
         email : email,
         posisi : Posisi.getPosisi(posisi),
         idchild:idchild,
-        topicID:topicID
+        topicID:topicID,
+        editedProfile:editedProfile
       }
     }
 
@@ -98,7 +102,52 @@ const getTokenByEmailVerified=async (email:String)=>{
   }
 }
 
+const insertDataByRole = async (data)=>{
+  try{
+    let idchild
+    const {email,posisi}=data
 
+    if (posisi != Posisi.WALI && posisi != Posisi.GURU) return  null
+
+    const userBuilder:UserBuilder = new UserBuilder(data)
+    if(posisi == Posisi.GURU){
+      userBuilder.withTeacherPosisition()
+      idchild = await initTeacher(email)
+    }else{
+      userBuilder.withWaliPosisition()
+      idchild = await initWali(email)
+    }
+
+    const {iduser} = await db.users.add(userBuilder.build())
+    const token = generate({
+      iduser:iduser,
+      email:email,
+      posisi:posisi,
+      idchild:idchild,
+    })
+    return {
+      token : token,
+      email : email,
+      posisi : Posisi.getPosisi(posisi),
+      idchild:idchild,
+      editedProfile:false
+    }
+  }catch (e){
+    return null
+  }
+}
+
+const initTeacher = async (email) =>{
+    const guruBuilder:GuruBuilder = new GuruBuilder(email)
+    const {idguru}  = await db.guru.add(guruBuilder.build())
+    return idguru
+}
+
+const initWali = async (email) =>{
+  const guruBuilder:WaliBuilder = new WaliBuilder(email)
+  const {idwali}  = await db.wali.add(guruBuilder.build())
+  return idwali
+}
 
 
 const changePassword = async({iduser,password} :UserInterface) =>{
@@ -117,4 +166,4 @@ const changePassword = async({iduser,password} :UserInterface) =>{
 }
 
 
-export {loginWithGoogle,loginAdmin,changePassword}
+export {loginWithGoogle,loginAdmin,changePassword,insertDataByRole}

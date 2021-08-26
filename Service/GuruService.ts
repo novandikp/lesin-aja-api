@@ -19,11 +19,12 @@ const register = async (body) =>{
     }
 }
 
-const profile = async (email:String) =>{
+const profile = async (id:number) =>{
     try {
-        const dataGuru:Guru = await db.guru.getByEmail(email)
+        const dataGuru:Guru = await db.guru.getByID(id)
         return dataGuru
     } catch (error) {
+        console.log(error)
         return null       
     }
 }
@@ -31,7 +32,7 @@ const profile = async (email:String) =>{
 
 const setProfile = async (body) =>{
     try {
-        const dataGuru:Guru = await db.guru.edit(body,body.idchild)
+        const dataGuru:Guru = await db.guru.edit(body,body.idguru)
         return dataGuru
     } catch (error) {
         console.error(error)

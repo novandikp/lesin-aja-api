@@ -11,7 +11,7 @@ router.post("/login",async (req:Request,res:Response, next:NextFunction)=>{
     if(!data){
         return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Token tidak bisa diurai")) 
     }else if(!data.isExist){
-        return send(res,HTTPStatus.OK, {data :data,message:"Login Berhasil"})
+        return send(res,HTTPStatus.OK, {data :data,message:"Akun tidak ditemukan"})
     }else{
         return send(res,HTTPStatus.OK, {data :data,message:"Login Berhasil"})
        
@@ -30,8 +30,13 @@ router.post("/admin/login",async (req:Request,res:Response, next:NextFunction)=>
 router.post("/change_password",async (req:Request,res:Response, next:NextFunction)=>{
     const data = await AuthService.changePassword(req.body)
     if(!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"User dan password tidak ditemukan"))
-
     return send(res,HTTPStatus.OK, {data :data,status:true,message:"Password berhasil diganti"})
 })
 
+
+router.post("/register",async (req:Request, res:Response, next:NextFunction)=>{
+    const data = await AuthService.insertDataByRole(req.body)
+    if(!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"User dan password tidak ditemukan"))
+    return send(res,HTTPStatus.OK, {data :data,status:true,message:"Password berhasil diganti"})
+})
 export default router

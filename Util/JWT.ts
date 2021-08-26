@@ -23,12 +23,13 @@ export const verifyToken =(req:Request, res:Response, next:NextFunction) =>{
     const token = req.headers.authorization
     const decoded = verify(token, key)
     if (decoded.project == projectName) {
-      if (req.method == "POST"){
-        req.body.iduser = decoded.iduser  
-        req.body.idchild = decoded.idchild
-        req.body.email = decoded.email
-      }
+      // if (req.method == "POST"){
+      //   req.body.iduser = decoded.iduser
+      //   req.body.idchild = decoded.idchild
+      //   req.body.email = decoded.email
+      // }
       req.context = decoded
+
       next()
     } else {
       return next(new ErrorHandler(HTTPStatus.UNAUTHORIZED, "Token is not valid"))

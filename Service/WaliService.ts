@@ -20,9 +20,9 @@ const register = async (body) =>{
     }
 }
 
-const profile = async (email:String) =>{
+const profile = async (id:number) =>{
     try {
-        const dataWali:Wali = await db.wali.getByEmail(email)
+        const dataWali:Wali = await db.wali.getById(id)
         return dataWali
     } catch (error) {
         return null       
@@ -32,7 +32,7 @@ const profile = async (email:String) =>{
 
 const setProfile = async (body) =>{
     try {
-        const dataWali:Wali = await db.wali.edit(body,body.idchild)
+        const dataWali:Wali = await db.wali.edit(body,body.idwali)
         return dataWali
     } catch (error) {
         return null       

@@ -14,6 +14,10 @@ export default class GuruRepository {
         return this.db.one("SELECT * FROM tblguru where email=$1 LIMIT 1",[email])
     }
 
+    async getByID(id:number):Promise<Guru>{
+        return this.db.one("SELECT * FROM tblguru where idguru=$1 LIMIT 1",[id])
+    }
+
 
     async add(guru : GuruInterface): Promise<Guru >{
         const dataGuru:Guru = new Guru(guru)
