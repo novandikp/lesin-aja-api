@@ -1,0 +1,857 @@
+{
+	"info": {
+		"_postman_id": "69dca110-24f2-4851-acbd-ad49806eec60",
+		"name": "Lesinaja",
+		"description": "\"\"Ini merupakan Dokumentasi Penggunaan api lesinaja",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Daerah",
+			"item": [
+				{
+					"name": "Ambil Provinsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/daerah/provinsi"
+					},
+					"response": []
+				},
+				{
+					"name": "Ambil Kota",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/daerah/kota/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Ambil Kecamatan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/daerah/kecamatan/1101"
+					},
+					"response": []
+				},
+				{
+					"name": "Ambil Desa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/daerah/desa/1101010"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "guru@lesinaja",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "guru",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "Test",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/auth/change_password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wali",
+			"item": [
+				{
+					"name": "Profil",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"url": "{{URL}}/wali/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Ganti Profil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "wali",
+									"value": "Budi",
+									"type": "text"
+								},
+								{
+									"key": "idprovinsi",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "idkabupaten",
+									"value": "1101",
+									"type": "text"
+								},
+								{
+									"key": "idkecamatan",
+									"value": "1101010",
+									"type": "text"
+								},
+								{
+									"key": "iddesa",
+									"value": "1101010001",
+									"type": "text"
+								},
+								{
+									"key": "alamat",
+									"value": "Sidoarjo",
+									"type": "text"
+								},
+								{
+									"key": "telp",
+									"value": "08888",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/wali/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "kevin@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "kevin",
+									"type": "text"
+								},
+								{
+									"key": "wali",
+									"value": "Budi",
+									"type": "text"
+								},
+								{
+									"key": "idprovinsi",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "idkabupaten",
+									"value": "1101",
+									"type": "text"
+								},
+								{
+									"key": "idkecamatan",
+									"value": "1101010",
+									"type": "text"
+								},
+								{
+									"key": "iddesa",
+									"value": "1101010001",
+									"type": "text"
+								},
+								{
+									"key": "alamat",
+									"value": "Sidoarjo",
+									"type": "text"
+								},
+								{
+									"key": "telp",
+									"value": "08888",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/wali/register"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Guru",
+			"item": [
+				{
+					"name": "Profil",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"url": "{{URL}}/guru/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Ganti Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "gurua@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "kevin",
+									"type": "text"
+								},
+								{
+									"key": "guru",
+									"value": "Budi",
+									"type": "text"
+								},
+								{
+									"key": "idprovinsi",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "idkabupaten",
+									"value": "1101",
+									"type": "text"
+								},
+								{
+									"key": "idkecamatan",
+									"value": "1101010",
+									"type": "text"
+								},
+								{
+									"key": "iddesa",
+									"value": "1101010001",
+									"type": "text"
+								},
+								{
+									"key": "alamat",
+									"value": "Sidoarjo",
+									"type": "text"
+								},
+								{
+									"key": "telp",
+									"value": "08888",
+									"type": "text"
+								},
+								{
+									"key": "perguruantinggi",
+									"value": "UPN",
+									"type": "text"
+								},
+								{
+									"key": "jurusan",
+									"value": "Informatika",
+									"type": "text"
+								},
+								{
+									"key": "mapelyangdikuasai",
+									"value": "Matematika",
+									"type": "text"
+								},
+								{
+									"key": "pernahmengajar",
+									"value": "sma",
+									"type": "text"
+								},
+								{
+									"key": "lokasimengajar",
+									"value": "Buduran",
+									"type": "text"
+								},
+								{
+									"key": "lamamengajar",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "rekening",
+									"value": "12312",
+									"type": "text"
+								},
+								{
+									"key": "bank",
+									"value": "BCA",
+									"type": "text"
+								},
+								{
+									"key": "jeniskelaminguru",
+									"value": "Pria",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/guru/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "guru@lesinaja",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "guru",
+									"type": "text"
+								},
+								{
+									"key": "guru",
+									"value": "Budi",
+									"type": "text"
+								},
+								{
+									"key": "idprovinsi",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "idkabupaten",
+									"value": "1101",
+									"type": "text"
+								},
+								{
+									"key": "idkecamatan",
+									"value": "1101010",
+									"type": "text"
+								},
+								{
+									"key": "iddesa",
+									"value": "1101010001",
+									"type": "text"
+								},
+								{
+									"key": "alamat",
+									"value": "Sidoarjo",
+									"type": "text"
+								},
+								{
+									"key": "telp",
+									"value": "08888",
+									"type": "text"
+								},
+								{
+									"key": "cv",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Downloads/Surat Peminjaman Ruang Tanggal 28 - 29  Agustus 2021.pdf"
+								},
+								{
+									"key": "perguruantinggi",
+									"value": "UPN",
+									"type": "text"
+								},
+								{
+									"key": "jurusan",
+									"value": "Informatika",
+									"type": "text"
+								},
+								{
+									"key": "mapelyangdikuasai",
+									"value": "Matematika",
+									"type": "text"
+								},
+								{
+									"key": "pernahmengajar",
+									"value": "sma",
+									"type": "text"
+								},
+								{
+									"key": "lokasimengajar",
+									"value": "Buduran",
+									"type": "text"
+								},
+								{
+									"key": "lamamengajar",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "rekening",
+									"value": "12312",
+									"type": "text"
+								},
+								{
+									"key": "bank",
+									"value": "BCA",
+									"type": "text"
+								},
+								{
+									"key": "jeniskelaminguru",
+									"value": "Pria",
+									"type": "text"
+								},
+								{
+									"key": "mapel",
+									"value": "matematika",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/guru/register"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Paket Les",
+			"item": [
+				{
+					"name": "Ambil Paket",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/paket?page=1&paket&orderBy=biaya&sort=ASC",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"paket"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paket",
+									"value": null,
+									"description": "Pencarian\n"
+								},
+								{
+									"key": "orderBy",
+									"value": "biaya",
+									"description": "Urutan nama kolum"
+								},
+								{
+									"key": "sort",
+									"value": "ASC",
+									"description": "ASC || DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert Paket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "paket",
+									"value": "Bahasa Indo UN",
+									"type": "text"
+								},
+								{
+									"key": "jumlah_pertemuan",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "biaya",
+									"value": "5000",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/paket"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Paket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "paket",
+									"value": "Mat Berubah UN",
+									"type": "text"
+								},
+								{
+									"key": "jumlah_pertemuan",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "biaya",
+									"value": "5000",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/paket/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Hapus Paket",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"url": "{{URL}}/paket/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Siswa",
+			"item": [
+				{
+					"name": "Get ALL Siswa",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/siswa?page=1&siswa=&orderBy=siswa&sort=ASC",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"siswa"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "siswa",
+									"value": "",
+									"description": "pencarian"
+								},
+								{
+									"key": "orderBy",
+									"value": "siswa"
+								},
+								{
+									"key": "sort",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Siswaku",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/siswa/my?page=1&siswa=&orderBy=siswa&sort=ASC",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"siswa",
+								"my"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "siswa",
+									"value": ""
+								},
+								{
+									"key": "orderBy",
+									"value": "siswa"
+								},
+								{
+									"key": "sort",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Siswa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "siswa",
+									"value": "Budi",
+									"type": "text"
+								},
+								{
+									"key": "jeniskelamin",
+									"value": "Laki-laki",
+									"type": "text"
+								},
+								{
+									"key": "jenjang",
+									"value": "SMP",
+									"type": "text"
+								},
+								{
+									"key": "kelas",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/siswa"
+					},
+					"response": []
+				},
+				{
+					"name": "Ubah Siswa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "siswa",
+									"value": "Budi Ana",
+									"type": "text"
+								},
+								{
+									"key": "jeniskelamin",
+									"value": "Laki-laki",
+									"type": "text"
+								},
+								{
+									"key": "jenjang",
+									"value": "SMP",
+									"type": "text"
+								},
+								{
+									"key": "kelas",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{URL}}/siswa/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Hapus Siswa",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": "{{URL}}/siswa/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Daftar Les",
+			"item": []
+		},
+		{
+			"name": "Absen",
+			"item": []
+		},
+		{
+			"name": "Bayar",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:8081"
+		},
+		{
+			"key": "contohTokenWali",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0IjoiTG9tYW4iLCJlbWFpbCI6IlRlc3QiLCJwb3Npc2kiOjIsImlkY2hpbGQiOjEsImlkdXNlciI6MiwiaWF0IjoxNjI5ODc1MzM4fQ.iWQeCmRj_6VNniKdFeJ2vXwO4dHSmnYzSmfrqPuj5DA"
+		},
+		{
+			"key": "contohtokenguru",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0IjoiTG9tYW4iLCJlbWFpbCI6Imd1cnVhQG1haWwuY29tIiwicG9zaXNpIjoxLCJpZGNoaWxkIjoyLCJpZHVzZXIiOjE1LCJpYXQiOjE2Mjk5MDA4OTF9.Onpj_6yoSjzs6Nk_hBcUrjesw-6OrC6fwDNpiiGPm0I"
+		}
+	]
+}
