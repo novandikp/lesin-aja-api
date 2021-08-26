@@ -29,11 +29,9 @@ router.post("/admin/login",async (req:Request,res:Response, next:NextFunction)=>
 
 router.post("/change_password",async (req:Request,res:Response, next:NextFunction)=>{
     const data = await AuthService.changePassword(req.body)
-    if(data){
-        return send(res,HTTPStatus.OK, {data :data,status:true,message:"Password berhasil diganti"})
-    }else{
-       return next(new ErrorHandler(HTTPStatus.NOTFOUND,"User dan password tidak ditemukan"))
-    }
+    if(!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"User dan password tidak ditemukan"))
+
+    return send(res,HTTPStatus.OK, {data :data,status:true,message:"Password berhasil diganti"})
 })
 
 export default router

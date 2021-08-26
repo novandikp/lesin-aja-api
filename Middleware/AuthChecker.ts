@@ -3,7 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 const allowedURL = [
   "POST /auth/login",
   "POST /auth/admin/login",
-  "POST /auth/register",
+  "POST /guru/register",
+  "POST /wali/register",
   "GET /daerah",
   
 ]

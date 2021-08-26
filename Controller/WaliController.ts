@@ -4,10 +4,11 @@ import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
 import WaliChecker from "../Middleware/WaliChecker"
+import AuthValidation from "../Validation/AuthValidation"
 const router = Router()
 
 
-router.post("/register",async (req:Request, res :Response, next:NextFunction)=>{
+router.post("/register",AuthValidation,async (req:Request, res :Response, next:NextFunction)=>{
     const data = await WaliService.register(req.body)
     if(!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi Kesalahan"))
 

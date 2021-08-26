@@ -9,7 +9,7 @@ export class UserBuilder{
     public email:String
     public password:String
     
-    constructor({email,password}:UserInterface){
+    constructor({email,password =""}:UserInterface){
         this.email =email
         this.password =password
     }

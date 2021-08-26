@@ -1,12 +1,12 @@
 import { CustomValidator,body} from "express-validator"
 import { User } from "../Entity/User"
 import { db } from "../Database"
+import validate from "../Util/ValidationHandler"
 
-function validate() {
+function AuthValidation() {
   return [
     body("email").isEmail().withMessage("Email tidak valid"),
     body("email").custom(checkEmail),
-    body("password").isLength({min:8}).withMessage("Password minimal 8 digit")
   ]
 }
 
@@ -17,4 +17,4 @@ const checkEmail:CustomValidator =  (input, meta) =>{
 
 }
 
-export default validate
+export default validate(AuthValidation())

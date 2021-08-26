@@ -3,7 +3,7 @@
 		"_postman_id": "69dca110-24f2-4851-acbd-ad49806eec60",
 		"name": "Lesinaja",
 		"description": "\"\"Ini merupakan Dokumentasi Penggunaan api lesinaja",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -14,7 +14,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{URL}}/daerah/provinsi"
+						"url": {
+							"raw": "{{URL}}/daerah/provinsi",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"daerah",
+								"provinsi"
+							]
+						}
 					},
 					"response": []
 				},
@@ -23,7 +32,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{URL}}/daerah/kota/11"
+						"url": {
+							"raw": "{{URL}}/daerah/kota/11",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"daerah",
+								"kota",
+								"11"
+							]
+						}
 					},
 					"response": []
 				},
@@ -32,7 +51,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{URL}}/daerah/kecamatan/1101"
+						"url": {
+							"raw": "{{URL}}/daerah/kecamatan/1101",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"daerah",
+								"kecamatan",
+								"1101"
+							]
+						}
 					},
 					"response": []
 				},
@@ -41,7 +70,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{URL}}/daerah/desa/1101010"
+						"url": {
+							"raw": "{{URL}}/daerah/desa/1101010",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"daerah",
+								"desa",
+								"1101010"
+							]
+						}
 					},
 					"response": []
 				}
@@ -51,7 +90,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Login",
+					"name": "Login With Password",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -70,7 +109,17 @@
 								}
 							]
 						},
-						"url": "{{URL}}/auth/login"
+						"url": {
+							"raw": "{{URL}}/auth/admin/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -95,7 +144,44 @@
 								}
 							]
 						},
-						"url": "{{URL}}/auth/change_password"
+						"url": {
+							"raw": "{{URL}}/auth/change_password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"change_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login With Token Google",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				}
@@ -115,7 +201,16 @@
 								"type": "text"
 							}
 						],
-						"url": "{{URL}}/wali/profile"
+						"url": {
+							"raw": "{{URL}}/wali/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"wali",
+								"profile"
+							]
+						}
 					},
 					"response": []
 				},
@@ -170,7 +265,16 @@
 								}
 							]
 						},
-						"url": "{{URL}}/wali/profile"
+						"url": {
+							"raw": "{{URL}}/wali/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"wali",
+								"profile"
+							]
+						}
 					},
 					"response": []
 				},
@@ -235,7 +339,16 @@
 								}
 							]
 						},
-						"url": "{{URL}}/wali/register"
+						"url": {
+							"raw": "{{URL}}/wali/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"wali",
+								"register"
+							]
+						}
 					},
 					"response": []
 				}
@@ -255,7 +368,16 @@
 								"type": "text"
 							}
 						],
-						"url": "{{URL}}/guru/profile"
+						"url": {
+							"raw": "{{URL}}/guru/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"guru",
+								"profile"
+							]
+						}
 					},
 					"response": []
 				},
@@ -365,7 +487,16 @@
 								}
 							]
 						},
-						"url": "{{URL}}/guru/profile"
+						"url": {
+							"raw": "{{URL}}/guru/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"guru",
+								"profile"
+							]
+						}
 					},
 					"response": []
 				},
@@ -390,7 +521,8 @@
 								{
 									"key": "guru",
 									"value": "Budi",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "idprovinsi",
@@ -479,7 +611,16 @@
 								}
 							]
 						},
-						"url": "{{URL}}/guru/register"
+						"url": {
+							"raw": "{{URL}}/guru/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"guru",
+								"register"
+							]
+						}
 					},
 					"response": []
 				}
@@ -563,7 +704,15 @@
 								}
 							]
 						},
-						"url": "{{URL}}/paket"
+						"url": {
+							"raw": "{{URL}}/paket",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"paket"
+							]
+						}
 					},
 					"response": []
 				},
@@ -598,7 +747,16 @@
 								}
 							]
 						},
-						"url": "{{URL}}/paket/1"
+						"url": {
+							"raw": "{{URL}}/paket/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"paket",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -613,7 +771,16 @@
 								"type": "text"
 							}
 						],
-						"url": "{{URL}}/paket/1"
+						"url": {
+							"raw": "{{URL}}/paket/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"paket",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -742,7 +909,15 @@
 								}
 							]
 						},
-						"url": "{{URL}}/siswa"
+						"url": {
+							"raw": "{{URL}}/siswa",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"siswa"
+							]
+						}
 					},
 					"response": []
 				},
@@ -782,7 +957,16 @@
 								}
 							]
 						},
-						"url": "{{URL}}/siswa/1"
+						"url": {
+							"raw": "{{URL}}/siswa/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"siswa",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -801,7 +985,16 @@
 							"mode": "urlencoded",
 							"urlencoded": []
 						},
-						"url": "{{URL}}/siswa/1"
+						"url": {
+							"raw": "{{URL}}/siswa/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"siswa",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}

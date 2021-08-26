@@ -42,3 +42,4 @@ app.listen(port, async () => {
   console.log(`REST at http://localhost:${port}`)
 })
 
+export default  app
