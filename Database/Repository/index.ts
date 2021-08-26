@@ -4,6 +4,8 @@ import  GuruRepository  from './GuruRepository';
 import RegionRepository from "./RegionRepository";
 import PaketRepository from "./PaketRepository"
 import SiswaRepository from "./SiswaRepository"
+import LesRepository from "./LesRepository"
+import AbsenRepository from "./AbsenRepository"
 
 interface IRepository{
     users : UserRepository
@@ -12,9 +14,13 @@ interface IRepository{
     region:RegionRepository
     paket:PaketRepository
     siswa:SiswaRepository
+    les:LesRepository
+    absen:AbsenRepository
 }
 
 
 export{
-    IRepository,UserRepository,WaliRepository,GuruRepository,RegionRepository,PaketRepository,SiswaRepository
+    IRepository,UserRepository,WaliRepository,
+    GuruRepository,RegionRepository,PaketRepository,
+    SiswaRepository,LesRepository,AbsenRepository
 }

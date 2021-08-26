@@ -11,7 +11,7 @@ router.post("/login",async (req:Request,res:Response, next:NextFunction)=>{
     if(!data){
         return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Token tidak bisa diurai")) 
     }else if(!data.isExist){
-        return send(res,HTTPStatus.NOCONTENT, {data :data,message:"Email tidak ditemukan"})
+        return send(res,HTTPStatus.OK, {data :data,message:"Login Berhasil"})
     }else{
         return send(res,HTTPStatus.OK, {data :data,message:"Login Berhasil"})
        

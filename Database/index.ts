@@ -2,13 +2,15 @@ import * as promise from "bluebird"
 import pgPromise from 'pg-promise'; 
 import {IInitOptions, IDatabase, IMain} from 'pg-promise';
 import {
+    AbsenRepository,
     GuruRepository,
-    IRepository,
+    IRepository, LesRepository,
     PaketRepository,
     RegionRepository,
     SiswaRepository,
     UserRepository,
     WaliRepository
+
 } from "./Repository"
 
 
@@ -24,6 +26,8 @@ const initOptions: IInitOptions<IRepository> = {
         obj.guru = new GuruRepository(obj,pgp)
         obj.paket = new PaketRepository(obj,pgp)
         obj.siswa = new SiswaRepository(obj,pgp)
+        obj.les = new LesRepository(obj,pgp)
+        obj.absen = new AbsenRepository(obj,pgp)
     }
 };
 
@@ -37,6 +41,7 @@ const db: ExtendedProtocol = pgp({
     host: process.env.HOST_DATABASE,
     user: process.env.USER_DATABASE,
     password: process.env.PASS_DATABASE,
+
 });
 
 export {db, pgp};
