@@ -4,6 +4,9 @@ import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
 import multer = require("multer");
+import TeacherChecker from "../Middleware/TeacherChecker"
+import AuthValidation from "../Validation/AuthValidation"
+import ValidationHandler from "../Util/ValidationHandler"
 
 const UPLOAD_PATH = 'public/uploads/cv';
 const upload = multer({ storage:
@@ -25,7 +28,7 @@ router.post("/register",upload.any(),async (req:Request, res :Response, next:Nex
     return next()
 })
 
-router.post("/register",async (req:Request, res :Response, next:NextFunction)=>{
+router.post("/register",AuthValidation(),ValidationHandler,async (req:Request, res :Response, next:NextFunction)=>{
     const data = await GuruService.register(req.body)
     if(!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi Kesalahan"))
     return send(res,HTTPStatus.OK, {
@@ -34,6 +37,8 @@ router.post("/register",async (req:Request, res :Response, next:NextFunction)=>{
          message:"Registrasi Berhasil silahkan Login"
     })
 })
+
+router.use(TeacherChecker)
 
 router.get("/profile",async (req:Request, res:Response,next:NextFunction)=>{
     const data = await GuruService.profile(req.context.email)

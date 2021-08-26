@@ -27,10 +27,8 @@ export const verifyToken =(req:Request, res:Response, next:NextFunction) =>{
         req.body.iduser = decoded.iduser  
         req.body.idchild = decoded.idchild
         req.body.email = decoded.email
-      }else{
-        req.context = decoded
       }
-      
+      req.context = decoded
       next()
     } else {
       return next(new ErrorHandler(HTTPStatus.UNAUTHORIZED, "Token is not valid"))

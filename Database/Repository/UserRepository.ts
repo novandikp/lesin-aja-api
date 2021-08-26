@@ -6,6 +6,7 @@ export default class UserRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
     }
 
+
     async all(): Promise<User []> {
         return this.db.any("SELECT * FROM tbluser")
     }
@@ -14,8 +15,8 @@ export default class UserRepository {
         return this.db.one("SELECT * FROM tbluser where iduser=$1 LIMIT 1",[iduser])
     }
 
-    async getByUsername(email:String): Promise<User > {
-        return this.db.one("SELECT * FROM tbluser where email=$1 LIMIT 1",[email])
+    async getByEmail(email:String): Promise<User > {
+        return this.db.oneOrNone("SELECT * FROM tbluser where email=$1 LIMIT 1",[email])
     }
 
     async getByUsernameAndPassword(email:String,password:String) : Promise<User>{
