@@ -852,34 +852,215 @@
 			]
 		},
 		{
-			"name": "Daftar Les",
+			"name": "Les",
 			"item": [
 				{
-					"name": "Daftar Les",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"idpaket\" :2,\r\n    \"idsiswa\" :1,\r\n    \"tglmulai\" :'',\r\n    \"tglles\" : [\r\n        \"SENIN\",\"JUMAT\"\r\n    ],\r\n    \"jamles\":[\r\n        \"19:00\",\"20:00\"\r\n    ]\r\n\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Wali",
+					"item": [
+						{
+							"name": "Mendaftar Les",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohTokenWali}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "idpaket",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "idsiswa",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "tglles",
+											"value": "2021-09-01",
+											"type": "text"
+										},
+										{
+											"key": "jamles",
+											"value": "08:00",
+											"type": "text"
+										},
+										{
+											"key": "hari",
+											"value": "SENIN,SELASA,RABU",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/les/daftar",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"les",
+										"daftar"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{URL}}/les/daftar",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"les",
-								"daftar"
-							]
+						{
+							"name": "Tagihan Les",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohTokenWali}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/les/tagihan?cari=&orderBy=siswa&sort=desc&page=1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"les",
+										"tagihan"
+									],
+									"query": [
+										{
+											"key": "cari",
+											"value": ""
+										},
+										{
+											"key": "orderBy",
+											"value": "siswa"
+										},
+										{
+											"key": "sort",
+											"value": "desc"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Histori Pendaftaran",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohTokenWali}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/les/histori?status&cari&orderBy=siswa&sort=desc&page=1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"les",
+										"histori"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": null,
+											"description": "0,1,2,3,4"
+										},
+										{
+											"key": "cari",
+											"value": null
+										},
+										{
+											"key": "orderBy",
+											"value": "siswa"
+										},
+										{
+											"key": "sort",
+											"value": "desc"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Konfirmasi Les dan Buat Absensi",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohtokenguru}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/les/konfirmasi/2",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"les",
+										"konfirmasi",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tolak Pembayaran les",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohTokenWali}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/les/tolak/3",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"les",
+										"tolak",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
