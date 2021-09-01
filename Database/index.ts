@@ -12,6 +12,7 @@ import {
     WaliRepository
 
 } from "./Repository"
+import PembayaranRepository from "./Repository/PembayaranRepository"
 
 
 
@@ -28,6 +29,7 @@ const initOptions: IInitOptions<IRepository> = {
         obj.siswa = new SiswaRepository(obj,pgp)
         obj.les = new LesRepository(obj,pgp)
         obj.absen = new AbsenRepository(obj,pgp)
+        obj.pembayaran = new PembayaranRepository(obj,pgp)
     }
 };
 
