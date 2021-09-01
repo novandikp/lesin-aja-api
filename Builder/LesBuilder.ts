@@ -1,6 +1,7 @@
 import { Posisi } from "../Entity/Posisi"
 import { Les, LesInterface } from './../Entity/Les';
 import { encrypt } from "../Util/Encrypt"
+import StatusLes from "../Entity/StatusLes"
 
 export class LesBuilder{
   public idles:number
@@ -8,36 +9,30 @@ export class LesBuilder{
   public idsiswa:number
   public tglles:string
   public jamles:string
-
-  constructor({idpaket,idsiswa}:LesInterface){
+  public hari:string
+  public statusles:number
+  constructor({idpaket,idsiswa, tglles, jamles, hari}:LesInterface){
     this.idpaket = idpaket
     this.idsiswa =idsiswa
-    this.tglles = this.getDay()
-    this.jamles = this.getTime()
+    this.tglles = tglles
+    this.jamles = jamles
+    this.hari =hari
   }
 
-  getDay(){
-    const d = new Date()
-    let month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
+  setPending(){
+    this.statusles = StatusLes.PENDING
   }
 
-  getTime(){
-    const d = new Date()
-    let hour = '' + (d.getHours()),
-      minute = '' + d.getMinutes()
-
-    return [hour,minute].join(':');
+  setTolakPembayaran(){
+    this.statusles = StatusLes.PEMBAYARANDITOLAK
   }
 
-  setJamLes(time){
-    this.jamles = time
+  setMencariGuru(){
+    this.statusles = StatusLes.MENCARI_GURU
+  }
+
+  setMenemukanGuru(){
+    this.statusles = StatusLes.MENDAPATKAN_GURU
   }
 
   setTanggalLes(day){

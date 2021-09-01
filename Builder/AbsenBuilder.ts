@@ -1,7 +1,7 @@
 import { Posisi } from "../Entity/Posisi"
 import { Absen, AbsenInterface } from './../Entity/Absen';
 import { encrypt } from "../Util/Encrypt"
-import Status from "../Entity/Status"
+import StatusAbsen from "../Entity/StatusAbsen"
 
 export class AbsenBuilder{
   public idabsen:number
@@ -18,7 +18,7 @@ export class AbsenBuilder{
 
   removeTeacher(){
     this.idguru=null
-    this.flagabsen=Status.PENDING
+    this.flagabsen=StatusAbsen.PENDING
   }
 
   setKeterangan(keterangan){
@@ -26,11 +26,11 @@ export class AbsenBuilder{
   }
 
   assignAbcent(){
-    this.flagabsen = Status.HADIR
+    this.flagabsen = StatusAbsen.HADIR
   }
 
   notAbcent(){
-    this.flagabsen = Status.TIDAKHADIR
+    this.flagabsen = StatusAbsen.TIDAKHADIR
   }
 
   getDay(){

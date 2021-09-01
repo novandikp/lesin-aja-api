@@ -5,7 +5,8 @@ import {
     PaketController,
     RegionController,
     SiswaController,
-    WaliController
+    WaliController,
+    LesController
 } from "../Controller"
 
 const route = (app : Express)=>{
@@ -15,6 +16,7 @@ const route = (app : Express)=>{
     app.use("/guru",GuruController)
     app.use("/paket",PaketController)
     app.use("/siswa",SiswaController)
+    app.use("/les",LesController)
 }
 
 export default  route

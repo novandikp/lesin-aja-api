@@ -4,6 +4,7 @@ import RegionController from './RegionController'
 import GuruController from "./GuruController"
 import PaketController from "./PaketController"
 import SiswaController from "./SiswaController"
+import LesController from "./LesController"
 export  {
     AuthController,
     WaliController,
@@ -11,4 +12,5 @@ export  {
     GuruController,
     PaketController,
     SiswaController,
+    LesController,
 }

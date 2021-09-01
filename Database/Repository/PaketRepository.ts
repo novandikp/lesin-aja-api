@@ -20,6 +20,11 @@ export default class PaketRepository {
     )
   }
 
+
+  get(index):Promise<Paket>{
+    return this.db.one("SELECT * FROM tblpaket where idpaket = $1", [index])
+  }
+
   add(paket:PaketInterface):Promise<Paket>{
     const dataPaket = new Paket(paket)
     return this.db.one("INSERT INTO tblpaket (${this:name}) VALUES (${this:list}) RETURNING *", dataPaket.getDataWithoutID())
