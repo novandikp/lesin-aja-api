@@ -54,7 +54,7 @@ const addLes = async (data)  =>{
 const confirmLes =  async (idles)  =>{
   try{
     const dataLes = await db.les.get(idles)
-    if (dataLes.statusles === StatusLes.PENDING){
+    if (dataLes.statusles === StatusLes.MENUNGGU_KONFIRMASI){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setMencariGuru()
       //Generate Absen
@@ -119,7 +119,7 @@ const acceptLes = async (idles,idguru) =>{
 const rejectLes =  async (idles)  =>{
   try{
     const dataLes:Les = await db.les.get(idles)
-    if (dataLes.statusles === StatusLes.PENDING){
+    if (dataLes.statusles === StatusLes.MENUNGGU_KONFIRMASI){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setTolakPembayaran()
       return db.les.edit(lesBuilder.build(),idles)
