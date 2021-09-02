@@ -6,7 +6,8 @@ import {
     RegionController,
     SiswaController,
     WaliController,
-    LesController
+    LesController,
+    PembayaranController, JadwalController
 } from "../Controller"
 
 const route = (app : Express)=>{
@@ -17,6 +18,8 @@ const route = (app : Express)=>{
     app.use("/paket",PaketController)
     app.use("/siswa",SiswaController)
     app.use("/les",LesController)
+    app.use("/bayar",PembayaranController)
+    app.use("/jadwal",JadwalController)
 }
 
 export default  route

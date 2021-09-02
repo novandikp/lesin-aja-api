@@ -23,6 +23,10 @@ export class LesBuilder{
     this.statusles = StatusLes.PENDING
   }
 
+  setTungguKonfirmasi(){
+    this.statusles = StatusLes.MENUNGGU_KONFIRMASI
+  }
+
   setTolakPembayaran(){
     this.statusles = StatusLes.PEMBAYARANDITOLAK
   }

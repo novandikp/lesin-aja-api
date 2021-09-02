@@ -5,6 +5,7 @@ import AuthChecker from './Middleware/AuthChecker';
 import Payload from './Entity/Payload';
 import path from "path"
 
+
 declare global {
   namespace Express {
     interface Request {
@@ -39,6 +40,7 @@ Route(app)
 app.use(handleError)
 
 app.listen(port, async () => {
+
   console.log(`REST at http://localhost:${port}`)
 })
 

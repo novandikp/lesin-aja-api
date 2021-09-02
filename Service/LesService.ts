@@ -9,6 +9,8 @@ import StatusLes from "../Entity/StatusLes"
 import getIndexHari from "../Entity/Hari"
 import { convertDate } from "../Util/DateUtil"
 import { log } from "util"
+import OneSignalUtil from "../Util/OneSignalUtil"
+import { Posisi } from "../Entity/Posisi"
 
 const getLes = async (filter)=>{
   try{
@@ -25,6 +27,39 @@ const getHistoryWali =async(filter,idortu,status)=>{
     }else {
       return await db.les.historyByParentStatus(filter,idortu,status)
     }
+  }catch (e){
+    console.log(e)
+    return null
+  }
+}
+
+
+const getJadwal =async(filter,idchild,role)=>{
+  try{
+    if(role == Posisi.WALI){
+      return await db.absen.getByParent(filter,idchild)
+    }else {
+      return await db.absen.getByTeacher(filter,idchild)
+    }
+  }catch (e){
+    console.log(e)
+    return null
+  }
+}
+
+
+const getJadwalByLes =async(filter,idles)=>{
+  try{
+    return await db.absen.getByLes(filter,idles)
+  }catch (e){
+    console.log(e)
+    return null
+  }
+}
+
+const getJadwalBySiswa =async(filter,idles)=>{
+  try{
+    return await db.absen.getBySiswa(filter,idles)
   }catch (e){
     console.log(e)
     return null
@@ -87,6 +122,7 @@ const confirmLes =  async (idles)  =>{
       const result = await db.les.edit(lesBuilder.build(),idles)
 
       result["absen"] = dataAbsen
+      new OneSignalUtil().sendNotificationWithTag("Terdapat pesanan baru",1)
       return result
     }else{
       return null
@@ -99,19 +135,15 @@ const confirmLes =  async (idles)  =>{
 const acceptLes = async (idles,idguru) =>{
   try {
     const dataLes:Les = await  db.les.get(idles)
-    const dataAbsen:Absen[]=[];
-    if (dataAbsen.length == 0){
-      return {statusFailed : false}
-    }else{
-      for (const value of dataAbsen) {
-        value.idguru =idguru
-        await db.absen.edit(value, value.idabsen)
-      }
+    if(dataLes.statusles == StatusLes.MENCARI_GURU){
+      await  db.absen.setGuruAbsen(idles,idguru)
+      const lesBuilder:LesBuilder = new LesBuilder(dataLes)
+      lesBuilder.setMenemukanGuru()
+      return db.les.edit(lesBuilder.build(),idles)
     }
-    const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-    lesBuilder.setMenemukanGuru()
-    return db.les.edit(lesBuilder.build(),idles)
+    return null
   }catch (e){
+
     return null
   }
 }
@@ -150,4 +182,4 @@ const  deleteLes = async  (id) =>{
 }
 
 
-export  {getLes,getHistoryWali,getTagihanWali, addLes,editLes,deleteLes,confirmLes, rejectLes}
+export  {getLes,getHistoryWali,getTagihanWali, addLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}

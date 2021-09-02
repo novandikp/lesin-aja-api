@@ -982,7 +982,7 @@
 										{
 											"key": "status",
 											"value": null,
-											"description": "0,1,2,3,4"
+											"description": "0,1,2,3,4 tidak wajib"
 										},
 										{
 											"key": "cari",
@@ -1022,14 +1022,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL}}/les/konfirmasi/2",
+									"raw": "{{URL}}/les/konfirmasi/3",
 									"host": [
 										"{{URL}}"
 									],
 									"path": [
 										"les",
 										"konfirmasi",
-										"2"
+										"3"
 									]
 								}
 							},
@@ -1061,16 +1061,289 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Guru",
+					"item": [
+						{
+							"name": "Terima Les",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohtokenguru}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/les/terima/2",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"les",
+										"terima",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
 		{
 			"name": "Absen",
-			"item": []
+			"item": [
+				{
+					"name": "Absen Harian",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohtokenguru}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/les/absen/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"les",
+								"absen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Absen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "tglabsen",
+									"value": "2021-09-02",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/les/edit/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"les",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Jadwal Les",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"description": "Token akan menyesuaikan hasil",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/jadwal?cari=&orderBy=siswa&sort=desc&page=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jadwal"
+							],
+							"query": [
+								{
+									"key": "cari",
+									"value": ""
+								},
+								{
+									"key": "orderBy",
+									"value": "siswa"
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Jadwal Les Per Les",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/jadwal/les/2?cari=&orderBy=tglabsen&sort=desc&page=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jadwal",
+								"les",
+								"2"
+							],
+							"query": [
+								{
+									"key": "cari",
+									"value": ""
+								},
+								{
+									"key": "orderBy",
+									"value": "tglabsen"
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Jadwal Les Per Siswa",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{contohTokenWali}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/jadwal/siswa/2?cari=&orderBy=siswa&sort=desc&page=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jadwal",
+								"siswa",
+								"2"
+							],
+							"query": [
+								{
+									"key": "cari",
+									"value": ""
+								},
+								{
+									"key": "orderBy",
+									"value": "siswa"
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Bayar",
-			"item": []
+			"item": [
+				{
+					"name": "Wali",
+					"item": [
+						{
+							"name": "Pembayaran Les",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohTokenWali}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "idles",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "tglbayar",
+											"value": "2021-09-02",
+											"type": "text"
+										},
+										{
+											"key": "bukti",
+											"type": "file",
+											"src": "/C:/Users/Administrator/Downloads/Logo HomeNew.png"
+										},
+										{
+											"key": "jumlahbayar",
+											"value": "5000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/bayar",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"bayar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [

@@ -4,6 +4,7 @@ import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
 import {
+  acceptLes,
   addLes,
   confirmLes,
   deleteLes,
@@ -14,6 +15,7 @@ import {
   rejectLes
 } from "../Service/LesService"
 import WaliChecker from "../Middleware/WaliChecker"
+import { absenPertemuan, editAbsen } from "../Service/AbsenService"
 
 
 const router = Router()
@@ -59,5 +61,23 @@ router.post("/tolak/:id",async (req:Request,res:Response, next:NextFunction)=>{
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 
+router.post("/terima/:id",async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await acceptLes(req.params.id,req.context.idchild)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat menerima les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+
+router.post("/absen/:id",async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await absenPertemuan(req.params.id)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat absen les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+router.post("/edit/:id",async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await editAbsen(req.params.id,req.body.tglabsen)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat edit les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
 
 export default router

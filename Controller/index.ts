@@ -5,6 +5,8 @@ import GuruController from "./GuruController"
 import PaketController from "./PaketController"
 import SiswaController from "./SiswaController"
 import LesController from "./LesController"
+import PembayaranController from "./PembayaranController"
+import JadwalController from "./JadwalController"
 export  {
     AuthController,
     WaliController,
@@ -13,4 +15,6 @@ export  {
     PaketController,
     SiswaController,
     LesController,
+    PembayaranController,
+    JadwalController
 }

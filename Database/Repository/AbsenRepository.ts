@@ -1,6 +1,7 @@
 import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Absen,AbsenInterface } from "../../Entity/Absen"
+import StatusAbsen from "../../Entity/StatusAbsen"
 
 
 export default class AbsenRepository {
@@ -13,11 +14,21 @@ export default class AbsenRepository {
     this.offset = (page-1) * this.limit
   }
 
-  all({page=1,absen="",orderBy="absen",sort="ASC"}:ParameterQuery) : Promise<Absen[]> {
+  all({page=1,cari="",orderBy="absen",sort="ASC"}:ParameterQuery) : Promise<Absen[]> {
     this.setOffset(page)
     return this.db.any("SELECT * FROM tblabsen WHERE absen ilike '%$1:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
-      [absen, orderBy,sort,this.limit,this.offset]
+      [cari, orderBy,sort,this.limit,this.offset]
     )
+  }
+
+
+  get(idabsen) {
+    return this.db.one("SELECT * FROM tblabsen where idabsen=$1",[idabsen])
+  }
+
+  setGuruAbsen(idles, idguru){
+    return this.db.any("UPDATE tblabsen SET idguru=$1,flagabsen=$2 where idles=$3 and flagabsen= 0 and idguru is null"
+    ,[idguru,StatusAbsen.PENDING,idles])
   }
 
   add(absen:AbsenInterface):Promise<Absen>{
@@ -40,12 +51,99 @@ export default class AbsenRepository {
     ])
   }
 
+  getBySiswa({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
+    this.setOffset(page)
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    tblpaket.paket ,tblpaket.jumlah_pertemuan, 
+    tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
+    tblwali.alamat as alamat_wali,
+    tblguru.guru ,tblguru.alamat as alamat_guru
+     from tblabsen 
+    inner join tblles  on tblles.idles = tblabsen.idles 
+    inner join tblguru on tblguru.idguru  = tblabsen.idguru 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket 
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa 
+    inner join tblwali on tblwali.idwali  = tblsiswa.idortu
+    where 
+    (guru ilike '%$1:raw%' or paket ilike '%$1:raw%')
+    and tblsiswa.idsiswa = $2
+    order by $3:name $4:raw 
+    limit $5:raw offset $6:raw`,
+      [cari,idchild, orderBy,sort,this.limit,this.offset]
+    )
+  }
+
+  getByLes({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
+    this.setOffset(page)
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    tblpaket.paket ,tblpaket.jumlah_pertemuan, 
+    tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
+    tblwali.alamat as alamat_wali,
+    tblguru.guru ,tblguru.alamat as alamat_guru
+     from tblabsen 
+    inner join tblles  on tblles.idles = tblabsen.idles 
+    inner join tblguru on tblguru.idguru  = tblabsen.idguru 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket 
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa 
+    inner join tblwali on tblwali.idwali  = tblsiswa.idortu
+    where 
+    (siswa ilike '%$1:raw%' or paket ilike '%$1:raw%')
+    and tblles.idles = $2
+    order by $3:name $4:raw 
+    limit $5:raw offset $6:raw`,
+      [cari,idchild, orderBy,sort,this.limit,this.offset]
+    )
+  }
+
+  getByParent({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
+    this.setOffset(page)
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    tblpaket.paket ,tblpaket.jumlah_pertemuan, 
+    tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
+    tblwali.alamat as alamat_wali,
+    tblguru.guru ,tblguru.alamat as alamat_guru
+     from tblabsen 
+    inner join tblles  on tblles.idles = tblabsen.idles 
+    inner join tblguru on tblguru.idguru  = tblabsen.idguru 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket 
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa 
+    inner join tblwali on tblwali.idwali  = tblsiswa.idortu
+    where 
+    (siswa ilike '%$1:raw%' or guru ilike '%$1:raw%' or paket ilike '%$1:raw%')
+    and tblwali.idwali = $2
+    order by $3:name $4:raw 
+    limit $5:raw offset $6:raw`,
+      [cari,idchild, orderBy,sort,this.limit,this.offset]
+    )
+  }
+
+  getByTeacher({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
+    this.setOffset(page)
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    tblpaket.paket ,tblpaket.jumlah_pertemuan, 
+    tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
+    tblwali.alamat as alamat_wali,
+    tblguru.guru ,tblguru.alamat as alamat_guru
+     from tblabsen 
+    inner join tblles  on tblles.idles = tblabsen.idles 
+    inner join tblguru on tblguru.idguru  = tblabsen.idguru 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket 
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa 
+    inner join tblwali on tblwali.idwali  = tblsiswa.idortu
+    where 
+    (siswa ilike '%$1:raw%' or paket ilike '%$1:raw%')
+    and tblguru.idguru = $2
+    order by $3:name $4:raw 
+    limit $5:raw offset $6:raw`,
+      [cari,idchild, orderBy,sort,this.limit,this.offset]
+    )
+  }
 }
 
 
 type ParameterQuery ={
   page:number
-  absen:String
+  cari:String
   orderBy:String
   sort:String
 }

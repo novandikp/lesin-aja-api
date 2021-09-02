@@ -18,7 +18,6 @@ export class Absen {
 
   getDataWithoutID(){
     return {
-
       idguru:this.idguru,
       tglabsen:this.tglabsen,
       keterangan:this.keterangan,

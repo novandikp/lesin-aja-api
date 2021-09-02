@@ -9,6 +9,7 @@ import path from "path"
 
 const router = Router()
 import multer = require("multer");
+import { PembayaranRepository } from "../Database/Repository"
 
 const UPLOAD_PATH = 'public/uploads/bukti';
 const upload = multer({ storage:
@@ -33,6 +34,9 @@ router.post("/",upload.any(), async (req:Request,res:Response,next:NextFunction)
 })
 
 router.post("/", async (req:Request,res:Response,next:NextFunction)=>{
-
+    const dataBayar = await addBayar(req.body)
+    if (!dataBayar) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Terjadi kesalaham"))
+    return send(res,HTTPStatus.OK,{status:true,data:dataBayar,message:"Berhasil"})
 })
 
+export default router
