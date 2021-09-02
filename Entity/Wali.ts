@@ -8,7 +8,7 @@ export class Wali  {
     public alamat:String;
     public email:String;
     public telp:String;
-
+    public pekerjaan:String;
     constructor({
         idwali,
         wali,
@@ -19,6 +19,7 @@ export class Wali  {
         alamat,
         email,
         telp,
+        pekerjaan
     }:WaliInterface){
         this.idwali=idwali
         this.wali= wali,
@@ -28,7 +29,8 @@ export class Wali  {
         this.iddesa = iddesa,
         this.alamat = alamat,
         this.email = email,
-        this.telp=telp
+        this.telp=telp,
+        this.pekerjaan=pekerjaan
     }
 
 
@@ -41,7 +43,8 @@ export class Wali  {
             iddesa : this.iddesa,
             alamat : this.alamat,
             email : this.email,
-            telp : this.telp
+            telp : this.telp,
+            pekerjaan:this.pekerjaan
         }
     }
     
@@ -59,4 +62,5 @@ export type WaliInterface ={
     alamat:String,
     email:String,
     telp:String
+    pekerjaan:String
 }

@@ -301,6 +301,11 @@
 									"key": "telp",
 									"value": "08888",
 									"type": "text"
+								},
+								{
+									"key": "pekerjaan",
+									"value": "PNS",
+									"type": "text"
 								}
 							]
 						},
@@ -896,12 +901,7 @@
 											"value": "SENIN,SELASA,RABU",
 											"type": "text"
 										}
-									],
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									]
 								},
 								"url": {
 									"raw": "{{URL}}/les/daftar",

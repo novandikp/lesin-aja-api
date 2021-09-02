@@ -12,6 +12,7 @@ export class WaliBuilder{
   public alamat:String;
   public email:String;
   public telp:String;
+  public pekerjaan:String;
 
 
   constructor(email){

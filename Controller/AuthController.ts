@@ -9,12 +9,9 @@ const router = Router()
 router.post("/login",async (req:Request,res:Response, next:NextFunction)=>{    
     const data = await AuthService.loginWithGoogle(req.body.token)
     if(!data){
-        return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Token tidak bisa diurai")) 
-    }else if(!data.isExist){
-        return send(res,HTTPStatus.OK, {data :data,message:"Akun tidak ditemukan"})
+        return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Token tidak bisa diurai"))
     }else{
         return send(res,HTTPStatus.OK, {data :data,message:"Login Berhasil"})
-       
     }
 })
 
