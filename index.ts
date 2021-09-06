@@ -1,9 +1,10 @@
-import express from "express";
+import express, { Response } from "express";
 import Route from "./Routes/Route";
 import { handleError } from "./Util/ErrorHandler";
 import AuthChecker from './Middleware/AuthChecker';
 import Payload from './Entity/Payload';
 import path from "path"
+import { send } from './Util/GlobalResponse';
 
 
 declare global {
@@ -38,10 +39,12 @@ app.use(AuthChecker)
 Route(app)
 
 app.use(handleError)
-
+const axios = require("axios")
 app.listen(port, async () => {
-
+  
   console.log(`REST at http://localhost:${port}`)
 })
+
+
 
 export default  app

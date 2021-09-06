@@ -5,6 +5,7 @@ export class Siswa {
   public jeniskelamin:string
   public jenjang:string
   public kelas:string
+  public sekolah:string
 
   constructor(
     {
@@ -14,6 +15,7 @@ export class Siswa {
       jeniskelamin,
       jenjang,
       kelas,
+      sekolah
     }:SiswaInterface) {
     this.idsiswa = idsiswa
     this.idortu = idortu
@@ -21,6 +23,7 @@ export class Siswa {
     this.jeniskelamin = jeniskelamin
     this.jenjang =jenjang
     this.kelas=kelas
+    this.sekolah=sekolah
   }
 
   getDataWithoutID(){
@@ -29,7 +32,8 @@ export class Siswa {
       siswa:this.siswa ,
       jeniskelamin:this.jeniskelamin ,
       jenjang:this.jenjang ,
-      kelas:this.kelas
+      kelas:this.kelas,
+      sekolah:this.sekolah
     }
   }
 }
@@ -42,4 +46,5 @@ export type SiswaInterface =  {
  jeniskelamin:string
  jenjang:string
  kelas:string
+ sekolah:string
 }
