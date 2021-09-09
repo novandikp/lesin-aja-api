@@ -2,6 +2,8 @@ import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Les,LesInterface } from "../../Entity/Les"
 import StatusLes from "../../Entity/StatusLes"
+import Lowongan from "../../Entity/Lowongan"
+import StatusLowongan from "../../Entity/StatusLowongan"
 
 
 export default class LesRepository {
@@ -23,10 +25,10 @@ export default class LesRepository {
 
 
   get(index){
-    return this.db.one(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa, jenjang,kelas, jeniskelamin 
-    FROM tblles 
-    inner join tblpaket on tblpaket.idpaket = tblles.idpaket
-    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+      return this.db.one(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa, jenjang,kelas, jeniskelamin,gaji 
+      FROM tblles 
+      inner join tblpaket on tblpaket.idpaket = tblles.idpaket
+      inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
     where idles = $1`, [index])
   }
 

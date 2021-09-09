@@ -11,6 +11,8 @@ import { convertDate } from "../Util/DateUtil"
 import { log } from "util"
 import OneSignalUtil from "../Util/OneSignalUtil"
 import { Posisi } from "../Entity/Posisi"
+import StatusLowongan from "../Entity/StatusLowongan"
+import Lowongan from "../Entity/Lowongan"
 
 const getLes = async (filter)=>{
   try{
@@ -78,8 +80,11 @@ const getTagihanWali = async (filter,idortu)=>{
 const addLes = async (data)  =>{
   try{
     const lesBuilder:LesBuilder = new LesBuilder(data)
-    lesBuilder.setPending()
-    return await db.les.add(lesBuilder.build())
+    lesBuilder.setMencariGuru()
+    const dataLes:Les =await db.les.add(lesBuilder.build())
+    await db.lowongan.add(new Lowongan(dataLes.idles,StatusLowongan.PENDING))
+    // new OneSignalUtil().sendNotificationWithTag("Terdapat pesanan baru",1)
+    return dataLes
   }catch (e){
     console.error(e)
     return  null
@@ -89,9 +94,9 @@ const addLes = async (data)  =>{
 const confirmLes =  async (idles)  =>{
   try{
     const dataLes = await db.les.get(idles)
-    if (dataLes.statusles === StatusLes.MENUNGGU_KONFIRMASI){
+    if (dataLes.statusles === StatusLes.PENDING){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-      lesBuilder.setMencariGuru()
+      lesBuilder.setBerlangsung()
       //Generate Absen
       let tglmulailes:Date = new Date(dataLes.tglles)
       let dataAbsen:Absen[] =[];
@@ -122,7 +127,7 @@ const confirmLes =  async (idles)  =>{
       const result = await db.les.edit(lesBuilder.build(),idles)
 
       result["absen"] = dataAbsen
-      new OneSignalUtil().sendNotificationWithTag("Terdapat pesanan baru",1)
+
       return result
     }else{
       return null
@@ -132,13 +137,18 @@ const confirmLes =  async (idles)  =>{
   }
 }
 
+
+const inputLowonganToAbcent =(idles)=>{
+  // db.query("UPDATE tblabsen SET idguru = (SELECT idguru from tbldetai)")
+}
+
 const acceptLes = async (idles,idguru) =>{
   try {
     const dataLes:Les = await  db.les.get(idles)
     if(dataLes.statusles == StatusLes.MENCARI_GURU){
       await  db.absen.setGuruAbsen(idles,idguru)
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-      lesBuilder.setMenemukanGuru()
+      lesBuilder.setPending()
       return db.les.edit(lesBuilder.build(),idles)
     }
     return null
@@ -151,7 +161,7 @@ const acceptLes = async (idles,idguru) =>{
 const rejectLes =  async (idles)  =>{
   try{
     const dataLes:Les = await db.les.get(idles)
-    if (dataLes.statusles === StatusLes.MENUNGGU_KONFIRMASI){
+    if (dataLes.statusles === StatusLes.PENDING){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setTolakPembayaran()
       return db.les.edit(lesBuilder.build(),idles)

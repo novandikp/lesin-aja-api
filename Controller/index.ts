@@ -7,6 +7,7 @@ import SiswaController from "./SiswaController"
 import LesController from "./LesController"
 import PembayaranController from "./PembayaranController"
 import JadwalController from "./JadwalController"
+import LowonganController from "./LowonganController"
 export  {
     AuthController,
     WaliController,
@@ -16,5 +17,6 @@ export  {
     SiswaController,
     LesController,
     PembayaranController,
-    JadwalController
+    JadwalController,
+    LowonganController
 }

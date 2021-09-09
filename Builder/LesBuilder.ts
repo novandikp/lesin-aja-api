@@ -23,9 +23,7 @@ export class LesBuilder{
     this.statusles = StatusLes.PENDING
   }
 
-  setTungguKonfirmasi(){
-    this.statusles = StatusLes.MENUNGGU_KONFIRMASI
-  }
+
 
   setTolakPembayaran(){
     this.statusles = StatusLes.PEMBAYARANDITOLAK
@@ -35,8 +33,12 @@ export class LesBuilder{
     this.statusles = StatusLes.MENCARI_GURU
   }
 
-  setMenemukanGuru(){
-    this.statusles = StatusLes.MENDAPATKAN_GURU
+  setBerlangsung(){
+    this.statusles=StatusLes.SEDANG_BERLANGSUNG
+  }
+
+  setSelesai(){
+    this.statusles = StatusLes.SELESAI
   }
 
   setTanggalLes(day){

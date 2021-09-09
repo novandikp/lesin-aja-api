@@ -4,9 +4,9 @@ import { LesBuilder } from "../Builder/LesBuilder"
 const addBayar = async (data)  =>{
   try{
     const dataLes = await db.les.get(data.idles)
-    if (dataLes.statusles === StatusLes.PENDING) {
+    if (dataLes.statusles === StatusLes.MEMILIH_GURU) {
       const lesBuilder: LesBuilder = new LesBuilder(dataLes)
-      lesBuilder.setTungguKonfirmasi()
+      lesBuilder.setPending()
       db.les.edit(lesBuilder.build(), data.idles)
       return await db.pembayaran.add(data)
     }

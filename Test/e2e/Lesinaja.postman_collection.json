@@ -557,6 +557,11 @@
 									"key": "biaya",
 									"value": "5000",
 									"type": "text"
+								},
+								{
+									"key": "gaji",
+									"value": "1000",
+									"type": "text"
 								}
 							]
 						},
@@ -599,6 +604,11 @@
 								{
 									"key": "biaya",
 									"value": "5000",
+									"type": "text"
+								},
+								{
+									"key": "gaji",
+									"value": "1000",
 									"type": "text"
 								}
 							]
@@ -657,7 +667,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL}}/siswa?page=1&siswa=&orderBy=siswa&sort=ASC",
+							"raw": "{{URL}}/siswa?page=1&siswa=Budi&orderBy=siswa&sort=ASC",
 							"host": [
 								"{{URL}}"
 							],
@@ -671,7 +681,7 @@
 								},
 								{
 									"key": "siswa",
-									"value": "",
+									"value": "Budi",
 									"description": "pencarian"
 								},
 								{
@@ -762,6 +772,11 @@
 									"key": "kelas",
 									"value": "9",
 									"type": "text"
+								},
+								{
+									"key": "sekolah",
+									"value": "SMP 4 Sidoarjo",
+									"type": "text"
 								}
 							]
 						},
@@ -809,6 +824,11 @@
 								{
 									"key": "kelas",
 									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "sekolah",
+									"value": "SDN Cemeng",
 									"type": "text"
 								}
 							]
@@ -1055,36 +1075,6 @@
 										"les",
 										"tolak",
 										"3"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Guru",
-					"item": [
-						{
-							"name": "Terima Les",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{contohtokenguru}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{URL}}/les/terima/2",
-									"host": [
-										"{{URL}}"
-									],
-									"path": [
-										"les",
-										"terima",
-										"2"
 									]
 								}
 							},
@@ -1344,6 +1334,154 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Lowongan",
+			"item": [
+				{
+					"name": "Guru",
+					"item": [
+						{
+							"name": "Apply Lowongan",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohtokenguru}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/lowongan/ajuan/1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"lowongan",
+										"ajuan",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lowongan by Region",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohtokenguru}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/lowongan/{{sampleIdKabupatenTag}}?page=1&cari=&orderBy=idlowongan&sort=ASC",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"lowongan",
+										"{{sampleIdKabupatenTag}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "cari",
+											"value": ""
+										},
+										{
+											"key": "orderBy",
+											"value": "idlowongan"
+										},
+										{
+											"key": "sort",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Semua Lowongan",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohtokenguru}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/lowongan?page=1&cari=&orderBy=idlowongan&sort=ASC",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"lowongan"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "cari",
+											"value": ""
+										},
+										{
+											"key": "orderBy",
+											"value": "idlowongan"
+										},
+										{
+											"key": "sort",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Wali",
+					"item": [
+						{
+							"name": "Lihat Pelamar Les",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{contohTokenWali}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/lowongan/pelamar/{{idLes}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"lowongan",
+										"pelamar",
+										"{{idLes}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
@@ -1382,6 +1520,14 @@
 		{
 			"key": "tokenGoogleSignIn",
 			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjZlZjRiZDkwODU5MWY2OTdhOGE5Yjg5M2IwM2U2YTc3ZWIwNGU1MWYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1MDgzODQwOTUzMzQtczJkc2R1YmdyZDZyaXJqOWwxa3Y4ZzJxZGtnZzlxcjQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1MDgzODQwOTUzMzQtdXFpN3ZzaGI4djNrcm0ycjdiYWNlcmp0cGRmbTgyZmEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDI2Mzg5NzEyNDQ5MTM2OTIzNTUiLCJlbWFpbCI6ImFuZGkucmF5a2FAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJBbmRpIFJheWthIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdna3lyNjMzNC1rN05mLUFSbW0xZk1Xc0pFU0RGcTRvcHp2TW8tNkpnPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFuZGkiLCJmYW1pbHlfbmFtZSI6IlJheWthIiwibG9jYWxlIjoiZW4tR0IiLCJpYXQiOjE2Mjk5NjE1OTcsImV4cCI6MTYyOTk2NTE5N30.O_xX3GQpYSnqKLiz8Pghi9pu0u1rVeLEad2EGMpER4P9bcoNVdhYBqi0g1_Lzkiu_E5yjK3MXHTJnQ60LqcprvrjiIw9YS4b3IVfV6jAjm7puHjlB6upA9W_heMafufx9bAa6fjSsN1vRmqyM9Q10CxMkWC-u69hMsnt4bzCtQqUqm6mnRq9EvUnbdVz1OaChXZsAKbBT2G0teP3USJ4EAsScWarjRyVmjsqQ5oETjiOr6V9rMnf7TftqjSeml_DDCWVW-B8MRBRdn9Oi5iLuCwY2THfvzPpUHd-Th_IpWwcCjFjWwG-6a6RUCb4QihAYNm-fBHGwphWbzB6VFEFYA"
+		},
+		{
+			"key": "sampleIdKabupatenTag",
+			"value": "1101"
+		},
+		{
+			"key": "idLes",
+			"value": "4"
 		}
 	]
 }
