@@ -2,6 +2,7 @@ import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import { Siswa,SiswaInterface } from "../../Entity/Siswa"
 import Lowongan from "../../Entity/Lowongan"
+import StatusLowongan from "../../Entity/StatusLowongan"
 
 
 export default class LowonganRepository {
@@ -12,6 +13,19 @@ export default class LowonganRepository {
 
   setOffset(page:number){
     this.offset = (page-1) * this.limit
+  }
+
+
+
+  getCurrentLowonganByLes(idles:number){
+    return this.db.one("SELECT * FROM view_lowongan WHERE idles = $1 and statuslowongan=$2 LIMIT 1",[
+      idles,StatusLowongan.PENDING
+    ])
+  }
+
+
+  setStatusLowongan(idlowongan:number,status:number ){
+    return this.db.none("UPDATE tbllowongan SET statuslowongan= $1 WHERE idlowongan = $2", [status,idlowongan]);
   }
 
   all({page=1,cari="",orderBy="idlowongan",sort="ASC"}:ParameterQuery){

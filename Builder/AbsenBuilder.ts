@@ -21,6 +21,11 @@ export class AbsenBuilder{
     this.flagabsen=StatusAbsen.PENDING
   }
 
+
+  setTeacher(idguru){
+    this.idguru =idguru
+  }
+
   setKeterangan(keterangan){
     this.keterangan =keterangan
   }

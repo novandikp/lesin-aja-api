@@ -5,6 +5,7 @@ import AuthChecker from './Middleware/AuthChecker';
 import Payload from './Entity/Payload';
 import path from "path"
 import { send } from './Util/GlobalResponse';
+import { encrypt } from "./Util/Encrypt"
 
 
 declare global {
@@ -41,7 +42,7 @@ Route(app)
 app.use(handleError)
 const axios = require("axios")
 app.listen(port, async () => {
-  
+
   console.log(`REST at http://localhost:${port}`)
 })
 

@@ -73,6 +73,24 @@ export default class AbsenRepository {
     )
   }
 
+
+  getSisaJadwal(idchild)  {
+    return this.db.query(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    tblpaket.paket ,tblpaket.jumlah_pertemuan, 
+    tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
+    tblwali.alamat as alamat_wali,
+    tblguru.guru ,tblguru.alamat as alamat_guru
+     from tblabsen 
+    inner join tblles  on tblles.idles = tblabsen.idles 
+    inner join tblguru on tblguru.idguru  = tblabsen.idguru 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket 
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa 
+    inner join tblwali on tblwali.idwali  = tblsiswa.idortu
+    WHERE idles=$1 and flagabsen=$2`,
+      [idchild, StatusAbsen.PENDING]
+    )
+  }
+
   getByLes({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
     this.setOffset(page)
     return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,

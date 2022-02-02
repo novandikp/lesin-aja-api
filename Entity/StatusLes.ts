@@ -6,6 +6,9 @@ export default class StatusLes {
   public static readonly SEDANG_BERLANGSUNG = 3
   public static readonly PEMBAYARANDITOLAK= 4
   public static readonly SELESAI= 5
+
+  public static readonly MENCARI_GURU_ULANG = 6
+
   //
   // public static readonly PENDING= 0
   // public static readonly MENUNGGU_KONFIRMASI= 1

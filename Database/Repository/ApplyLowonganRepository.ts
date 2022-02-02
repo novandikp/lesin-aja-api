@@ -2,6 +2,7 @@ import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import { Siswa,SiswaInterface } from "../../Entity/Siswa"
 import ApplyLowongan from "../../Entity/ApplyLowongan"
+import StatusLowongan from "../../Entity/StatusLowongan"
 
 
 export default class ApplyLowonganRepository {
@@ -12,6 +13,10 @@ export default class ApplyLowonganRepository {
 
   setOffset(page:number){
     this.offset = (page-1) * this.limit
+  }
+
+  get(id:number){
+    return this.db.one("SELECT * FROM tblapplylowongan WHERE idapplylowongan=$1",[id])
   }
 
   all({page=1,cari="",orderBy="idapplylowongan",sort="ASC"}:ParameterQuery){
@@ -34,6 +39,16 @@ export default class ApplyLowonganRepository {
     return this.db.one("INSERT INTO tblapplylowongan (${this:name}) VALUES (${this:list}) RETURNING *", lowongan.getDataWithoutId())
   }
 
+  async applyLowongan(id:number, idlowongan:number,statusKonfirmasi){
+    // tolak lainnya
+    this.db.none("UPDATE tblap  plylowongan SET statusapply = $1 where idapplylowongan!=$2 and idlowongan=$3",[
+      StatusLowongan.TERAMBIL,id, idlowongan
+    ])
+    //terima salah satu proposal
+    return this.db.one("UPDATE tblapplylowongan SET statusapply = $1 where idapplylowongan=$2 and idlowongan=$3 RETURNING *",[
+      statusKonfirmasi,id, idlowongan
+    ]);
+  }
 
 
 

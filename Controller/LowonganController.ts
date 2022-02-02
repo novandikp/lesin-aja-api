@@ -5,7 +5,7 @@ import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
 import { addSiswa, deleteSiswa, editSiswa, getSiswa, getSiswaByParent } from "../Service/SiswaService"
 import WaliChecker from "../Middleware/WaliChecker"
-import { ajuanLowongan, getLowongan, getLowonganByTag, getPelamar } from "../Service/LowonganService"
+import { acceptLowongan, ajuanLowongan, getLowongan, getLowonganByTag, getPelamar } from "../Service/LowonganService"
 import TeacherChecker from "../Middleware/TeacherChecker"
 
 
@@ -31,6 +31,12 @@ router.get("/:id",async (req:Request,res:Response,next:NextFunction)=>{
 
 router.post("/ajuan/:id", TeacherChecker,async (req:Request,res:Response,next:NextFunction)=>{
   const data = await ajuanLowongan(req.params.id,req.context.idchild)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Apply telah dilakukan atau data tidak ditemukan"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+router.post("/terima", TeacherChecker,async (req:Request,res:Response,next:NextFunction)=>{
+  const data = await acceptLowongan(req.body)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Apply telah dilakukan atau data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
