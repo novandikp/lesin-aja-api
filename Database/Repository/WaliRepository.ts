@@ -3,12 +3,22 @@ import {IDatabase, IMain} from 'pg-promise';
 import { Wali, WaliInterface } from "../../Entity/Wali"
 import  FilterUpdate  from '../../Util/FilterUpdate';
 export default class WaliRepository {
+    private limit:number = 10
+    private offset:number=0
     constructor(private db: IDatabase<any>, private pgp: IMain) {
     }
 
-    async all(): Promise<Wali []> {
-        return this.db.any("SELECT * FROM tblwali")
+    setOffset(page:number){
+        this.offset = (page-1) * this.limit
     }
+
+    all({page=1,wali="",orderBy="wali",sort="ASC"}:ParameterQuery) : Promise<Wali[]> {
+        this.setOffset(page)
+        return this.db.any("SELECT * FROM tblwali WHERE (wali ilike '%$1:raw%' or email ilike '%$1:raw%') ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+          [wali, orderBy,sort,this.limit,this.offset]
+        )
+    }
+
 
     async getByEmail(email:String): Promise<Wali > {
         return this.db.one("SELECT * FROM tblwali where email=$1 LIMIT 1",[email])
@@ -35,4 +45,11 @@ export default class WaliRepository {
         ])
     }
     
+}
+
+type ParameterQuery ={
+    page:number
+    wali:String
+    orderBy:String
+    sort:String
 }

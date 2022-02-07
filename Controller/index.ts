@@ -9,6 +9,8 @@ import PembayaranController from "./PembayaranController"
 import JadwalController from "./JadwalController"
 import LowonganController from "./LowonganController"
 import KeuanganController from "./KeuanganController"
+import GlobalController from './GlobalController'
+import Admin from "./Admin"
 export  {
     AuthController,
     WaliController,
@@ -20,5 +22,7 @@ export  {
     PembayaranController,
     JadwalController,
     LowonganController,
-    KeuanganController
+    KeuanganController,
+    GlobalController,
+    Admin
 }

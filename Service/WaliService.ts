@@ -5,6 +5,13 @@ import { db } from '../Database';
 import { Wali } from './../Entity/Wali';
 
 
+const getWali = async (filter)=>{
+    try{
+      return await db.wali.all(filter)
+    }catch (e){
+      return null
+    }
+}
 
 const register = async (body) =>{
     const userBuilder:UserBuilder = new UserBuilder(body)
@@ -39,4 +46,4 @@ const setProfile = async (body) =>{
     }
 }
 
-export {profile,setProfile,register}
+export {profile,setProfile,register,getWali}

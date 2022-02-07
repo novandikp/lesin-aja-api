@@ -3,11 +3,20 @@ import {IDatabase, IMain} from 'pg-promise';
 import { Guru, GuruInterface } from "../../Entity/Guru"
 import FilterUpdate from "../../Util/FilterUpdate"
 export default class GuruRepository {
+    private limit:number = 10
+    private offset:number=0
     constructor(private db: IDatabase<any>, private pgp: IMain) {
     }
 
-    async all(): Promise<Guru []> {
-        return this.db.any("SELECT * FROM tblguru")
+    setOffset(page:number){
+        this.offset = (page-1) * this.limit
+    }
+
+    all({page=1,guru="",orderBy="guru",sort="ASC"}:ParameterQuery) : Promise<Guru[]> {
+        this.setOffset(page)
+        return this.db.any("SELECT * FROM tblguru WHERE (guru ilike '%$1:raw%' or email ilike '%$1:raw%') ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+          [guru, orderBy,sort,this.limit,this.offset]
+        )
     }
 
     async getByEmail(email:String): Promise<Guru > {
@@ -32,4 +41,10 @@ export default class GuruRepository {
         ])
     }
     
+}
+type ParameterQuery ={
+    page:number
+    guru:String
+    orderBy:String
+    sort:String
 }

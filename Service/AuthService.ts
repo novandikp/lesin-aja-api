@@ -166,4 +166,4 @@ const changePassword = async({iduser,password} :UserInterface) =>{
 }
 
 
-export {loginWithGoogle,loginAdmin,changePassword,insertDataByRole}
+export {loginWithGoogle,loginAdmin,changePassword,insertDataByRole,getTokenByEmailVerified}

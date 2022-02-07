@@ -1,0 +1,20 @@
+import { Router,Request ,Response,NextFunction } from "express";
+import AdminChecker from "../../Middleware/AdminChecker";
+import { getGuru } from "../../Service/GuruService";
+import { ErrorHandler } from "../../Util/ErrorHandler";
+import { send } from "../../Util/GlobalResponse";
+import { HTTPStatus } from "../../Util/HTTPStatus";
+
+const router:Router = Router();
+
+//Halaman Guru
+
+router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
+    const data = await getGuru(req.query)
+    if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+    return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+
+  
+export default router;

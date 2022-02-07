@@ -4,6 +4,13 @@ import { UserBuilder } from './../Builder/UserBuilder';
 import { db } from '../Database';
 import { Guru } from '../Entity/Guru';
 
+const getGuru = async (filter)=>{
+    try{
+      return await db.guru.all(filter)
+    }catch (e){
+      return null
+    }
+}
 
 const register = async (body) =>{
     const userBuilder:UserBuilder = new UserBuilder(body)
@@ -40,4 +47,4 @@ const setProfile = async (body) =>{
     }
 }
 
-export {profile,setProfile,register}
+export {profile,setProfile,register,getGuru}

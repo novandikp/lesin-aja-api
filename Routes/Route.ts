@@ -7,10 +7,13 @@ import {
     SiswaController,
     WaliController,
     LesController,
-    PembayaranController, JadwalController, LowonganController, KeuanganController
+    PembayaranController, JadwalController, LowonganController, KeuanganController, GlobalController, Admin
 } from "../Controller"
 
 const route = (app : Express)=>{
+    
+    app.use("/",GlobalController)
+    app.use("/admin",Admin);
     app.use("/auth",AuthController)
     app.use("/wali",WaliController)
     app.use("/daerah",RegionController)
