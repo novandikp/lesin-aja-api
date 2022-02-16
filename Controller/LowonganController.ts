@@ -35,7 +35,7 @@ router.post("/ajuan/:id", TeacherChecker,async (req:Request,res:Response,next:Ne
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 
-router.post("/terima", TeacherChecker,async (req:Request,res:Response,next:NextFunction)=>{
+router.post("/terima", WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
   const data = await acceptLowongan(req.body)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Apply telah dilakukan atau data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
