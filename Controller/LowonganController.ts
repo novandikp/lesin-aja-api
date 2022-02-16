@@ -16,7 +16,7 @@ router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 
-router.get("/pelamar/:id",async (req:Request,res:Response,next:NextFunction)=>{
+router.get("/pelamar/:id",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
   const data = await getPelamar(req.query,req.params.id)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
