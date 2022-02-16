@@ -1,6 +1,4 @@
-import { Posisi } from "../Entity/Posisi"
 import { Les, LesInterface } from './../Entity/Les';
-import { encrypt } from "../Util/Encrypt"
 import StatusLes from "../Entity/StatusLes"
 
 export class LesBuilder{

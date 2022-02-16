@@ -1,6 +1,4 @@
-import { Posisi } from "../Entity/Posisi"
-import { Guru, GuruInterface } from './../Entity/Guru';
-import { encrypt } from "../Util/Encrypt"
+import { Guru } from './../Entity/Guru';
 
 export class GuruBuilder{
   public idguru:number

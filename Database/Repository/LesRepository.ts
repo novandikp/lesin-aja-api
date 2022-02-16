@@ -1,9 +1,6 @@
 import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Les,LesInterface } from "../../Entity/Les"
-import StatusLes from "../../Entity/StatusLes"
-import Lowongan from "../../Entity/Lowongan"
-import StatusLowongan from "../../Entity/StatusLowongan"
 
 
 export default class LesRepository {

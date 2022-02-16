@@ -1,7 +1,6 @@
 
 import {IDatabase, IMain} from 'pg-promise';
 
-import  FilterUpdate  from '../../Util/FilterUpdate';
 import Provinsi from './../../Entity/Provinsi';
 import Kota from './../../Entity/Kota';
 import Kecamatan from '../../Entity/Kecamatan';

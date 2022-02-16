@@ -1,6 +1,4 @@
-import { Posisi } from "../Entity/Posisi"
-import { Wali, WaliInterface } from './../Entity/Wali';
-import { encrypt } from "../Util/Encrypt"
+import { Wali } from './../Entity/Wali';
 
 export class WaliBuilder{
   public idwali:number

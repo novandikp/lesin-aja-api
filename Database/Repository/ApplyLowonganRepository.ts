@@ -1,6 +1,5 @@
 import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
-import { Siswa,SiswaInterface } from "../../Entity/Siswa"
 import ApplyLowongan from "../../Entity/ApplyLowongan"
 import StatusLowongan from "../../Entity/StatusLowongan"
 

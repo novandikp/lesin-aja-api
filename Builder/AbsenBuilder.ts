@@ -1,6 +1,4 @@
-import { Posisi } from "../Entity/Posisi"
-import { Absen, AbsenInterface } from './../Entity/Absen';
-import { encrypt } from "../Util/Encrypt"
+import { Absen } from './../Entity/Absen';
 import StatusAbsen from "../Entity/StatusAbsen"
 
 export class AbsenBuilder{

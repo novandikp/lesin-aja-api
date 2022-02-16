@@ -1,6 +1,4 @@
 import { IDatabase, IMain } from "pg-promise"
-import FilterUpdate from "../../Util/FilterUpdate"
-import Paket, { PaketInterface } from "../../Entity/Paket"
 import { Pembayaran, PembayaranInterface } from "../../Entity/Pembayaran"
 
 
