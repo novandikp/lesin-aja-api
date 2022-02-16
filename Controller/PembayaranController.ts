@@ -1,15 +1,12 @@
 import {Router,Response,Request,NextFunction} from "express"
-import { PembayaranService, WaliService } from "../Service"
 import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
-import WaliChecker from "../Middleware/WaliChecker"
 import { addBayar } from "../Service/PembayaranService"
 import path from "path"
 
 const router = Router()
 import multer = require("multer");
-import { PembayaranRepository } from "../Database/Repository"
 
 const UPLOAD_PATH = 'public/uploads/bukti';
 const upload = multer({ storage:

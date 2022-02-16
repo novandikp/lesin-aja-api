@@ -4,8 +4,6 @@ import StatusLowongan from "../Entity/StatusLowongan"
 import StatusLes from "../Entity/StatusLes"
 import { LesBuilder } from "../Builder/LesBuilder"
 import getIndexHari from "../Entity/Hari"
-import { AbsenBuilder } from "../Builder/AbsenBuilder"
-import { convertDate } from "../Util/DateUtil"
 import { Absen } from "../Entity/Absen"
 
 const getLowongan = async (filter)=>{

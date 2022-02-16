@@ -15,13 +15,13 @@ const loginAdmin= async ({email, password }:UserInterface) =>{
       let idchild,topicID;
       const {posisi,iduser} = await db.users.getByUsernameAndPassword(email,encrypt(password))
       if (posisi == Posisi.GURU){
-        const  {idguru,idkabupaten} = await db.guru.getByEmail(email)
+        const  {idguru,idkecamatan} = await db.guru.getByEmail(email)
         idchild=idguru
-        topicID =idkabupaten
+        topicID =idkecamatan
       }else if (posisi == Posisi.WALI){
-        const  {idwali,idkabupaten} = await db.wali.getByEmail(email)
+        const  {idwali,idkecamatan} = await db.wali.getByEmail(email)
         idchild=idwali
-        topicID =idkabupaten
+        topicID =idkecamatan
       }
       const token = generate({
         iduser:iduser,
@@ -71,14 +71,14 @@ const getTokenByEmailVerified=async (email:String)=>{
     } else{
       const {posisi,iduser}  = dataUser
       if (posisi === Posisi.GURU){
-        const  {idguru,idkabupaten,guru} = await db.guru.getByEmail(email)
+        const  {idguru,idkecamatan,guru} = await db.guru.getByEmail(email)
         idchild=idguru
-        topicID = idkabupaten
+        topicID = idkecamatan
         editedProfile = guru != null
       }else if (posisi === Posisi.WALI){
-        const  {idwali,idkabupaten,wali} = await db.wali.getByEmail(email)
+        const  {idwali,idkecamatan,wali} = await db.wali.getByEmail(email)
         idchild=idwali
-        topicID = idkabupaten
+        topicID = idkecamatan
         editedProfile = wali != null
       }
       const token = generate({

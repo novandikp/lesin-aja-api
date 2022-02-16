@@ -3,7 +3,6 @@ import {Router,Response,Request,NextFunction} from "express"
 import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
-import { addSiswa, deleteSiswa, editSiswa, getSiswa, getSiswaByParent } from "../Service/SiswaService"
 import WaliChecker from "../Middleware/WaliChecker"
 import { acceptLowongan, ajuanLowongan, getLowongan, getLowonganByTag, getPelamar } from "../Service/LowonganService"
 import TeacherChecker from "../Middleware/TeacherChecker"

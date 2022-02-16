@@ -3,8 +3,7 @@ import {Router,Response,Request,NextFunction} from "express"
 import { HTTPStatus } from './../Util/HTTPStatus';
 import { send } from './../Util/GlobalResponse';
 import { ErrorHandler } from "../Util/ErrorHandler";
-import WaliChecker from "../Middleware/WaliChecker"
-import { getHistoryWali, getJadwal, getJadwalByLes, getJadwalBySiswa } from "../Service/LesService"
+import {  getJadwal, getJadwalByLes, getJadwalBySiswa } from "../Service/LesService"
 
 
 
