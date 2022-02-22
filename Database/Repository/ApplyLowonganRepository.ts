@@ -40,11 +40,11 @@ export default class ApplyLowonganRepository {
 
   async applyLowongan(id:number, idlowongan:number,statusKonfirmasi){
     // tolak lainnya
-    this.db.none("UPDATE tblap  plylowongan SET statusapply = $1 where idapplylowongan!=$2 and idlowongan=$3",[
+    this.db.none("UPDATE tblapplylowongan SET statusapply = $1 where idapplylowongan!=$2 and idlowongan=$3",[
       StatusLowongan.TERAMBIL,id, idlowongan
     ])
     //terima salah satu proposal
-    return this.db.one("UPDATE tblapplylowongan SET statusapply = $1 where idapplylowongan=$2 and idlowongan=$3 RETURNING *",[
+    return this.db.oneOrNone("UPDATE tblapplylowongan SET statusapply = $1 where idapplylowongan=$2 and idlowongan=$3 RETURNING *",[
       statusKonfirmasi,id, idlowongan
     ]);
   }
