@@ -45,17 +45,22 @@ const ajuanLowongan = async (idlowongan,idguru)=>{
 const acceptLowongan = async({ idapplylowongan, idles, tglmulai })=>{
   // cari tetang les dan lowongan
   const dataLes = await db.lowongan.getCurrentLowonganByLes(idles)
-  const lesBuilder = new LesBuilder(dataLes)
-  if(dataLes.statusles == StatusLes.MENCARI_GURU){
-    await db.applyLowongan.applyLowongan(idapplylowongan,dataLes.idlowongan,StatusLowongan.MENUNGGU_KONFIRMASI)
-    lesBuilder.setPending()
+  if(dataLes){
+    const lesBuilder = new LesBuilder(dataLes)
+    if(dataLes.statusles == StatusLes.MENCARI_GURU){
+      await db.applyLowongan.applyLowongan(idapplylowongan,dataLes.idlowongan,StatusLowongan.MENUNGGU_KONFIRMASI)
+      lesBuilder.setPending()
+    }else{
+      const ajuan = await db.applyLowongan.applyLowongan(idapplylowongan,dataLes.idlowongan,StatusLowongan.DIKONFIRMASI)
+      await applyNewAbsen(tglmulai,dataLes,ajuan.idguru)
+      lesBuilder.setBerlangsung()
+    }
+    await db.lowongan.setStatusLowongan(dataLes.idlowongan, StatusLowongan.DIKONFIRMASI)
+    return db.les.edit(lesBuilder.build(),idles)
   }else{
-    const ajuan = await db.applyLowongan.applyLowongan(idapplylowongan,dataLes.idlowongan,StatusLowongan.DIKONFIRMASI)
-    await applyNewAbsen(tglmulai,dataLes,ajuan.idguru)
-    lesBuilder.setBerlangsung()
+    return null;
   }
-  await db.lowongan.setStatusLowongan(dataLes.idlowongan, StatusLowongan.DIKONFIRMASI)
-  return db.les.edit(lesBuilder.build(),idles)
+  
 
 }
 

@@ -17,7 +17,7 @@ export default class LowonganRepository {
 
 
   getCurrentLowonganByLes(idles:number){
-    return this.db.one("SELECT * FROM view_lowongan WHERE idles = $1 and statuslowongan=$2 LIMIT 1",[
+    return this.db.oneOrNone("SELECT * FROM view_lowongan WHERE idles = $1 and statuslowongan=$2 LIMIT 1",[
       idles,StatusLowongan.PENDING
     ])
   }
