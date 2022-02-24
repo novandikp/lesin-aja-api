@@ -15,9 +15,17 @@ import StatusLowongan from "../Entity/StatusLowongan"
 import Lowongan from "../Entity/Lowongan"
 
 const getLes = async (filter)=>{
+  const {status} = filter;
   try{
-    return await db.les.all(filter)
+    if (status && StatusLes.STATUS_DATA.indexOf(status) > -1){
+      
+      return await db.les.allWithStatus(filter,StatusLes.STATUS_DATA.indexOf(status))
+    }else{
+      return await db.les.all(filter)
+    }
+    
   }catch (e){
+    console.log(e)
     return null
   }
 }
@@ -69,6 +77,15 @@ const getJadwalBySiswa =async(filter,idles)=>{
 }
 
 const getTagihanWali = async (filter,idortu)=>{
+  try{
+    return await db.les.historyByParentStatus(filter,idortu,StatusLes.PENDING)
+  }catch (e){
+
+    return null
+  }
+}
+
+const getTagihan = async (filter,idortu)=>{
   try{
     return await db.les.historyByParentStatus(filter,idortu,StatusLes.PENDING)
   }catch (e){
@@ -172,7 +189,6 @@ const rejectLes =  async (idles)  =>{
     return null
   }
 }
-
 
 
 const editLes = async (data,id) =>{

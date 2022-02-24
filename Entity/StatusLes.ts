@@ -9,6 +9,16 @@ export default class StatusLes {
 
   public static readonly MENCARI_GURU_ULANG = 6
 
+  public static readonly STATUS_DATA=[
+    "MENCARI_GURU",
+    "MEMILIH_GURU",
+    "PENDING",
+    "SEDANG_BERLANGSUNG",
+    "PEMBAYARAN_DITOLAK",
+    "SELESAI",
+    "MENCARI_GURU_ULANG"
+  ]
+
   //
   // public static readonly PENDING= 0
   // public static readonly MENUNGGU_KONFIRMASI= 1

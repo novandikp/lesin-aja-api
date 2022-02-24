@@ -1,6 +1,7 @@
 import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Les,LesInterface } from "../../Entity/Les"
+import { ViewLes } from "../../Entity/ViewLes"
 
 
 export default class LesRepository {
@@ -12,11 +13,18 @@ export default class LesRepository {
   setOffset(page:number){
     this.offset = (page-1) * this.limit
   }
-
-  all({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery) : Promise<Les[]> {
+  
+  all({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery) : Promise<ViewLes[]> {
     this.setOffset(page)
-    return this.db.any("SELECT * FROM tblles WHERE les ilike '%$1:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+    return this.db.any("SELECT * FROM view_les WHERE (siswa ilike '%$1:raw%' or wali ilike '%$1:raw%') ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
       [cari, orderBy,sort,this.limit,this.offset]
+    )
+  }
+
+  allWithStatus({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery,status) : Promise<ViewLes[]> {
+    this.setOffset(page)
+    return this.db.any("SELECT * FROM view_les WHERE (siswa ilike '%$1:raw%' or wali ilike '%$1:raw%') and statusles = $2 ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
+      [cari,status, orderBy,sort,this.limit,this.offset]
     )
   }
 
