@@ -35,6 +35,10 @@ export class LesBuilder{
     this.statusles=StatusLes.SEDANG_BERLANGSUNG
   }
 
+  setBayarBelumKonfirmasi(){
+    this.statusles = StatusLes.BAYAR_BELUMKONFIRMASI
+  }
+
   setSelesai(){
     this.statusles = StatusLes.SELESAI
   }

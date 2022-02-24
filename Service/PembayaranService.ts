@@ -6,7 +6,7 @@ const addBayar = async (data)  =>{
     const dataLes = await db.les.get(data.idles)
     if (dataLes.statusles === StatusLes.PENDING) {
       const lesBuilder: LesBuilder = new LesBuilder(dataLes)
-      lesBuilder.setBerlangsung()
+      lesBuilder.setBayarBelumKonfirmasi()
       db.les.edit(lesBuilder.build(), data.idles)
       return await db.pembayaran.add(data)
     }

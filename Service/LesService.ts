@@ -78,7 +78,7 @@ const getJadwalBySiswa =async(filter,idles)=>{
 
 const getTagihanWali = async (filter,idortu)=>{
   try{
-    return await db.les.historyByParentStatus(filter,idortu,StatusLes.PENDING)
+    return await db.les.historyByParentStatus(filter,idortu,StatusLes.BAYAR_BELUMKONFIRMASI)
   }catch (e){
 
     return null
@@ -87,7 +87,7 @@ const getTagihanWali = async (filter,idortu)=>{
 
 const getTagihan = async (filter,idortu)=>{
   try{
-    return await db.les.historyByParentStatus(filter,idortu,StatusLes.PENDING)
+    return await db.les.historyByParentStatus(filter,idortu,StatusLes.BAYAR_BELUMKONFIRMASI)
   }catch (e){
 
     return null
@@ -111,7 +111,7 @@ const addLes = async (data)  =>{
 const confirmLes =  async (idles)  =>{
   try{
     const dataLes = await db.les.get(idles)
-    if (dataLes.statusles === StatusLes.PENDING){
+    if (dataLes.statusles === StatusLes.BAYAR_BELUMKONFIRMASI){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setBerlangsung()
       //Generate Absen
@@ -178,7 +178,7 @@ const acceptLes = async (idles,idguru) =>{
 const rejectLes =  async (idles)  =>{
   try{
     const dataLes:Les = await db.les.get(idles)
-    if (dataLes.statusles === StatusLes.PENDING){
+    if (dataLes.statusles === StatusLes.BAYAR_BELUMKONFIRMASI){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setTolakPembayaran()
       return db.les.edit(lesBuilder.build(),idles)
