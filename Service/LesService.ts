@@ -129,7 +129,7 @@ const confirmLes =  async (idles)  =>{
                   tglabsen:convertDate(tglmulailes)}
               )
 
-              absenBuilder.removeTeacher()
+              absenBuilder.setTeacher(dataLes.idguru)
 
               const absen =await db.absen.add(absenBuilder.build())
               dataAbsen.push(absen)
