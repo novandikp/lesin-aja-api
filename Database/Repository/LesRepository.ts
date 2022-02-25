@@ -36,7 +36,7 @@ export default class LesRepository {
       inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
       left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
       left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan
-    where idles = $1`, [index])
+    where tblles.idles = $1`, [index])
   }
 
   add(les:LesInterface):Promise<Les>{

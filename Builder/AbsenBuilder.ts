@@ -32,6 +32,10 @@ export class AbsenBuilder{
     this.flagabsen = StatusAbsen.HADIR
   }
 
+  pendingAbcent(){
+    this.flagabsen = StatusAbsen.PENDING
+  }
+
   notAbcent(){
     this.flagabsen = StatusAbsen.TIDAKHADIR
   }

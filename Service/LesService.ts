@@ -130,7 +130,7 @@ const confirmLes =  async (idles)  =>{
               )
 
               absenBuilder.setTeacher(dataLes.idguru)
-
+              absenBuilder.pendingAbcent()
               const absen =await db.absen.add(absenBuilder.build())
               dataAbsen.push(absen)
           }
@@ -150,6 +150,7 @@ const confirmLes =  async (idles)  =>{
       return null
     }
   }catch (e) {
+    console.log(e);
     return null
   }
 }
