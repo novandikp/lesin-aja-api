@@ -1,4 +1,5 @@
 import { db } from '../Database';
+import { Posisi } from '../Entity/Posisi';
 
 
 const getSiswa = async (filter)=>{
@@ -9,9 +10,15 @@ const getSiswa = async (filter)=>{
   }
 }
 
-const getSiswaByParent = async (filter,idparent)=>{
+const getSiswaByParent = async (filter,idparent,tipe)=>{
+  
   try{
-    return await db.siswa.getByParent(filter,idparent)
+    if (tipe == Posisi.WALI){
+      return await db.siswa.getByParent(filter,idparent)
+    }else if(tipe == Posisi.GURU){
+      return await db.siswa.getByTeacher(filter,idparent)
+    }
+    return null
   }catch (e){
     console.error(e)
     return null

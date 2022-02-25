@@ -15,14 +15,15 @@ router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
 })
 
 
-router.use(WaliChecker)
+
 
 router.get("/my/",async (req:Request,res:Response,next:NextFunction)=>{
-  const data = await getSiswaByParent(req.query,req.context.idchild)
+  const data = await getSiswaByParent(req.query,req.context.idchild,req.context.posisi)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 
+router.use(WaliChecker)
 
 router.post("/",async (req:Request,res:Response, next:NextFunction)=>{
   req.body.idortu = req.context.idchild
