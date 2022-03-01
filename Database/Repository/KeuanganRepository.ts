@@ -44,7 +44,47 @@ export default class KeuanganRepository {
     return data;
   }
 
-  getSaldo
+  async rekapmasuk({page=1,cari="",orderBy="idkeuangan",sort="ASC", startDate=undefined,endDate=undefined}:ParameterQueryRekap){
+    this.setOffset(page)
+    
+    const {saldo}= await  this.db.one("select COALESCE(sum(masuk -keluar)) as saldo from tblkeuangan")
+    
+    let rekap:Keuangan[]
+   
+    if (startDate && endDate){
+      rekap = await this.db.any("select *,sum(masuk-keluar) over (order by tglkeuangan, idkeuangan) as saldo from tblkeuangan WHERE keterangan ilike '%$1:raw%' and masuk>0 and tglkeuangan between '%$6:raw%' and '%$7:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+        [cari, orderBy,sort,this.limit,this.offset, startDate,endDate]
+      )
+     
+    }else{
+      rekap = await this.db.any("select *,sum(masuk-keluar) over (order by tglkeuangan, idkeuangan) as saldo from tblkeuangan WHERE keterangan ilike '%$1:raw%' and masuk>0 ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+        [cari, orderBy,sort,this.limit,this.offset]
+      )
+    }
+    let data:ResponseRekap = {data:rekap, saldo:saldo}
+    return data;
+  }
+
+  async rekapkeluar({page=1,cari="",orderBy="idkeuangan",sort="ASC", startDate=undefined,endDate=undefined}:ParameterQueryRekap){
+    this.setOffset(page)
+    
+    const {saldo}= await  this.db.one("select COALESCE(sum(masuk -keluar)) as saldo from tblkeuangan")
+    
+    let rekap:Keuangan[]
+   
+    if (startDate && endDate){
+      rekap = await this.db.any("select *,sum(masuk-keluar) over (order by tglkeuangan, idkeuangan) as saldo from tblkeuangan WHERE keterangan ilike '%$1:raw%' and keluar>0 and tglkeuangan between '%$6:raw%' and '%$7:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+        [cari, orderBy,sort,this.limit,this.offset, startDate,endDate]
+      )
+     
+    }else{
+      rekap = await this.db.any("select *,sum(masuk-keluar) over (order by tglkeuangan, idkeuangan) as saldo from tblkeuangan WHERE keterangan ilike '%$1:raw%' and keluar>0 ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+        [cari, orderBy,sort,this.limit,this.offset]
+      )
+    }
+    let data:ResponseRekap = {data:rekap, saldo:saldo}
+    return data;
+  }
 
   add(keuangan:Keuangan):Promise<Keuangan>{
     return this.db.one("INSERT INTO tblkeuangan (${this:name}) VALUES (${this:list}) RETURNING *", keuangan.getDataWithoutID())

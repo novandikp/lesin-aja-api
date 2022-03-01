@@ -16,5 +16,12 @@ const rekapKeuangan = (filter)=>{
   return db.keuangan.rekap(filter)
 }
 
+const rekapKeuanganmasuk = (filter)=>{
+  return db.keuangan.rekapmasuk(filter)
+}
 
-export {tambahPemasukan,tambahPengeluaran,rekapKeuangan}
+const rekapKeuangankeluar = (filter)=>{
+  return db.keuangan.rekapkeluar(filter)
+}
+
+export {tambahPemasukan,tambahPengeluaran,rekapKeuangan,rekapKeuanganmasuk,rekapKeuangankeluar}
