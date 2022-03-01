@@ -142,7 +142,6 @@ const confirmLes =  async (idles)  =>{
 
       // Update data les
       const result = await db.les.edit(lesBuilder.build(),idles)
-
       result["absen"] = dataAbsen
 
       return result

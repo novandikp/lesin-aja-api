@@ -12,5 +12,9 @@ const tambahPengeluaran=  ({jumlah,keterangan, tanggal = convertDate(new Date())
   return db.keuangan.add(keuangan)
 }
 
+const rekapKeuangan = (filter)=>{
+  return db.keuangan.rekap(filter)
+}
 
-export {tambahPemasukan,tambahPengeluaran}
+
+export {tambahPemasukan,tambahPengeluaran,rekapKeuangan}

@@ -21,6 +21,30 @@ export default class KeuanganRepository {
     )
   }
 
+   
+  
+  async rekap({page=1,cari="",orderBy="idkeuangan",sort="ASC", startDate=undefined,endDate=undefined}:ParameterQueryRekap){
+    this.setOffset(page)
+    
+    const {saldo}= await  this.db.one("select COALESCE(sum(masuk -keluar)) as saldo from tblkeuangan")
+    
+    let rekap:Keuangan[]
+   
+    if (startDate && endDate){
+      rekap = await this.db.any("select *,sum(masuk-keluar) over (order by tglkeuangan, idkeuangan) as saldo from tblkeuangan WHERE keterangan ilike '%$1:raw%' and tglkeuangan between '%$6:raw%' and '%$7:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+        [cari, orderBy,sort,this.limit,this.offset, startDate,endDate]
+      )
+     
+    }else{
+      rekap = await this.db.any("select *,sum(masuk-keluar) over (order by tglkeuangan, idkeuangan) as saldo from tblkeuangan WHERE keterangan ilike '%$1:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+        [cari, orderBy,sort,this.limit,this.offset]
+      )
+    }
+    let data:ResponseRekap = {data:rekap, saldo:saldo}
+    return data;
+  }
+
+  getSaldo
 
   add(keuangan:Keuangan):Promise<Keuangan>{
     return this.db.one("INSERT INTO tblkeuangan (${this:name}) VALUES (${this:list}) RETURNING *", keuangan.getDataWithoutID())
@@ -41,11 +65,23 @@ export default class KeuanganRepository {
   }
 
 }
-
-
 type ParameterQuery ={
   page:number
   cari:String
   orderBy:String
   sort:String
+}
+
+type ResponseRekap={
+  saldo:number
+  data:Keuangan[]
+}
+
+type ParameterQueryRekap ={
+  page:number
+  cari:String
+  orderBy:String
+  sort:String,
+  startDate:String,
+  endDate:String
 }

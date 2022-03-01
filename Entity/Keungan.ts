@@ -4,7 +4,7 @@ export  default class Keuangan{
   public  masuk:number
   public  keluar:number
   public  keterangan:string
-
+  public  saldo:number
 
   constructor(tglkeuangan: string, masuk: number, keluar: number, keterangan: string) {
     this.tglkeuangan = tglkeuangan
