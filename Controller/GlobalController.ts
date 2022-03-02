@@ -15,7 +15,11 @@ router.get("/guru/profile/:id", async (req, res, next) => {
 
 
 router.get("/access", async (req,res,next)=>{
-    return send(res,HTTPStatus.OK, {data: req.context, status:true, message:"Akses masih berlaku"})
+    const data = {
+        email:req.context.email,
+        iduser:req.context.iduser,
+    }
+    return send(res,HTTPStatus.OK, {data:data, status:true, message:"Akses masih berlaku"})
 })
 
 
