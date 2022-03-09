@@ -9,12 +9,14 @@ export class LesBuilder{
   public jamles:string
   public hari:string
   public statusles:number
-  constructor({idpaket,idsiswa, tglles, jamles, hari}:LesInterface){
+  public prefrensi:string
+  constructor({idpaket,idsiswa, tglles, jamles, hari,prefrensi}:LesInterface){
     this.idpaket = idpaket
     this.idsiswa =idsiswa
     this.tglles = tglles
     this.jamles = jamles
     this.hari =hari
+    this.prefrensi = prefrensi
   }
 
   setPending(){

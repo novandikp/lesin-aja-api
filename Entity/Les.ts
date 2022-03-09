@@ -6,8 +6,9 @@ export class Les  {
   public jamles:string
   public hari:string
   public statusles:number
+  public prefrensi:string
 
-  constructor({idles, idpaket,idsiswa, tglles,jamles,hari,statusles  }:LesInterface) {
+  constructor({idles, idpaket,idsiswa, tglles,jamles,hari,statusles ,prefrensi }:LesInterface) {
       this.idles= idles
       this.idpaket=idpaket
       this.idsiswa=idsiswa
@@ -15,6 +16,8 @@ export class Les  {
       this.jamles=jamles
       this.hari = hari
       this.statusles = statusles
+      this.prefrensi = prefrensi
+      
   }
 
 
@@ -26,7 +29,8 @@ export class Les  {
       tglles :this.tglles,
       jamles : this.jamles,
       hari:this.hari,
-      statusles:this.statusles
+      statusles:this.statusles,
+      prefrensi:this.prefrensi,
     }
   }
 }
@@ -39,7 +43,8 @@ export type LesInterface = {
   tglles:string,
   jamles:string,
   hari:string,
-  statusles:number
+  statusles:number,
+  prefrensi:string
 }
 
 

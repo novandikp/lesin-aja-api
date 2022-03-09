@@ -27,17 +27,20 @@ export default class LowonganRepository {
     return this.db.none("UPDATE tbllowongan SET statuslowongan= $1 WHERE idlowongan = $2", [status,idlowongan]);
   }
 
-  all({page=1,cari="",orderBy="idlowongan",sort="ASC"}:ParameterQuery){
+  all({page=1,cari="",orderBy="idlowongan",sort="ASC", jenjang=undefined,prefrensi=''}:ParameterQuery){
     this.setOffset(page)
-    return this.db.any("SELECT * FROM view_lowongan WHERE (paket ilike '%$1:raw%' or  jenjang ilike '%$1:raw%') ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
-      [cari, orderBy,sort,this.limit,this.offset]
+
+    let jenjangQuery = jenjang ? ` and jenjang = '$6:raw' ` : ""
+    return this.db.any("SELECT * FROM view_lowongan WHERE paket ilike '%$1:raw%' "+jenjangQuery+" and (prefrensi = '$7:raw' or prefrensi = 'Bebas') ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+      [cari, orderBy,sort,this.limit,this.offset, jenjang, prefrensi]
     )
   }
 
-  getByRegion({page=1,cari="",orderBy="idlowongan",sort="ASC"}:ParameterQuery,tag_id){
+  getByRegion({page=1,cari="",orderBy="idlowongan",sort="ASC", jenjang=undefined,prefrensi=''}:ParameterQuery,tag_id){
     this.setOffset(page)
-    return this.db.any("SELECT * FROM view_lowongan WHERE (paket ilike '%$1:raw%' or  jenjang ilike '%$1:raw%') and tag_id =$2  ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
-      [cari,tag_id, orderBy,sort,this.limit,this.offset]
+    let jenjangQuery = jenjang ? ` and jenjang = '$7:raw' ` : ""
+    return this.db.any("SELECT * FROM view_lowongan WHERE paket ilike '%$1:raw%' "+jenjangQuery+" and (prefrensi = '$8:raw' or prefrensi = 'Bebas')  and tag_id =$2  ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
+      [cari,tag_id, orderBy,sort,this.limit,this.offset,jenjang, prefrensi]
     )
   }
 
@@ -67,5 +70,7 @@ type ParameterQuery ={
   page:number
   cari:String
   orderBy:String
-  sort:String
+  sort:String,
+  prefrensi:String,
+  jenjang:String
 }

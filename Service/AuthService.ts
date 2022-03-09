@@ -59,6 +59,7 @@ const loginWithGoogle = async (token) =>{
 const getTokenByEmailVerified=async (email:String)=>{
   try {
     let idchild,topicID,editedProfile;
+    let gender
     const dataUser:User= await db.users.getByEmail(email)
     if(!dataUser){
       const token = generate({
@@ -71,15 +72,19 @@ const getTokenByEmailVerified=async (email:String)=>{
     } else{
       const {posisi,iduser}  = dataUser
       if (posisi === Posisi.GURU){
-        const  {idguru,idkecamatan,guru} = await db.guru.getByEmail(email)
+        const  {idguru,idkecamatan,guru,jeniskelaminguru} = await db.guru.getByEmail(email)
         idchild=idguru
         topicID = idkecamatan
+        gender = jeniskelaminguru
         editedProfile = guru != null
       }else if (posisi === Posisi.WALI){
         const  {idwali,idkecamatan,wali} = await db.wali.getByEmail(email)
         idchild=idwali
         topicID = idkecamatan
         editedProfile = wali != null
+      }
+      if (!gender){
+        gender ="-"
       }
       const token = generate({
         iduser:iduser,
@@ -93,6 +98,7 @@ const getTokenByEmailVerified=async (email:String)=>{
         posisi : Posisi.getPosisi(posisi),
         idchild:idchild,
         topicID:topicID,
+        prefrensi:gender,
         editedProfile:editedProfile
       }
     }
