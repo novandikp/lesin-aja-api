@@ -13,9 +13,14 @@ export default class PaketRepository {
     this.offset = (page-1) * this.limit
   }
 
-  all({page=1,paket="",orderBy="paket",sort="ASC"}:ParameterQuery) : Promise<Paket[]> {
+  all({page=1,paket="", jenjang="",orderBy="paket",sort="ASC"}:ParameterQuery) : Promise<Paket[]> {
     this.setOffset(page)
-    return this.db.any("SELECT * FROM tblpaket WHERE paket ilike '%$1:raw%' ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
+    if (jenjang.trim().length == 0){
+      jenjang =""
+    }else{
+      jenjang =` JENJANG = '${jenjang}'`
+    }
+    return this.db.any("SELECT * FROM tblpaket WHERE paket ilike '%$1:raw%' "+jenjang+" ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
       [paket, orderBy,sort,this.limit,this.offset]
     )
   }
@@ -49,8 +54,9 @@ export default class PaketRepository {
 
 
 type ParameterQuery ={
-  page:number
+  page:number 
   paket:String
+  jenjang:String
   orderBy:String
   sort:String
 }
