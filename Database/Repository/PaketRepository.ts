@@ -18,8 +18,10 @@ export default class PaketRepository {
     if (jenjang.trim().length == 0){
       jenjang =""
     }else{
-      jenjang =` JENJANG = '${jenjang}'`
+      jenjang =` and jenjang = '${jenjang}'`
     }
+    console.log(jenjang);
+    
     return this.db.any("SELECT * FROM tblpaket WHERE paket ilike '%$1:raw%' "+jenjang+" ORDER BY $2:name $3:raw LIMIT $4 OFFSET $5",
       [paket, orderBy,sort,this.limit,this.offset]
     )
