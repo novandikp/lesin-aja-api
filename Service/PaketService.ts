@@ -1,5 +1,6 @@
 import { db } from '../Database';
 import { as } from "pg-promise"
+import Jenjang from '../Entity/Jenjang';
 
 const getPaket = async (filter)=>{
   try{
@@ -17,6 +18,11 @@ const addPaket = async (data)  =>{
     return  null
   }
 }
+
+const getJenjang=()=>{
+  return Jenjang.DataJenjang
+}
+ 
 
 
 const editPaket = async (data,id) =>{
@@ -36,4 +42,4 @@ const  deletePaket = async  (id) =>{
 }
 
 
-export  {getPaket, addPaket,editPaket,deletePaket}
+export  {getPaket, addPaket,editPaket,deletePaket,getJenjang}
