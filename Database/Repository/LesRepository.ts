@@ -72,7 +72,7 @@ export default class LesRepository {
     this.setOffset(page)
 
     return this.db.any(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa,
-      jenjang,kelas, jeniskelamin,wali FROM tblles
+      tblpaket.jenjang,kelas, jeniskelamin,wali FROM tblles
       inner join tblpaket on tblpaket.idpaket = tblles.idpaket
       inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
       inner join tblwali on tblwali.idwali = tblsiswa.idortu
