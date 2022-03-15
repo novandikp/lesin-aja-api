@@ -14,6 +14,12 @@ export default class ApplyLowonganRepository {
     this.offset = (page-1) * this.limit
   }
 
+
+  getStatus(idlowongan:number, idguru:number){
+    return this.db.oneOrNone("SELECT COALESCE(t.statusapply,-1) statusapply, tbllowongan.idlowongan, tblles.idles, tblles.idpaket, tblles.idsiswa, tblles.tglles, tblles.jamles, tblles.hari, tblles.statusles, tblpaket.paket, tblpaket.jumlah_pertemuan, tblpaket.biaya, tblsiswa.siswa, tblsiswa.jenjang, tblsiswa.kelas, tblsiswa.jeniskelamin, tblpaket.gaji FROM tbllowongan LEFT JOIN tblapplylowongan t ON tbllowongan.idlowongan = t.idlowongan and t.idguru = $1 INNER JOIN tblles ON tblles.idles = tbllowongan.idles INNER JOIN tblpaket ON tblpaket.idpaket = tblles.idpaket INNER JOIN tblsiswa ON tblsiswa.idsiswa = tblles.idsiswa INNER JOIN tblwali ON tblwali.idwali = tblsiswa.idortu where tbllowongan.idlowongan = $2",
+    [idguru,idlowongan])
+  }
+
   get(id:number){
     return this.db.one("SELECT * FROM tblapplylowongan WHERE idapplylowongan=$1",[id])
   }

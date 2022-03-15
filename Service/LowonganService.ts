@@ -95,4 +95,14 @@ const applyNewAbsen=async (tanggalMulai,dataLes,idguru)=>{
   }
 }
 
-export {getLowongan,getLowonganByTag,ajuanLowongan,getPelamar,acceptLowongan}
+const getStatusLowongan = async (idlowongan,idguru)=>{
+  try{
+    const data = await db.applyLowongan.getStatus(idlowongan,idguru)
+    data.statusapply = StatusLowongan.getStatus(data.statusapply)
+    return data;
+  }catch (e){
+    return null
+  }
+}
+
+export {getLowongan,getLowonganByTag,ajuanLowongan,getPelamar,acceptLowongan,getStatusLowongan}
