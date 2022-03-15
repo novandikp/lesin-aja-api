@@ -6,6 +6,7 @@ const allowedURL = [
   "POST /guru/register",
   "POST /wali/register",
   "GET /daerah",
+  "GET /public"
   
 ]
 const  AuthChecker =  (req : Request, res:Response, next:NextFunction)=> {
