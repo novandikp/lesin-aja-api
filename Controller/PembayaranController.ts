@@ -31,7 +31,8 @@ router.post("/",upload.any(), async (req:Request,res:Response,next:NextFunction)
 })
 
 router.post("/", async (req:Request,res:Response,next:NextFunction)=>{
-    const dataBayar = await addBayar(req.body)
+    const dataBayar = await addBayar(req.body)\
+    
     if (!dataBayar) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Terjadi kesalaham"))
     return send(res,HTTPStatus.OK,{status:true,data:dataBayar,message:"Berhasil"})
 })
