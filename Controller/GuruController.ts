@@ -32,14 +32,14 @@ router.get("/profile",async (req:Request, res:Response,next:NextFunction)=>{
 })
 
 router.post("/profile",upload.any(),async (req:Request, res :Response, next:NextFunction)=>{
-  if (req.files) req.body.file_cv = req.files[0].filename
+  if (req.files[0]) req.body.file_cv = req.files[0].filename
   return next()
 })
 
 router.post("/profile",async (req:Request, res:Response,next:NextFunction)=>{
     req.body.idguru = req.context.idchild
     const data = await GuruService.setProfile(req.body)
-    if (!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
+    if (!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan atau email telah digunakan"))
     return send(res, HTTPStatus.OK, {data:data,status:true, message :""})
 })
 
