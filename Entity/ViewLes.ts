@@ -18,6 +18,7 @@ export class ViewLes{
     public idwali:number
     public email:string
     public alamat:string
+    public bukti:string
 
 }
 
@@ -38,5 +39,6 @@ export type ViewLesInterface = {
      gaji:number,
      idwali:number,
      email:string,
-     alamat:string
+     alamat:string,
+     bukti:string
 }
