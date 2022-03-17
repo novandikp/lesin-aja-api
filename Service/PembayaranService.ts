@@ -11,6 +11,7 @@ const addBayar = async (data)  =>{
       return await db.pembayaran.add(data)
     }
     return null
+    
 
   }catch (e){
     console.error(e)
