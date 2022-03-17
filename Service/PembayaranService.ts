@@ -10,7 +10,7 @@ const addBayar = async (data)  =>{
       db.les.edit(lesBuilder.build(), data.idles)
       return await db.pembayaran.add(data)
     }
-    return {error:dataLes.statusles}
+    return null
 
 
   }catch (e){
