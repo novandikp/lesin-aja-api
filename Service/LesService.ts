@@ -141,6 +141,8 @@ const confirmLes =  async (idles)  =>{
       }
 
       // Update data les
+      const dataLowongan = await db.lowongan.getCurrentLowonganByLes(idles,StatusLowongan.TERAMBIL)
+      db.applyLowongan.acceptLowongan(dataLowongan.idlowongan)
       const result = await db.les.edit(lesBuilder.build(),idles)
       result["absen"] = dataAbsen
 

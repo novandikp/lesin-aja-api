@@ -55,6 +55,14 @@ export default class ApplyLowonganRepository {
     ]);
   }
 
+  async acceptLowongan(idlowongan:number){
+    // tolak lainnya
+    return this.db.none("UPDATE tblapplylowongan SET statusapply = $1 where statusapply = $2  and idlowongan=$3",[
+     StatusLowongan.DIKONFIRMASI, StatusLowongan.MENUNGGU_KONFIRMASI, idlowongan
+    ])
+    //terima salah satu proposal
+   
+  }
 
 
   edit(lowongan:ApplyLowongan, idapplylowongan:number):Promise<ApplyLowongan>{
