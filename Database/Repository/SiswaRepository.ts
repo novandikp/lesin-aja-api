@@ -22,7 +22,7 @@ export default class SiswaRepository {
 
   getByTeacher({page=1,siswa="",orderBy="siswa",sort="ASC"}:ParameterQuery,idparent:number) : Promise<Siswa[]> {
     this.setOffset(page)
-    return this.db.any("select tblsiswa.* FROM tblsiswa inner join tblles on tblles.idles = tblsiswa.idsiswa inner join tblabsen on tblabsen.idles = tblles.idles  WHERE siswa ilike '%$1:raw%' and idguru=$2 group by tblsiswa.idsiswa ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
+    return this.db.any("select tblsiswa.idsiswa, idortu, siswa, jeniskelamin, jenjang, kelas, sekolah, tblles.idles, idpaket,  tglles, jamles, hari, statusles, prefrensi FROM tblsiswa inner join tblles on tblles.idsiswa = tblsiswa.idsiswa inner join (select idles from tblabsen where idguru = $2 and flagabsen= 0 group by idles) tblabsen on tblabsen.idles = tblles.idles  WHERE siswa ilike '%$1:raw%'  ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
       [siswa,idparent, orderBy,sort,this.limit,this.offset]
     )
   }
