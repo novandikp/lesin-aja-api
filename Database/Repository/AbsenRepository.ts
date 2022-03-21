@@ -55,7 +55,7 @@ export default class AbsenRepository {
 
   getBySiswa({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
     this.setOffset(page)
-    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,tblabsen.flagabsenwali,
     tblpaket.paket ,tblpaket.jumlah_pertemuan, 
     tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
     tblwali.alamat as alamat_wali,
@@ -77,7 +77,7 @@ export default class AbsenRepository {
 
 
   getSisaJadwal(idchild)  {
-    return this.db.query(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    return this.db.query(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,tblabsen.flagabsenwali,
     tblpaket.paket ,tblpaket.jumlah_pertemuan, 
     tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
     tblwali.alamat as alamat_wali,
@@ -95,7 +95,7 @@ export default class AbsenRepository {
 
   getByLes({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
     this.setOffset(page)
-    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,tblabsen.flagabsenwali,
     tblpaket.paket ,tblpaket.jumlah_pertemuan, 
     tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
     tblwali.alamat as alamat_wali,
@@ -117,7 +117,7 @@ export default class AbsenRepository {
 
   getByParent({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
     this.setOffset(page)
-    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen, tblabsen.flagabsenwali,
     tblpaket.paket ,tblpaket.jumlah_pertemuan, 
     tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
     tblwali.alamat as alamat_wali,
@@ -139,7 +139,7 @@ export default class AbsenRepository {
 
   getByTeacher({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
     this.setOffset(page)
-    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,
+    return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,tblabsen.flagabsenwali,
     tblpaket.paket ,tblpaket.jumlah_pertemuan, 
     tblsiswa.siswa , tblsiswa.jenjang , tblsiswa.kelas,
     tblwali.alamat as alamat_wali,
