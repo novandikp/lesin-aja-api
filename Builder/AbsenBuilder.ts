@@ -8,10 +8,16 @@ export class AbsenBuilder{
   public tglabsen:string
   public keterangan:string =""
   public flagabsen:number
+  
+  public flagabsenwali:number
+  public rating:number
+  public keteranganwali:string
 
   constructor({idles,tglabsen}){
     this.idles = idles
     this.tglabsen =tglabsen
+    this.flagabsenwali =0
+    
   }
 
   removeTeacher(){

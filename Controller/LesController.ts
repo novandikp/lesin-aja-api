@@ -15,7 +15,7 @@ import {
   rejectLes
 } from "../Service/LesService"
 import WaliChecker from "../Middleware/WaliChecker"
-import { absenPertemuan, editAbsen } from "../Service/AbsenService"
+import { absenPertemuan, editAbsen, izinPertemuan } from "../Service/AbsenService"
 
 
 const router = Router()
@@ -68,8 +68,14 @@ router.post("/terima/:id",async (req:Request,res:Response, next:NextFunction)=>{
 })
 
 
-router.post("/absen/:id",async (req:Request,res:Response, next:NextFunction)=>{
-  const data = await absenPertemuan(req.params.id)
+router.post("/present/:id",async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await absenPertemuan(req.params.id, req.body, req.context)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat presen les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+router.post("/absent/:id",async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await izinPertemuan(req.params.id, req.body, req.context)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat absen les"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })

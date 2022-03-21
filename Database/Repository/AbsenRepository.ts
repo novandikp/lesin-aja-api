@@ -1,3 +1,4 @@
+import { log } from 'util';
 import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Absen,AbsenInterface } from "../../Entity/Absen"
@@ -38,6 +39,7 @@ export default class AbsenRepository {
 
   edit(absen:AbsenInterface, idabsen:number):Promise<Absen>{
     const dataAbsen = new Absen(absen)
+    
     const data = new FilterUpdate(dataAbsen.getDataWithoutID(),this.pgp)
     return this.db.one("UPDATE tblabsen set $1:raw WHERE idabsen=$2 RETURNING *", [
       data,idabsen
