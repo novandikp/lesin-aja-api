@@ -56,13 +56,16 @@ export default class LesRepository {
     this.setOffset(page)
 
     return this.db.any(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa,
-      tblpaket.jenjang,kelas, jeniskelamin,wali FROM tblles
-      inner join tblpaket on tblpaket.idpaket = tblles.idpaket
-      inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
-      inner join tblwali on tblwali.idwali = tblsiswa.idortu
+    tblpaket.jenjang,kelas, jeniskelamin,wali,guru  FROM tblles
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+    inner join tblwali on tblwali.idwali = tblsiswa.idortu
+    left join tblabsen on tblabsen.idles = tblles.idles
+    left join tblguru on tblabsen.idguru = tblguru.idguru
       where 
       (paket ilike '%$1:raw%' or siswa ilike '%$1:raw%') 
       and idwali = $2 
+      group by tblles.idles, tblpaket.idpaket, tblguru.idguru, tblsiswa.idsiswa, tblwali.idwali
       order by $3:name $4:raw
       LIMIT $5 OFFSET $6`,
       [cari,idortu,orderBy,sort,this.limit,this.offset])
@@ -72,13 +75,16 @@ export default class LesRepository {
     this.setOffset(page)
 
     return this.db.any(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa,
-      tblpaket.jenjang,kelas, jeniskelamin,wali FROM tblles
-      inner join tblpaket on tblpaket.idpaket = tblles.idpaket
-      inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
-      inner join tblwali on tblwali.idwali = tblsiswa.idortu
+    tblpaket.jenjang,kelas, jeniskelamin,wali,guru  FROM tblles
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+    inner join tblwali on tblwali.idwali = tblsiswa.idortu
+    left join tblabsen on tblabsen.idles = tblles.idles
+    left join tblguru on tblabsen.idguru = tblguru.idguru
       where statusles = $1 and 
       (paket ilike '%$2:raw%' or siswa ilike '%$2:raw%') 
       and idwali = $3 
+      group by tblles.idles, tblpaket.idpaket, tblguru.idguru, tblsiswa.idsiswa, tblwali.idwali
       order by $4:name $5:raw
       LIMIT $6 OFFSET $7`,
       [status,cari,idortu,orderBy,sort,this.limit,this.offset])
