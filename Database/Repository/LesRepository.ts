@@ -55,7 +55,7 @@ export default class LesRepository {
   historyByParent({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery, idortu){
     this.setOffset(page)
 
-    return this.db.any(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa,
+    return this.db.any(`SELECT tblles.*, tblpaket.paket, tblpaket.jumlah_pertemuan, biaya,siswa,
     tblpaket.jenjang,kelas, jeniskelamin,wali,guru  FROM tblles
     inner join tblpaket on tblpaket.idpaket = tblles.idpaket
     inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
@@ -74,7 +74,7 @@ export default class LesRepository {
   historyByParentStatus({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery, idortu, status){
     this.setOffset(page)
 
-    return this.db.any(`SELECT tblles.*, tblpaket.jumlah_pertemuan, biaya,siswa,
+    return this.db.any(`SELECT tblles.*, tblpaket.paket, tblpaket.jumlah_pertemuan, biaya,siswa,
     tblpaket.jenjang,kelas, jeniskelamin,wali,guru  FROM tblles
     inner join tblpaket on tblpaket.idpaket = tblles.idpaket
     inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
