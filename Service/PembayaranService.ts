@@ -3,7 +3,7 @@ import StatusLes from "../Entity/StatusLes"
 import { LesBuilder } from "../Builder/LesBuilder"
 const addBayar = async (data)  =>{
   try{
-    const dataLes = await db.les.get(data.idles)
+    const dataLes = await db.les.getApply(data.idles)
     if (dataLes.statusles === StatusLes.PENDING || dataLes.statusles === StatusLes.PEMBAYARANDITOLAK) {
       const lesBuilder: LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setBayarBelumKonfirmasi()

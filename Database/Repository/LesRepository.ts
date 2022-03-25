@@ -39,6 +39,16 @@ export default class LesRepository {
     where tblles.idles = $1`, [index])
   }
 
+  getApply(index){
+    return this.db.one(`SELECT tblles.*,idguru,statuslowongan, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
+    FROM tblles 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+    left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
+    left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 1
+  where tblles.idles = $1`, [index])
+}
+
   add(les:LesInterface):Promise<Les>{
     const dataLes = new Les(les)
     return this.db.one("INSERT INTO tblles (${this:name}) VALUES (${this:list}) RETURNING *", dataLes.getDataWithoutID())
