@@ -110,7 +110,7 @@ const addLes = async (data)  =>{
 
 const confirmLes =  async (idles)  =>{
   try{
-    const dataLes = await db.les.get(idles)
+    const dataLes = await db.les.getApply(idles)
     if (dataLes.statusles === StatusLes.BAYAR_BELUMKONFIRMASI){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setBerlangsung()
@@ -165,7 +165,7 @@ const inputLowonganToAbcent =(idles)=>{
 
 const acceptLes = async (idles,idguru) =>{
   try {
-    const dataLes:Les = await  db.les.get(idles)
+    const dataLes:Les = await  db.les.getApply(idles)
     if(dataLes.statusles == StatusLes.MENCARI_GURU){
       await  db.absen.setGuruAbsen(idles,idguru)
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
@@ -181,7 +181,7 @@ const acceptLes = async (idles,idguru) =>{
 
 const rejectLes =  async (idles)  =>{
   try{
-    const dataLes:Les = await db.les.get(idles)
+    const dataLes:Les = await db.les.getApply(idles)
     if (dataLes.statusles === StatusLes.BAYAR_BELUMKONFIRMASI){
       const lesBuilder:LesBuilder = new LesBuilder(dataLes)
       lesBuilder.setTolakPembayaran()
