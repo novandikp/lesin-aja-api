@@ -8,7 +8,7 @@ import { WaliBuilder } from "../Builder/WaliBuilder"
 import { GuruBuilder } from "../Builder/GuruBuilder"
 
 const {OAuth2Client} = require('google-auth-library');
-const CLIENT_ID:string ="508384095334-uqi7vshb8v3krm2r7bacerjtpdfm82fa.apps.googleusercontent.com"
+const CLIENT_ID:string ="1074207251680-rfbkb2tqe7gchrk8vb1e9802en9rnsba.apps.googleusercontent.com"
 
 const loginAdmin= async ({email, password }:UserInterface) =>{
     try {
