@@ -1,7 +1,7 @@
 import  path from 'path';
 import { Router,Request ,Response,NextFunction } from "express";
 import AdminChecker from "../../Middleware/AdminChecker";
-import { getGuru, getRekapMengajar } from "../../Service/GuruService";
+import { getGuru, getPembayaran, getRekapMengajar } from "../../Service/GuruService";
 import { ErrorHandler } from "../../Util/ErrorHandler";
 import { send } from "../../Util/GlobalResponse";
 import { HTTPStatus } from "../../Util/HTTPStatus";
@@ -25,7 +25,11 @@ router.get("/rekap", async (req:Request,res:Response,next:NextFunction)=>{
 
 
 
-
+router.get("/pembayaran",async(req:Request,res:Response,next:NextFunction)=>{
+    const data = await getPembayaran(req.query)
+    if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+    return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
 
 
 import multer = require("multer");

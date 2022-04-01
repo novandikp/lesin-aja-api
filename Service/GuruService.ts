@@ -60,4 +60,14 @@ const getRekapMengajar = async (query)=>{
     }
 }
 
-export {profile,setProfile,register,getGuru,getRekapMengajar}
+const getPembayaran = async (query)=>{
+    try {
+        const dataRekap:RekapMengajar[] = await db.bayarTutor.all(query)
+        return dataRekap
+    } catch (error) {
+        console.error(error)
+        return null       
+    }
+}
+
+export {profile,setProfile,register,getGuru,getRekapMengajar,getPembayaran}
