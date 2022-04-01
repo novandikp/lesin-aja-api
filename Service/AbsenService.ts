@@ -19,35 +19,39 @@ const absenPertemuan = async (idabsen, data , context)=>{
 
       const rekap =await db.les.cekStatusLes(dataAbsen.idles)
       
-      
-      if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
-        const dataLes = await db.les.get(dataAbsen.idles)
-        const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-        lesBuilder.setSelesai()
-        await db.les.edit(lesBuilder.build(),dataAbsen.idles)
+      if(rekap){
+        if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
+          const dataLes = await db.les.get(dataAbsen.idles)
+          const lesBuilder:LesBuilder = new LesBuilder(dataLes)
+          lesBuilder.setSelesai()
+          await db.les.edit(lesBuilder.build(),dataAbsen.idles)
+        }
       }
-
       return await db.absen.edit(dataAbsen,idabsen)
     }else if (context.posisi == Posisi.WALI){
       const dataAbsen = await db.absen.get(idabsen)
       dataAbsen.flagabsenwali  = StatusAbsen.HADIR
       dataAbsen.rating = data.rating
       dataAbsen.keteranganwali = data.keterangan
-
-      const rekap =await db.les.cekStatusLes(dataAbsen.idles)
       
-      if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
-        const dataLes = await db.les.get(dataAbsen.idles)
-        const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-        lesBuilder.setSelesai()
-        await db.les.edit(lesBuilder.build(),dataAbsen.idles)
+      const rekap =await db.les.cekStatusLes(dataAbsen.idles)
+      if(rekap){
+        if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
+          const dataLes = await db.les.get(dataAbsen.idles)
+          const lesBuilder:LesBuilder = new LesBuilder(dataLes)
+          lesBuilder.setSelesai()
+          await db.les.edit(lesBuilder.build(),dataAbsen.idles)
+        }
       }
+      
 
       return await db.absen.edit(dataAbsen,idabsen)
     }
 
 
   }catch (e){
+    console.log(e);
+    
     return null
   }
 }
