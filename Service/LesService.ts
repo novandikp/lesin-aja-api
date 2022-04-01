@@ -108,6 +108,23 @@ const addLes = async (data)  =>{
   }
 }
 
+
+const cancelLes = async (idles)=>{
+  try{
+    const data = await db.les.get(idles)
+    console.log(data);
+    if(data.statusles == StatusLes.MENCARI_GURU){
+      const lesBuilder:LesBuilder = new LesBuilder(data)
+      lesBuilder.setCancel()
+      await db.lowongan.batal(idles);
+      return db.les.edit(lesBuilder.build(),idles)
+    }
+    return null
+  }catch (e){
+    return null
+  }
+}
+
 const confirmLes =  async (idles)  =>{
   try{
     const dataLes = await db.les.getApply(idles)
@@ -159,9 +176,6 @@ const confirmLes =  async (idles)  =>{
 }
 
 
-const inputLowonganToAbcent =(idles)=>{
-  // db.query("UPDATE tblabsen SET idguru = (SELECT idguru from tbldetai)")
-}
 
 const acceptLes = async (idles,idguru) =>{
   try {
@@ -212,4 +226,4 @@ const  deleteLes = async  (id) =>{
 }
 
 
-export  {getLes,getHistoryWali,getTagihanWali, addLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}
+export  {getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}

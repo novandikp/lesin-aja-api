@@ -9,6 +9,7 @@ export default class StatusLes {
   public static readonly SELESAI= 6
 
   public static readonly MENCARI_GURU_ULANG = 7
+  public static readonly DIBATALKAN = 8
 
   public static readonly STATUS_DATA=[
     "MENCARI_GURU",
@@ -18,7 +19,8 @@ export default class StatusLes {
     "SEDANG_BERLANGSUNG",
     "PEMBAYARAN_DITOLAK",
     "SELESAI",
-    "MENCARI_GURU_ULANG"
+    "MENCARI_GURU_ULANG",
+    "DIBATALKAN"
   ]
 
   //

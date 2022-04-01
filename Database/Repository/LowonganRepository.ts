@@ -63,6 +63,12 @@ export default class LowonganRepository {
     ])
   }
 
+  batal(idles:number){
+  // Batalkan apply lowongan
+    this.db.none ("UPDATE tblapplylowongan SET statusapply = $1 WHERE idlowongan in (select idlowongan from tbllowongan where idles = $2)",[StatusLowongan.BATAL,idles])
+    return this.db.none("UPDATE tbllowongan SET statuslowongan= $1 WHERE idles = $2", [StatusLowongan.BATAL,idles]);
+  }
+
 }
 
 

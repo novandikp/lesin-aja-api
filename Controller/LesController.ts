@@ -6,6 +6,7 @@ import { ErrorHandler } from "../Util/ErrorHandler";
 import {
   acceptLes,
   addLes,
+  cancelLes,
   confirmLes,
   deleteLes,
   editLes,
@@ -44,6 +45,13 @@ router.get("/histori",WaliChecker,async (req:Request,res:Response,next:NextFunct
 router.post("/daftar",async (req:Request,res:Response, next:NextFunction)=>{
   const data = await addLes(req.body)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat mendaftar les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+
+router.post("/batal",async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await cancelLes(req.body.idles)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat membatalkan les"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 

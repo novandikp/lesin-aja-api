@@ -32,7 +32,7 @@ export default class LesRepository {
 
 
   get(index){
-      return this.db.one(`SELECT tblles.*,idguru,statuslowongan, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
+      return this.db.one(`SELECT tblles.*,idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
       FROM tblles 
       inner join tblpaket on tblpaket.idpaket = tblles.idpaket
       inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa

@@ -45,6 +45,11 @@ export class LesBuilder{
     this.statusles = StatusLes.SELESAI
   }
 
+
+  setCancel(){
+    this.statusles = StatusLes.DIBATALKAN
+  }
+
   setTanggalLes(day){
     this.tglles = day
   }
