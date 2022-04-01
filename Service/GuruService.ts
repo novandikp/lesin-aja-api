@@ -3,6 +3,8 @@ import { User } from './../Entity/User';
 import { UserBuilder } from './../Builder/UserBuilder';
 import { db } from '../Database';
 import { Guru } from '../Entity/Guru';
+import RekapLes from '../Entity/RekapLes';
+import RekapMengajar from '../Entity/RekapMengajar';
 
 const getGuru = async (filter)=>{
     try{
@@ -47,4 +49,15 @@ const setProfile = async (body) =>{
     }
 }
 
-export {profile,setProfile,register,getGuru}
+
+const getRekapMengajar = async (query)=>{
+    try {
+        const dataRekap:RekapMengajar[] = await db.les.getRekapMengajar(query)
+        return dataRekap
+    } catch (error) {
+        console.error(error)
+        return null       
+    }
+}
+
+export {profile,setProfile,register,getGuru,getRekapMengajar}

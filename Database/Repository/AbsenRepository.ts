@@ -3,6 +3,7 @@ import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Absen,AbsenInterface } from "../../Entity/Absen"
 import StatusAbsen from "../../Entity/StatusAbsen"
+import RekapLes from '../../Entity/RekapLes';
 
 
 export default class AbsenRepository {
@@ -163,6 +164,8 @@ export default class AbsenRepository {
       [cari,idchild, orderBy,sort,this.limit,this.offset]
     )
   }
+
+ 
 }
 
 

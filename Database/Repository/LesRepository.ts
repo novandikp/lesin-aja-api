@@ -2,6 +2,8 @@ import { IDatabase, IMain } from "pg-promise"
 import FilterUpdate from "../../Util/FilterUpdate"
 import  { Les,LesInterface } from "../../Entity/Les"
 import { ViewLes } from "../../Entity/ViewLes"
+import RekapLes from "../../Entity/RekapLes"
+import RekapMengajar from "../../Entity/RekapMengajar"
 
 
 export default class LesRepository {
@@ -100,12 +102,27 @@ export default class LesRepository {
       [status,cari,idortu,orderBy,sort,this.limit,this.offset])
   }
 
-
   remove(idles:number):Promise<Les>{
     return this.db.one("DELETE FROM tblles WHERE idles=$1 RETURNING *",[
       idles
     ])
   }
+
+  cekStatusLes(idabsen:number):Promise<RekapLes>{
+    return this.db.oneOrNone(`select * from rekap_les where idles=$1`,idabsen)
+  }
+
+  getRekapMengajar({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery):Promise<RekapMengajar[]>{
+    this.setOffset(page)
+    return this.db.any(`select * from rekap_mengajar where   (guru ilike '%$1:raw%' or siswa ilike '%$1:raw%') 
+    order by $2:name $3:raw
+    LIMIT $4 OFFSET $5`,[cari,orderBy,sort,this.limit,this.offset]);
+  }
+
+  gerRekapMengajarByIdGuru(idguru:number):Promise<RekapMengajar>{
+    return this.db.one(`select * from rekap_mengajar where idguru=$1`,idguru)
+  }
+
 
 }
 
