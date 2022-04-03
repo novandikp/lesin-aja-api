@@ -40,7 +40,6 @@ app.use(AuthChecker)
 Route(app)
 
 app.use(handleError)
-const axios = require("axios")
 app.listen(port, async () => {
 
   console.log(`REST at http://localhost:${port}`)

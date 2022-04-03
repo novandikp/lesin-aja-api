@@ -12,11 +12,16 @@ import {
   editLes,
   getHistoryWali,
   getLes,
+  getPermintaanLes,
   getTagihanWali,
-  rejectLes
+  perpanjanganLes,
+  rejectLes,
+  terimaPerpanjanganLes,
+  tolakPerpanjanganLes
 } from "../Service/LesService"
 import WaliChecker from "../Middleware/WaliChecker"
 import { absenPertemuan, editAbsen, izinPertemuan } from "../Service/AbsenService"
+import TeacherChecker from "../Middleware/TeacherChecker";
 
 
 const router = Router()
@@ -93,5 +98,34 @@ router.post("/edit/:id",async (req:Request,res:Response, next:NextFunction)=>{
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat edit les"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
+
+
+// Meminta Perpanjangan Les
+router.post("/perpanjang",WaliChecker,async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await perpanjanganLes(req.body.idles,req.body.tglperpanjang)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat memperpanjang les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+router.get("/permintaan", TeacherChecker,async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await getPermintaanLes(req.context.idchild)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat menerima les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+router.post("/permintaan/terima/:id", TeacherChecker,async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await terimaPerpanjanganLes(req.params.id)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat menerima les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+
+router.post("/permintaan/tolak/:id", TeacherChecker,async (req:Request,res:Response, next:NextFunction)=>{
+  const data = await tolakPerpanjanganLes(req.params.id)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat menerima les"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+
 
 export default router

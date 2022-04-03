@@ -2,6 +2,7 @@ import { Les, LesInterface } from './../Entity/Les';
 import StatusLes from "../Entity/StatusLes"
 
 export class LesBuilder{
+  
   public idles:number
   public idpaket:number
   public idsiswa:number
@@ -10,6 +11,7 @@ export class LesBuilder{
   public hari:string
   public statusles:number
   public prefrensi:string
+  public tglperpanjang:string
   constructor({idpaket,idsiswa, tglles, jamles, hari,prefrensi}:LesInterface){
     this.idpaket = idpaket
     this.idsiswa =idsiswa
@@ -21,6 +23,7 @@ export class LesBuilder{
 
   setPending(){
     this.statusles = StatusLes.PENDING
+    this.tglperpanjang =null  
   }
 
 
@@ -31,6 +34,10 @@ export class LesBuilder{
 
   setMencariGuru(){
     this.statusles = StatusLes.MENCARI_GURU
+  }
+
+  setTolakPerpanjangan() {
+   this.statusles = StatusLes.TOLAK_PERPANJANGAN
   }
 
   setBerlangsung(){
@@ -45,16 +52,24 @@ export class LesBuilder{
     this.statusles = StatusLes.SELESAI
   }
 
+  setPerpanjangan(tanggalPerpanjangan){
+    this.tglperpanjang = tanggalPerpanjangan
+    this.statusles = StatusLes.PROSESPERPANJANGAN
+  }
+
+  setKonfirmasiPerpanjangan(){
+    this.statusles = StatusLes.KONFIRMASI_PERPANJANGAN
+  }
+
 
   setCancel(){
     this.statusles = StatusLes.DIBATALKAN
   }
 
-  setTanggalLes(day){
-    this.tglles = day
-  }
+  
 
   build() :Les{
+ 
     return new Les(this)
   }
 }

@@ -13,6 +13,7 @@ import OneSignalUtil from "../Util/OneSignalUtil"
 import { Posisi } from "../Entity/Posisi"
 import StatusLowongan from "../Entity/StatusLowongan"
 import Lowongan from "../Entity/Lowongan"
+import ApplyLowongan from '../Entity/ApplyLowongan';
 
 const getLes = async (filter)=>{
   const {status} = filter;
@@ -226,4 +227,63 @@ const  deleteLes = async  (id) =>{
 }
 
 
-export  {getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}
+const perpanjanganLes = async (id, tgl)=> {
+  try{
+    const data = await db.les.get(id)
+    if(data.statusles == StatusLes.SELESAI){
+      const lesBuilder:LesBuilder = new LesBuilder(data)
+      lesBuilder.setPerpanjangan(tgl)
+      return db.les.edit(lesBuilder.build(),id)
+    }
+    return null
+  }catch (e){
+    return null
+  }
+}
+
+const getPermintaanLes = async(idguru)=>{
+  try {
+    return db.les.getByGuruStatus(idguru,StatusLes.PROSESPERPANJANGAN)
+  } catch (error) {
+    return null
+  }
+}
+
+const terimaPerpanjanganLes = async (id)=> {
+  try{
+    const data = await db.les.get(id)
+    if(data.statusles == StatusLes.PROSESPERPANJANGAN){
+      const lesBuilder:LesBuilder = new LesBuilder(data)
+      lesBuilder.setKonfirmasiPerpanjangan()
+      await db.les.edit(lesBuilder.build(),id)
+      lesBuilder.tglles = lesBuilder.tglperpanjang
+      lesBuilder.setPending()
+      const dataLes =await db.les.add(lesBuilder.build())
+      const {idlowongan}= await db.lowongan.add(new Lowongan(dataLes.idles,StatusLowongan.DIKONFIRMASI))
+      await db.applyLowongan.add(new ApplyLowongan(idlowongan,data.idguru, StatusLowongan.DIKONFIRMASI))
+      return dataLes
+    }
+    return null
+  }catch (e){
+    return null
+  }
+}
+
+
+const tolakPerpanjanganLes = async (id)=> {
+  try{
+    const data = await db.les.get(id)
+    if(data.statusles == StatusLes.PROSESPERPANJANGAN){
+      const lesBuilder:LesBuilder = new LesBuilder(data)
+      lesBuilder.setTolakPerpanjangan()
+      return db.les.edit(lesBuilder.build(),id)
+    }
+    return null
+  }catch (e){
+    return null
+  }
+}
+
+
+
+export  {perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}

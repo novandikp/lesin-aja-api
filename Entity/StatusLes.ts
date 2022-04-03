@@ -10,6 +10,10 @@ export default class StatusLes {
 
   public static readonly MENCARI_GURU_ULANG = 7
   public static readonly DIBATALKAN = 8
+  // MEMINTA PERPANJANGAN KE GURU
+  public static readonly PROSESPERPANJANGAN= 9
+  public static readonly KONFIRMASI_PERPANJANGAN = 10
+  public static readonly TOLAK_PERPANJANGAN = 11
 
   public static readonly STATUS_DATA=[
     "MENCARI_GURU",
@@ -20,7 +24,10 @@ export default class StatusLes {
     "PEMBAYARAN_DITOLAK",
     "SELESAI",
     "MENCARI_GURU_ULANG",
-    "DIBATALKAN"
+    "DIBATALKAN",
+    "PROSESPERPANJANGAN",
+    "KONFIRMASI_PERPANJANGAN",
+    "TOLAK_PERPANJANGAN"
   ]
 
   //

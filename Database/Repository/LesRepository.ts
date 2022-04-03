@@ -4,6 +4,7 @@ import  { Les,LesInterface } from "../../Entity/Les"
 import { ViewLes } from "../../Entity/ViewLes"
 import RekapLes from "../../Entity/RekapLes"
 import RekapMengajar from "../../Entity/RekapMengajar"
+import StatusLes from "../../Entity/StatusLes"
 
 
 export default class LesRepository {
@@ -40,6 +41,16 @@ export default class LesRepository {
       left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan
     where tblles.idles = $1`, [index])
   }
+
+  getByGuruStatus(idguru, statusLes = StatusLes.SELESAI){
+    return this.db.any(`SELECT tblles.*,idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
+    FROM tblles 
+    inner join tblpaket on tblpaket.idpaket = tblles.idpaket
+    inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+    left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
+    left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan
+  where tblapplylowongan.idguru = $1 and tblles.statusles=$2`, [idguru,statusLes])
+}
 
   getApply(index){
     return this.db.one(`SELECT tblles.*,idguru,statuslowongan, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
