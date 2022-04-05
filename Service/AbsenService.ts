@@ -17,6 +17,8 @@ const absenPertemuan = async (idabsen, data , context)=>{
       dataAbsen.flagabsen = StatusAbsen.HADIR
       dataAbsen.keterangan = data.keterangan
 
+      
+      const dataEdit= await db.absen.edit(dataAbsen,idabsen)
       const rekap =await db.les.cekStatusLes(dataAbsen.idles)
       
       if(rekap){
@@ -27,13 +29,13 @@ const absenPertemuan = async (idabsen, data , context)=>{
           await db.les.edit(lesBuilder.build(),dataAbsen.idles)
         }
       }
-      return await db.absen.edit(dataAbsen,idabsen)
+      return dataEdit
     }else if (context.posisi == Posisi.WALI){
       const dataAbsen = await db.absen.get(idabsen)
       dataAbsen.flagabsenwali  = StatusAbsen.HADIR
       dataAbsen.rating = data.rating
       dataAbsen.keteranganwali = data.keterangan
-      
+      const dataEdit = await db.absen.edit(dataAbsen,idabsen)
       const rekap =await db.les.cekStatusLes(dataAbsen.idles)
       if(rekap){
         if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
@@ -43,9 +45,9 @@ const absenPertemuan = async (idabsen, data , context)=>{
           await db.les.edit(lesBuilder.build(),dataAbsen.idles)
         }
       }
-      
+      return dataEdit
 
-      return await db.absen.edit(dataAbsen,idabsen)
+      
     }
 
 
