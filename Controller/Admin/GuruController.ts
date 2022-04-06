@@ -18,7 +18,7 @@ router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
 
 
 router.get("/rekap", async (req:Request,res:Response,next:NextFunction)=>{
-    const data = await getRekapMengajar(req.query)
+    const data = await getRekapMengajar(req.query,req.query.status)
     if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
     return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })

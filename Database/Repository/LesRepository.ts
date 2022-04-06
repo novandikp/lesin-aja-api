@@ -123,11 +123,18 @@ export default class LesRepository {
     return this.db.oneOrNone(`select * from rekap_les where idles=$1`,idabsen)
   }
 
-  getRekapMengajar({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery):Promise<RekapMengajar[]>{
+  getRekapMengajar({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery,status):Promise<RekapMengajar[]>{
     this.setOffset(page)
-    return this.db.any(`select * from rekap_mengajar where   (guru ilike '%$1:raw%' or siswa ilike '%$1:raw%') 
-    order by $2:name $3:raw
-    LIMIT $4 OFFSET $5`,[cari,orderBy,sort,this.limit,this.offset]);
+    if(status == undefined){
+      return this.db.any(`select * from rekap_mengajar where  (guru ilike '%$1:raw%' or siswa ilike '%$1:raw%') 
+      order by $2:name $3:raw
+      LIMIT $4 OFFSET $5`,[cari,orderBy,sort,this.limit,this.offset]);
+    }else{
+      return this.db.any(`select * from rekap_mengajar where status='${status}' and  (guru ilike '%$1:raw%' or siswa ilike '%$1:raw%') 
+      order by $2:name $3:raw
+      LIMIT $4 OFFSET $5`,[cari,orderBy,sort,this.limit,this.offset]);
+    }
+   
   }
 
   gerRekapMengajarByIdGuru(idguru:number):Promise<RekapMengajar>{

@@ -5,6 +5,7 @@ import { db } from '../Database';
 import { Guru } from '../Entity/Guru';
 import RekapLes from '../Entity/RekapLes';
 import RekapMengajar from '../Entity/RekapMengajar';
+import { stat } from 'fs';
 
 const getGuru = async (filter)=>{
     try{
@@ -50,9 +51,10 @@ const setProfile = async (body) =>{
 }
 
 
-const getRekapMengajar = async (query)=>{
+const getRekapMengajar = async (query,status)=>{
     try {
-        const dataRekap:RekapMengajar[] = await db.les.getRekapMengajar(query)
+     
+        const dataRekap:RekapMengajar[] = await db.les.getRekapMengajar(query,status)
         return dataRekap
     } catch (error) {
         console.error(error)
