@@ -12,6 +12,7 @@ import {
   editLes,
   getHistoryWali,
   getLes,
+  getLesPayed,
   getPermintaanLes,
   getTagihanWali,
   perpanjanganLes,
@@ -28,6 +29,13 @@ const router = Router()
 
 router.get("/",async (req:Request,res:Response,next:NextFunction)=>{
   const data = await getLes(req.query)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
+})
+
+
+router.get("/terkonfirmasi",async (req:Request,res:Response,next:NextFunction)=>{
+  const data = await getLesPayed(req.query)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })

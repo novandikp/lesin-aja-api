@@ -285,5 +285,13 @@ const tolakPerpanjanganLes = async (id)=> {
 }
 
 
+const getLesPayed = async (query) =>{
+  try {
+    return db.les.lesPayed(query)
+  } catch (error) {
+    return null
+  }
+}
 
-export  {perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}
+
+export  {getLesPayed,perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}

@@ -24,6 +24,15 @@ export default class LesRepository {
     )
   }
 
+
+  
+  lesPayed({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery) : Promise<ViewLes[]> {
+    this.setOffset(page)
+    return this.db.any("SELECT * FROM view_les WHERE (siswa ilike '%$1:raw%' or wali ilike '%$1:raw%') and statusles > $2 and statusles != $7 and statusles != $8  ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
+      [cari,StatusLes.BAYAR_BELUMKONFIRMASI, orderBy,sort,this.limit,this.offset,StatusLes.PEMBAYARANDITOLAK,StatusLes.DIBATALKAN]
+    )
+  }
+
   allWithStatus({page=1,cari="",orderBy="paket",sort="ASC"}:ParameterQuery,status) : Promise<ViewLes[]> {
     this.setOffset(page)
     return this.db.any("SELECT * FROM view_les WHERE (siswa ilike '%$1:raw%' or wali ilike '%$1:raw%') and statusles = $2 ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
