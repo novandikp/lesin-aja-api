@@ -27,6 +27,16 @@ const register = async (body) =>{
     }
 }
 
+
+const setRefrensi = async (refrensi,idwali)=>{
+    try {
+        const dataWali:Wali = await db.wali.setRefrensi(refrensi,idwali)
+        return dataWali
+    } catch (error) {
+        return null       
+    }
+}
+
 const profile = async (id:number) =>{
     try {
         const dataWali:Wali = await db.wali.getById(id)
@@ -46,4 +56,14 @@ const setProfile = async (body) =>{
     }
 }
 
-export {profile,setProfile,register,getWali}
+
+const getRekapRefrensi = async () =>{
+    try {
+        const dataWali:any = await db.wali.getRekapRefrensi()
+        return dataWali
+    } catch (error) {
+        return null       
+    }
+}
+
+export {profile,setProfile,register,getWali,setRefrensi,getRekapRefrensi}

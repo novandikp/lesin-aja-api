@@ -20,6 +20,14 @@ export default class WaliRepository {
     }
 
 
+    async setRefrensi(refrensi:String, idwali:any){
+        return this.db.oneOrNone("UPDATE tblwali set refrensi=$1 WHERE idwali=$2 RETURNING *",[refrensi,idwali])
+    }
+
+    async getRekapRefrensi():Promise<any>{
+        return this.db.any("select * from view_refrensi")
+    }
+
     async getByEmail(email:String): Promise<Wali > {
         return this.db.one("SELECT * FROM tblwali where email=$1 LIMIT 1",[email])
     }

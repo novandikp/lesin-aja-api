@@ -20,5 +20,12 @@ router.post("/profile",async (req:Request, res:Response,next:NextFunction)=>{
     return send(res, HTTPStatus.OK, {data:data,status:true, message :""})
 })
 
+router.post("/refrensi",async (req:Request, res:Response,next:NextFunction)=>{
+    const idwali = req.context.idchild
+    const data = await WaliService.setRefrensi(req.body.refrensi,idwali )
+    if (!data) return next(new ErrorHandler(HTTPStatus.NOTFOUND,"Data tidak ditemukan"))
+    return send(res, HTTPStatus.OK, {data:data,status:true, message :""})
+})
+
 
 export default router
