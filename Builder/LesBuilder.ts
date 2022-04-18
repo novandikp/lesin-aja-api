@@ -21,6 +21,11 @@ export class LesBuilder{
     this.prefrensi = prefrensi
   }
 
+
+  setMencariGuruUlang() {
+    this.statusles = StatusLes.MENCARI_GURU_ULANG
+  }
+
   setPending(){
     this.statusles = StatusLes.PENDING
     this.tglperpanjang =null  

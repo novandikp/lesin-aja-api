@@ -176,7 +176,23 @@ const confirmLes =  async (idles)  =>{
   }
 }
 
-
+const reselectTeacher = async (idles)=>{
+  try{
+    await db.lowongan.disableRecent(idles)
+    const data = await db.les.get(idles)
+    if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
+      const lesBuilder:LesBuilder = new LesBuilder(data)
+      lesBuilder.setMencariGuruUlang()
+      await db.lowongan.add(new Lowongan(data.idles,StatusLowongan.PENDING))
+      return db.les.edit(lesBuilder.build(),idles)
+    }else{
+      return null;
+    }
+ 
+  }catch (e){ 
+    return null
+  }
+}
 
 const acceptLes = async (idles,idguru) =>{
   try {
@@ -294,4 +310,4 @@ const getLesPayed = async (query) =>{
 }
 
 
-export  {getLesPayed,perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}
+export  {reselectTeacher,getLesPayed,perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}

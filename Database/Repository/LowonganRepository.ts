@@ -22,6 +22,14 @@ export default class LowonganRepository {
     ])
   }
 
+  async disableRecent (idles)  {
+    //  delete tblappylowongan
+    await this.db.any(`update tblapplylowongan set statusapply=4 where idapplylowongan in 
+     (select idapplylowongan from view_pelamar where statusapply=3 and idles=$1 ) `, [idles]);
+     await this.db.any('update tbllowongan set statuslowongan=4 where idles=$1',[idles]);
+     return true;
+  }
+
 
   setStatusLowongan(idlowongan:number,status:number ){
     return this.db.none("UPDATE tbllowongan SET statuslowongan= $1 WHERE idlowongan = $2", [status,idlowongan]);

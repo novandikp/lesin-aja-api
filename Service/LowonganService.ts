@@ -86,6 +86,7 @@ const applyNewAbsen=async (tanggalMulai,dataLes,idguru)=>{
         const absenBuilder:Absen = new Absen(
           absenTersisa[i]
         )
+        absenBuilder.tglabsen = tglmulailes.toISOString().slice(0, 10);
         absenBuilder.idguru =idguru
         await db.absen.edit(absenBuilder,absenBuilder.idabsen)
         i++;

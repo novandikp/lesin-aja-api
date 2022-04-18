@@ -17,6 +17,7 @@ import {
   getTagihanWali,
   perpanjanganLes,
   rejectLes,
+  reselectTeacher,
   terimaPerpanjanganLes,
   tolakPerpanjanganLes
 } from "../Service/LesService"
@@ -40,6 +41,12 @@ router.get("/terkonfirmasi",async (req:Request,res:Response,next:NextFunction)=>
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })
 
+
+router.post("/ulang",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
+  let data = await reselectTeacher(req.body.idles)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+  return send(res,HTTPStatus.OK,{data:[],status:true,message:"Berhasil"})
+})
 
 router.get("/tagihan",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
 

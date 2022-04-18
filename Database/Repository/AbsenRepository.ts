@@ -91,7 +91,7 @@ export default class AbsenRepository {
     inner join tblpaket on tblpaket.idpaket = tblles.idpaket 
     inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa 
     inner join tblwali on tblwali.idwali  = tblsiswa.idortu
-    WHERE idles=$1 and flagabsen=$2`,
+    WHERE tblles.idles=$1 and flagabsen=$2`,
       [idchild, StatusAbsen.PENDING]
     )
   }
