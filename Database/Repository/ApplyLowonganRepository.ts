@@ -34,7 +34,7 @@ export default class ApplyLowonganRepository {
   getByLes({page=1,cari="",orderBy="idapplylowongan",sort="ASC"}:ParameterQuery,tag_id){
     this.setOffset(page)
   
-    return this.db.any("SELECT * FROM view_pelamar WHERE (paket ilike '%$1:raw%' or  guru ilike '%$1:raw%') and statuslowongan=3 and idles =$2  ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
+    return this.db.any("SELECT * FROM view_pelamar WHERE (paket ilike '%$1:raw%' or  guru ilike '%$1:raw%') and statuslowongan="+StatusLowongan.PENDING+" and idles =$2  ORDER BY $3:name $4:raw LIMIT $5 OFFSET $6",
       [cari,tag_id, orderBy,sort,this.limit,this.offset]
     )
   }
