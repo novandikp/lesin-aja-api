@@ -43,10 +43,10 @@ router.get("/terkonfirmasi",async (req:Request,res:Response,next:NextFunction)=>
 
 
 router.post("/ulang",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
-  let data = await reselectTeacher(req.body.idles)
+  let data = await reselectTeacher(req.body.idles,req.body.alasan)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:[],status:true,message:"Berhasil"})
-})
+})  
 
 router.get("/tagihan",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
 

@@ -14,6 +14,7 @@ import { Posisi } from "../Entity/Posisi"
 import StatusLowongan from "../Entity/StatusLowongan"
 import Lowongan from "../Entity/Lowongan"
 import ApplyLowongan from '../Entity/ApplyLowongan';
+import { Rekap_Mengajar } from '../Entity/RekapMengajar';
 
 const getLes = async (filter)=>{
   const {status} = filter;
@@ -176,13 +177,19 @@ const confirmLes =  async (idles)  =>{
   }
 }
 
-const reselectTeacher = async (idles)=>{
+const reselectTeacher = async (idles,alasan)=>{
   try{
-    await db.lowongan.disableRecent(idles)
     const data = await db.les.get(idles)
+    await db.lowongan.disableRecent(idles)
+    
+  
     if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
       const lesBuilder:LesBuilder = new LesBuilder(data)
       lesBuilder.setMencariGuruUlang()
+
+      const rekap:Rekap_Mengajar = new Rekap_Mengajar(idles,data.idguru,alasan,lesBuilder.statusles)
+      await db.rekap.addRekap(rekap);
+      
       await db.lowongan.add(new Lowongan(data.idles,StatusLowongan.PENDING))
       return db.les.edit(lesBuilder.build(),idles)
     }else{
@@ -190,6 +197,7 @@ const reselectTeacher = async (idles)=>{
     }
  
   }catch (e){ 
+    console.log(e)
     return null
   }
 }

@@ -1,5 +1,7 @@
 import { Les, LesInterface } from './../Entity/Les';
 import StatusLes from "../Entity/StatusLes"
+import { db } from '../Database';
+import { Rekap_Mengajar } from '../Entity/RekapMengajar';
 
 export class LesBuilder{
   
@@ -24,6 +26,7 @@ export class LesBuilder{
 
   setMencariGuruUlang() {
     this.statusles = StatusLes.MENCARI_GURU_ULANG
+
   }
 
   setPending(){
@@ -31,7 +34,9 @@ export class LesBuilder{
     this.tglperpanjang =null  
   }
 
-
+  setIdLes(idles:number){
+    this.idles = idles
+  }
 
   setTolakPembayaran(){
     this.statusles = StatusLes.PEMBAYARANDITOLAK

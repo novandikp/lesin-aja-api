@@ -4,6 +4,7 @@ import { Posisi } from "../Entity/Posisi"
 import StatusAbsen from "../Entity/StatusAbsen"
 import StatusLes from "../Entity/StatusLes"
 import { rekapKeuangankeluar } from "./KeuanganService"
+import { Rekap_Mengajar } from '../Entity/RekapMengajar';
 
 const absenPertemuan = async (idabsen, data , context)=>{
   try{
@@ -25,7 +26,11 @@ const absenPertemuan = async (idabsen, data , context)=>{
         if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
           const dataLes = await db.les.get(dataAbsen.idles)
           const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-          lesBuilder.setSelesai()
+          lesBuilder.setSelesai();
+
+          const rekap:Rekap_Mengajar = new Rekap_Mengajar(dataAbsen.idles,dataLes.idguru,"Selesai",lesBuilder.statusles)
+          await db.rekap.addRekap(rekap);
+
           await db.les.edit(lesBuilder.build(),dataAbsen.idles)
         }
       }
@@ -41,7 +46,11 @@ const absenPertemuan = async (idabsen, data , context)=>{
         if (rekap.statusles == StatusLes.SEDANG_BERLANGSUNG && rekap.jumlah_mengajar == rekap.jumlah_pertemuan){
           const dataLes = await db.les.get(dataAbsen.idles)
           const lesBuilder:LesBuilder = new LesBuilder(dataLes)
-          lesBuilder.setSelesai()
+          lesBuilder.setSelesai();
+
+          const rekap:Rekap_Mengajar = new Rekap_Mengajar(dataAbsen.idles,dataLes.idguru,"Selesai",lesBuilder.statusles)
+          await db.rekap.addRekap(rekap);
+
           await db.les.edit(lesBuilder.build(),dataAbsen.idles)
         }
       }
