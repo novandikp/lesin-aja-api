@@ -9,7 +9,7 @@ import {
     RegionRepository,
     SiswaRepository,
     UserRepository,
-    WaliRepository,KeuanganRepository,ApplyLowonganRepository,LowonganRepository,BayarTutorRepository, RekapMenagajarRepository
+    WaliRepository,KeuanganRepository,ApplyLowonganRepository,LowonganRepository,BayarTutorRepository, RekapMenagajarRepository, PenggantianGuruRepository
 
 } from "./Repository"
 import PembayaranRepository from "./Repository/PembayaranRepository"
@@ -35,6 +35,7 @@ const initOptions: IInitOptions<IRepository> = {
         obj.applyLowongan = new ApplyLowonganRepository(obj,pgp)
         obj.bayarTutor = new BayarTutorRepository(obj,pgp)
         obj.rekap = new RekapMenagajarRepository(obj,pgp)
+        obj.penggantian = new PenggantianGuruRepository(obj,pgp)
     }
 };
 

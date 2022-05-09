@@ -15,6 +15,7 @@ import StatusLowongan from "../Entity/StatusLowongan"
 import Lowongan from "../Entity/Lowongan"
 import ApplyLowongan from '../Entity/ApplyLowongan';
 import { Rekap_Mengajar } from '../Entity/RekapMengajar';
+import PenggantianGuru from '../Entity/PenggantianGuru';
 
 const getLes = async (filter)=>{
   const {status} = filter;
@@ -177,28 +178,83 @@ const confirmLes =  async (idles)  =>{
   }
 }
 
-const reselectTeacher = async (idles,alasan)=>{
+const requestReselect = async (idles,alasan)  =>{
   try{
-    const data = await db.les.get(idles)
-    await db.lowongan.disableRecent(idles)
-    
-  
-    if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
-      const lesBuilder:LesBuilder = new LesBuilder(data)
-      lesBuilder.setMencariGuruUlang()
-
-      const rekap:Rekap_Mengajar = new Rekap_Mengajar(idles,data.idguru,alasan,lesBuilder.statusles)
-      await db.rekap.addRekap(rekap);
-      
-      await db.lowongan.add(new Lowongan(data.idles,StatusLowongan.PENDING))
-      return db.les.edit(lesBuilder.build(),idles)
-    }else{
-      return null;
+    const requestExist = await db.penggantian.isExistsRequest(idles)
+    if(!requestExist){
+      const data = await db.les.get(idles)
+      if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
+          const data:PenggantianGuru = new PenggantianGuru({idles,alasan})
+          const result = await db.penggantian.add(data)
+          return result;
+      }
     }
+    
+    return null;
+    
+  }catch (e) {
+    console.log(e)
+    return null
+  }
+}
+
+const reselectTeacher = async (idpenggantian)=>{
+  try{
+    const data = await db.penggantian.get(idpenggantian)
+    const dataPenggantian:PenggantianGuru = new PenggantianGuru(data)
+    if(dataPenggantian.isDelayed()){
+      dataPenggantian.setConfirm();
+      const {idles,alasan} = data
+      await db.lowongan.disableRecent(idles)
+      await db.penggantian.set(idpenggantian,dataPenggantian);
+    
+      if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
+        const lesBuilder:LesBuilder = new LesBuilder(data)
+        lesBuilder.setMencariGuruUlang()
+  
+        const rekap:Rekap_Mengajar = new Rekap_Mengajar(idles,data.idguru,alasan,lesBuilder.statusles)
+        await db.rekap.addRekap(rekap);
+        
+        await db.lowongan.add(new Lowongan(data.idles,StatusLowongan.PENDING))
+        return db.les.edit(lesBuilder.build(),idles)
+      }
+    }
+    
+    return null;
  
   }catch (e){ 
     console.log(e)
     return null
+  }
+}
+
+const rejectReselect = async (idpenggantian)=>{
+  try{
+     const result= await db.penggantian.get(idpenggantian)
+     const data:PenggantianGuru = new PenggantianGuru(result)
+     console.log(data)
+    if(data.isDelayed()){
+      data.setReject();
+      const result = await db.penggantian.set(idpenggantian,data)
+      return result
+    }else{
+      return null;
+    }
+  }catch (e){
+    console.log(e)
+    return null;
+  }
+}
+
+const historyReselect = async (filter,context) =>{
+  try{
+    const result = await db.penggantian.all(filter,context)
+    
+    return result
+  }catch(e){
+    console.log(e);
+    
+    return null;
   }
 }
 
@@ -318,4 +374,4 @@ const getLesPayed = async (query) =>{
 }
 
 
-export  {reselectTeacher,getLesPayed,perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}
+export  {historyReselect,reselectTeacher,requestReselect,rejectReselect,getLesPayed,perpanjanganLes, tolakPerpanjanganLes, getPermintaanLes, terimaPerpanjanganLes,getLes,getHistoryWali,getTagihanWali, addLes, cancelLes,editLes,deleteLes,confirmLes, rejectLes,acceptLes,getJadwal,getJadwalByLes,getJadwalBySiswa}

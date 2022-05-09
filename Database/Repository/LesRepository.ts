@@ -47,7 +47,7 @@ export default class LesRepository {
       inner join tblpaket on tblpaket.idpaket = tblles.idpaket
       inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
       left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
-      left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan
+      left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 3
     where tblles.idles = $1`, [index])
   }
 

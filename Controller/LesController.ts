@@ -15,8 +15,11 @@ import {
   getLesPayed,
   getPermintaanLes,
   getTagihanWali,
+  historyReselect,
   perpanjanganLes,
   rejectLes,
+  rejectReselect,
+  requestReselect,
   reselectTeacher,
   terimaPerpanjanganLes,
   tolakPerpanjanganLes
@@ -24,6 +27,8 @@ import {
 import WaliChecker from "../Middleware/WaliChecker"
 import { absenPertemuan, editAbsen, izinPertemuan } from "../Service/AbsenService"
 import TeacherChecker from "../Middleware/TeacherChecker";
+import AdminChecker from "../Middleware/AdminChecker";
+import { Posisi } from "../Entity/Posisi";
 
 
 const router = Router()
@@ -43,9 +48,32 @@ router.get("/terkonfirmasi",async (req:Request,res:Response,next:NextFunction)=>
 
 
 router.post("/ulang",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{
-  let data = await reselectTeacher(req.body.idles,req.body.alasan)
+  let data = await requestReselect(req.body.idles,req.body.alasan)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:[],status:true,message:"Berhasil"})
+})  
+
+router.get("/ulang/daftar",async (req:Request,res:Response,next:NextFunction)=>{
+  if(req.context.posisi == Posisi.GURU){
+    return next(new ErrorHandler(HTTPStatus.UNAUTHORIZED, "Account Not has Access"))  
+  }
+
+  let data = await historyReselect(req.body,req.context)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:"Berhasil"})
+  
+})  
+
+router.post("/ulang/terima",AdminChecker,async (req:Request,res:Response,next:NextFunction)=>{
+  let data = await reselectTeacher(req.body.idpenggantian)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:"Berhasil"})
+})  
+
+router.post("/ulang/tolak",AdminChecker,async (req:Request,res:Response,next:NextFunction)=>{
+  let data = await rejectReselect(req.body.idpenggantian)
+  if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
+  return send(res,HTTPStatus.OK,{data:data,status:true,message:"Berhasil"})
 })  
 
 router.get("/tagihan",WaliChecker,async (req:Request,res:Response,next:NextFunction)=>{

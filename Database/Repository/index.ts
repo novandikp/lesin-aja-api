@@ -12,6 +12,7 @@ import LowonganRepository from "./LowonganRepository"
 import BayarTutorRepository from "./BayarTutorRepository"
 import ApplyLowonganRepository from "./ApplyLowonganRepository"
 import RekapMenagajarRepository from "./RekapMengajarRepository";
+import PenggantianGuruRepository from "./PenggantianGuruRepository";
 
 interface IRepository{
     users : UserRepository
@@ -28,11 +29,12 @@ interface IRepository{
     applyLowongan:ApplyLowonganRepository
     bayarTutor:BayarTutorRepository
     rekap:RekapMenagajarRepository
+    penggantian:PenggantianGuruRepository
 }
 
 
 export{
-    IRepository,UserRepository,WaliRepository,
+    IRepository,UserRepository,WaliRepository,PenggantianGuruRepository,
     GuruRepository,RegionRepository,PaketRepository,
     SiswaRepository,LesRepository,AbsenRepository,PembayaranRepository,
   KeuanganRepository,ApplyLowonganRepository,LowonganRepository,BayarTutorRepository,RekapMenagajarRepository
