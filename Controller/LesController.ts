@@ -58,7 +58,7 @@ router.get("/ulang/daftar",async (req:Request,res:Response,next:NextFunction)=>{
     return next(new ErrorHandler(HTTPStatus.UNAUTHORIZED, "Account Not has Access"))  
   }
 
-  let data = await historyReselect(req.body,req.context)
+  let data = await historyReselect(req.query,req.context)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Data tidak ditemukan"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:"Berhasil"})
   

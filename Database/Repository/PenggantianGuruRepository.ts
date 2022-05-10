@@ -20,8 +20,18 @@ export default class PenggantianGuruRepository{
 
 
     all(data:any, context:Payload):Promise<any>{
-        const {page=1,cari="",orderBy="idpenggantian",sort="ASC"} = data
+        const {page=1,cari="",orderBy="idpenggantian",sort="ASC", status="NONE"} = data
         const {posisi, idchild} = context;
+        const statusData = [
+            "PENDING",
+            "TERKONFIRMASI",
+            "DITOLAK"
+        ]
+
+        let filterStatus = ""
+        if(statusData.indexOf(status) >= 0){
+            filterStatus = " and tblpenggantianguru.status = " + statusData.indexOf(status)
+        }
         this.setOffset(page)
         let sqlQuery;
         if(posisi == Posisi.WALI){
@@ -34,7 +44,7 @@ export default class PenggantianGuruRepository{
             left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
             left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 3
             left JOIN tblguru ON tblguru.idguru = tblapplylowongan.idguru
-            WHERE (guru ILIKE '%${cari}%' or siswa ILIKE '%${cari}%') and idortu='${idchild}'
+            WHERE (guru ILIKE '%${cari}%' or siswa ILIKE '%${cari}%') and idortu='${idchild}' ${filterStatus}
             ORDER BY "${orderBy}" ${sort} LIMIT ${this.limit} OFFSET ${this.offset}`
         }else{
             sqlQuery = `SELECT idpenggantian, tblpenggantianguru.alasan, tglpenggantian,tblpenggantianguru.status ,tblles.*,tblguru.idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, tblsiswa.jeniskelamin,gaji,
@@ -46,7 +56,7 @@ export default class PenggantianGuruRepository{
             left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
             left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 3
             left JOIN tblguru ON tblguru.idguru = tblapplylowongan.idguru
-            WHERE guru ILIKE '%${cari}%' or siswa ILIKE '%${cari}%'
+            WHERE (guru ILIKE '%${cari}%' or siswa ILIKE '%${cari}%')  ${filterStatus}
             ORDER BY "${orderBy}" ${sort} LIMIT ${this.limit} OFFSET ${this.offset}`   
         }
         
