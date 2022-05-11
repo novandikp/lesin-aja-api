@@ -92,8 +92,9 @@ export default class LesRepository {
     inner join tblpaket on tblpaket.idpaket = tblles.idpaket
     inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
     inner join tblwali on tblwali.idwali = tblsiswa.idortu
-    left join tblabsen on tblabsen.idles = tblles.idles
-    left join tblguru on tblabsen.idguru = tblguru.idguru
+    left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
+    left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 3
+    left join tblguru on tblguru.idguru = tblapplylowongan.idguru
       where 
       (paket ilike '%$1:raw%' or siswa ilike '%$1:raw%') 
       and idwali = $2 
@@ -111,8 +112,9 @@ export default class LesRepository {
     inner join tblpaket on tblpaket.idpaket = tblles.idpaket
     inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
     inner join tblwali on tblwali.idwali = tblsiswa.idortu
-    left join tblabsen on tblabsen.idles = tblles.idles
-    left join tblguru on tblabsen.idguru = tblguru.idguru
+    left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
+    left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 3
+    left join tblguru on tblguru.idguru = tblapplylowongan.idguru
       where statusles = $1 and 
       (paket ilike '%$2:raw%' or siswa ilike '%$2:raw%') 
       and idwali = $3 
