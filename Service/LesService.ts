@@ -207,7 +207,7 @@ const reselectTeacher = async (idpenggantian)=>{
       const {idles,alasan} = data
       await db.lowongan.disableRecent(idles)
       await db.penggantian.set(idpenggantian,dataPenggantian);
-    
+      await db.absen.removeSisaJadwal(idles)
       if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
         const lesBuilder:LesBuilder = new LesBuilder(data)
         lesBuilder.setMencariGuruUlang()

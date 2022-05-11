@@ -96,6 +96,10 @@ export default class AbsenRepository {
     )
   }
 
+  removeSisaJadwal(idchild)  {
+    return this.db.query(`update tblabsen set idguru=null where idles=$1 and flagabsen=$2`,[idchild, StatusAbsen.PENDING])
+  }
+
   getByLes({page=1,cari="",orderBy="tglabsen",sort="ASC"}:ParameterQuery, idchild)  {
     this.setOffset(page)
     return this.db.any(`select idabsen,tblabsen.tglabsen, tblabsen.flagabsen,tblabsen.flagabsenwali,
