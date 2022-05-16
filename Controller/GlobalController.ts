@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { GuruService } from "../Service";
+import { getTokenByEmailVerified } from "../Service/AuthService";
 import { send } from "../Util/GlobalResponse";
 import { HTTPStatus } from "../Util/HTTPStatus";
 
@@ -15,10 +16,7 @@ router.get("/guru/profile/:id", async (req, res, next) => {
 
 
 router.get("/access", async (req,res,next)=>{
-    const data = {
-        email:req.context.email,
-        iduser:req.context.iduser,
-    }
+    const data = await getTokenByEmailVerified(req.context.email)
     return send(res,HTTPStatus.OK, {data:data, status:true, message:"Akses masih berlaku"})
 })
 
