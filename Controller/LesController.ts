@@ -91,7 +91,7 @@ router.get("/histori",WaliChecker,async (req:Request,res:Response,next:NextFunct
 
 
 router.post("/daftar",async (req:Request,res:Response, next:NextFunction)=>{
-  const data = await addLes(req.body)
+  const data = await addLes(req.body,req.context.idchild)
   if (!data) return next(new ErrorHandler(HTTPStatus.ERROR,"Terjadi kesalahan saat mendaftar les"))
   return send(res,HTTPStatus.OK,{data:data,status:true,message:""})
 })

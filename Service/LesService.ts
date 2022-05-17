@@ -97,13 +97,16 @@ const getTagihan = async (filter,idortu)=>{
   }
 }
 
-const addLes = async (data)  =>{
+const addLes = async (data,idortu)  =>{
   try{
     const lesBuilder:LesBuilder = new LesBuilder(data)
     lesBuilder.setMencariGuru()
     const dataLes:Les =await db.les.add(lesBuilder.build())
     await db.lowongan.add(new Lowongan(dataLes.idles,StatusLowongan.PENDING))
-    // new OneSignalUtil().sendNotificationWithTag("Terdapat pesanan baru",1)
+    const {idkecamatan} = await db.wali.get(idortu)
+    if(idkecamatan){
+      new OneSignalUtil().sendNotificationWithTag("Terdapat pesanan baru",idkecamatan,dataLes.prefrensi)
+    } 
     return dataLes
   }catch (e){
     console.error(e)

@@ -54,7 +54,6 @@ const acceptLowongan = async({ idapplylowongan, idles, tglmulai })=>{
       }else{
         return null;
       }
-     
     }else{
       const ajuan = await db.applyLowongan.applyLowongan(idapplylowongan,dataLes.idlowongan,StatusLowongan.DIKONFIRMASI)
       if (ajuan){
