@@ -10,13 +10,17 @@ export default class OneSignalUtil{
   constructor() {
      this.client = new Client('1fa1745c-7727-40cb-b10e-1a3ae71da5cc'
        ,'MDk4MGY0ODQtMWIxMi00ZDM2LThkZTYtOWE3NDg4OTZhMWQ2'
-       , { apiRoot: 'https://onesignal.com/api/v2'})
+       , { apiRoot: 'https://onesignal.com/api/v1'})
   }
 
 
 
-  public  sendNotificationWithTag(text,idkecamatan, kelamin:string){
+  public  sendNotificationWithTag(title="",text,idkecamatan, kelamin:string){
     const notification = {
+      headings:{
+        'id':title,
+        'en':title
+      },
       contents: {
         'id': text,
         'en': text,
@@ -30,8 +34,9 @@ export default class OneSignalUtil{
       notification.filters.push({ field: 'tag', key: this.tagsKelamin, relation: '=', value: kelamin})
     }
 
+    console.log(notification);
     this.client.createNotification(notification).then((e)=>{
-
+      console.log(e);
       console.log(e.body)
     }).catch((e)=>{
       console.error(e)

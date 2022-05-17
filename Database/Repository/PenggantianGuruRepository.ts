@@ -65,11 +65,12 @@ export default class PenggantianGuruRepository{
 
 
     get(idpenggantian:number):Promise<any>{
-        const sqlQuery =`SELECT idpenggantian, tblpenggantianguru.alasan, tglpenggantian,tblpenggantianguru.status ,tblles.*,idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, tblsiswa.jeniskelamin,gaji
+        const sqlQuery =`SELECT idpenggantian, tblles.prefrensi, tblwali.idkecamatan, tblpenggantianguru.alasan, tglpenggantian,tblpenggantianguru.status ,tblles.*,idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, tblsiswa.jeniskelamin,gaji
         FROM tblpenggantianguru
         inner join tblles on tblpenggantianguru.idles = tblles.idles 
         inner join tblpaket on tblpaket.idpaket = tblles.idpaket
         inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+        inner join tblwali on tblwali.idwali = tblsiswa.idortu
         left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
         left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan  and  tblapplylowongan.statusapply = 3 
         where idpenggantian = $1`;

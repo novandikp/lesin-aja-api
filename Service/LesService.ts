@@ -16,6 +16,7 @@ import Lowongan from "../Entity/Lowongan"
 import ApplyLowongan from '../Entity/ApplyLowongan';
 import { Rekap_Mengajar } from '../Entity/RekapMengajar';
 import PenggantianGuru from '../Entity/PenggantianGuru';
+import { NotificationMessage } from '../Entity/NotificationMessage';
 
 const getLes = async (filter)=>{
   const {status} = filter;
@@ -105,7 +106,8 @@ const addLes = async (data,idortu)  =>{
     await db.lowongan.add(new Lowongan(dataLes.idles,StatusLowongan.PENDING))
     const {idkecamatan} = await db.wali.get(idortu)
     if(idkecamatan){
-      new OneSignalUtil().sendNotificationWithTag("Terdapat pesanan baru",idkecamatan,dataLes.prefrensi)
+      const {title,message} = NotificationMessage.newOrder
+      new OneSignalUtil().sendNotificationWithTag(title,message,idkecamatan,dataLes.prefrensi)
     } 
     return dataLes
   }catch (e){
@@ -214,12 +216,14 @@ const reselectTeacher = async (idpenggantian)=>{
       if(data.statusles == StatusLes.SEDANG_BERLANGSUNG){
         const lesBuilder:LesBuilder = new LesBuilder(data)
         lesBuilder.setMencariGuruUlang()
-  
+        
         const rekap:Rekap_Mengajar = new Rekap_Mengajar(idles,data.idguru,alasan,lesBuilder.statusles)
         await db.rekap.addRekap(rekap);
         
         await db.lowongan.add(new Lowongan(data.idles,StatusLowongan.PENDING))
         return db.les.edit(lesBuilder.build(),idles)
+        const {title, message} = NotificationMessage.newOrder
+        new OneSignalUtil().sendNotificationWithTag(title,message,data.idkecamatan,data.prefrensi)
       }
     }
     

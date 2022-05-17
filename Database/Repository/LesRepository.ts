@@ -42,10 +42,11 @@ export default class LesRepository {
 
 
   get(index){
-      return this.db.one(`SELECT tblles.*,idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
+      return this.db.one(`SELECT tblles.*,tblwali.idkecamatan,idguru,statuslowongan, idortu, tblpaket.jumlah_pertemuan, biaya,siswa, tblpaket.jenjang,kelas, jeniskelamin,gaji 
       FROM tblles 
       inner join tblpaket on tblpaket.idpaket = tblles.idpaket
       inner join tblsiswa on tblsiswa.idsiswa = tblles.idsiswa
+      inner join tblwali on tblwali.idwali = tblsiswa.idortu
       left JOIN tbllowongan ON tbllowongan.idles = tblles.idles and statuslowongan=3
       left JOIN tblapplylowongan ON tblapplylowongan.idlowongan = tbllowongan.idlowongan and  tblapplylowongan.statusapply = 3
     where tblles.idles = $1`, [index])
